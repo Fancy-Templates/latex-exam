@@ -53,6 +53,8 @@
 \RequirePackage{tabularx}
 \RequirePackage{graphicx}
 \RequirePackage{fancyhdr}
+% so that no-one is surprised when placing a subtask:
+\RequirePackage{marginnote}
 
 \RequirePackage{microtype}
 
@@ -82,6 +84,7 @@
 
 % page head ==============================================================
 
+% TODO
 \pagestyle{fancy}
 \headheight=13.6pt
 
@@ -137,7 +140,7 @@
 % the following lines define them roughly from top to bottom regarding their appearance on the (exam/solution) title page
 \sp@make@cmd{examlineA}{\sp@@examnumber. Klausur zur Veranstaltung}
 \sp@make@cmd{examlineB}{\textbf{\LARGE\sp@@examname}}
-\sp@make@cmd{examinerline}{\@hangfrom{Prüfer: }{\sp@@examiner}}
+\sp@make@cmd{examinerline}{\@hangfrom{Prüfer:\space}{\strut\sp@@examiner\strut}}
 
 \sp@make@cmd{whenline}{im \sp@@semester semester \sp@@year}
 \sp@make@cmd{institute}{Institut für Softwaretechnik und Programmiersprachen}
@@ -232,6 +235,11 @@
    \expandafter\let\csname\sp@current@exercise@formula\endcsname\@empty\relax
 }
 
+\sp@make@cmd{subtaskpointwidth}{9mm}
+\sp@make@cmd{subtaskpointheight}{7.5mm}
+
+% TODO: solution and correction modes
+
 % create a points-padding for a subtask
 % #1 number of points for the subtask (if it is a floating point, it must be given with a dot/period, not a comma)
 \def\sp@subtask#1{%
@@ -242,6 +250,15 @@
    \else
       \csappto\sp@current@exercise@formula{+\space#1\sp@pt}%
    \fi
+   % write it to the marginpar too
+   \marginnote{\fboxsep=.5\p@
+      % TODO: round corners?
+      \fbox{%
+         \begin{minipage}[b][\sp@@subtaskpointheight]{\sp@@subtaskpointwidth}
+            \raggedleft\tiny\bfseries/#1\relax
+         \end{minipage}
+      }%
+   }
 }
 
 
