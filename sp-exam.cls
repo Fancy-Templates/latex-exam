@@ -120,6 +120,15 @@
 \sp@make@required@cmd{time}
 \sp@make@required@cmd{duration}
 \sp@make@required@cmd{permittedmaterial}
+\sp@make@required@cmd{coverimage}
+
+% for the coverimage we provide a convenience command `\framedcoverimage` which directly takes a path
+% to an image and wraps it in a frame with the wanted sizes
+\def\framedcoverimage#1{%
+   \sp@make@cmd{coverimage}{\fbox{\begin{minipage}[b][41mm][c]{70mm}
+      \centering\includegraphics[width=\linewidth,height=41mm,keepaspectratio]{#1}\relax
+   \end{minipage}}}%
+}
 
 % all of these commands could be redefined just the same but we not require the user to
 % in other words, the defaults should be satisfactory for most users
@@ -169,19 +178,23 @@
 % now we define the hints, for the number of pages we will infer them automatically
 % with the '\appendix' marker
 \sp@make@cmd{hintstitle}{\textbf{Zur allgemeinen Beachtung:}}%
+% morehints can be used to add more hints using `\item` prefixes, at the bottom of the list.
+% we make no attempts to make more space for them!
 \sp@make@cmd{morehints}{}
 \sp@make@cmd{hints}{%
    \item Füllen Sie das Deckblatt vollständig und korrekt aus.
-   \item Lesen Sie sich zunächst die Klausur sorgfältig durch (sie besteht aus \ifnum\sp@main@end=1\relax einer Seite\else\sp@main@end~Seiten\fi%
+   \item Lesen Sie sich zunächst die Klausur sorgfältig durch (sie besteht aus \ifnum\sp@main@end=1\relax \textbf{einer} Seite\else\textbf{\sp@main@end}~Seiten\fi%
    % now we have to check if there are additional pages
    \ifcsname sp@appendix@end\endcsname
-      \space und \ifnum\sp@appendix@end=1\relax einer Zusatzseite\else\sp@appendix@end~Zusatzseiten\fi
+      \space und \ifnum\sp@appendix@end=1\relax \textbf{einer} Zusatzseite\else\textbf{\sp@appendix@end}~Zusatzseiten\fi
    \fi)
    \item Bearbeiten Sie die Aufgaben direkt auf den Aufgabenblättern. Wenn sie mehr Platz benötigen, verwenden Sie zuerst die Rückseiten der Blätter. % TODO: [TODO: more], was genau soll hier noch kommen?
    \item \sp@@permittedmaterial
    \item Aufgaben, welche nicht mit einem dokumentenechten Stift in den Farben blau oder schwarz bearbeitet worden sind, werden nicht bewertet.
    \sp@@morehints
 }
+
+\sp@make@cmd{additionalpaper}{Zusätzliches benötigtes Paper wird Ihnen von der Aufsicht zur Verfügung gestellt.}
 
 \errorcontextlines\maxdimen
 
@@ -213,12 +226,21 @@
    % TODO: multciolumn
    \begin{minipage}{\linewidth}
       \sp@@hintstitle\\
-      \parbox[c]{.48\linewidth}{%
+      % we store the hints in a box to calculate the height to align the image
+      \setbox0=\hbox{\parbox[c]{.48\linewidth}{%
          \begin{itemize}
             \sp@@hints
          \end{itemize}
-      }\hfill\parbox[c]{.45\linewidth}{}%
+      }}%
+      \usebox0\relax
+      \hfill\begin{minipage}[c][\dimexpr\ht0+\dp0][c]{\dimexpr70mm+2\fboxsep}
+         \hfill% \fboxsep=0pt
+         \sp@@coverimage\bigskip%
+
+         \sp@@additionalpaper
+     \end{minipage}%
    \end{minipage}
+   \vfill\strut
    \endgroup
 \end{center}
 \restoregeometry\newpage
