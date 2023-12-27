@@ -1,10 +1,4 @@
-% \RequirePackage{kvoptions}
-% \SetupKeyvalOptions{family=sp,prefix=sp@}
-
-% % if true, you will receive debugging information in the log
-% \DeclareBoolOption{debug}
-
-% \ProcessKeyvalOptions*
+\errorcontextlines=10000
 
 \providecommand\sp@documentclass{
    \PassOptionsToClass{11pt,a4paper}{article}
@@ -42,6 +36,13 @@
 % comfort overload for `\sp@make@cmd` for macros which are required
 \def\sp@make@required@cmd#1{\sp@make@cmd{#1}{\sp@missing{\texttt{\textbackslash #1\{??\}}}}}
 
+% immediately persist the value #2 in #1 to be active on the next run
+\def\sp@persist#1=#2;{%
+   \immediate\write\@auxout{%
+      \string\gdef\string#1{#2}%
+   }%
+}
+
 % load the bare minimum of default packages ==============================
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
@@ -61,6 +62,7 @@
 \renewcommand\familydefault{\sfdefault}
 
 % page layout ============================================================
+
 \def\sp@geometry@left{2cm}%
 \def\sp@geometry@right{2cm}%
 \def\sp@geometry@top{1cm}%
@@ -95,19 +97,18 @@
    \setcounter{page}{1}%
 }
 % at the end of the document we just store the current page(s)
-\AtEndDocument{\ifsp@in@appendix
-   \immediate\write\@auxout{%
-      \string\gdef\string\sp@main@end{\sp@main@end}%
-      \string\gdef\string\sp@appendix@end{\arabic{page}}%
-   }
-   \else\immediate\write\@auxout{%
-      \string\gdef\string\sp@main@end{\arabic{page}}%
-   }\fi
+\AtEndDocument{%
+   \ifsp@in@appendix
+      \sp@persist\sp@main@end=\sp@main@end;%
+      \sp@persist\sp@appendix@end=\arabic{page};%
+   \else
+      \sp@persist\sp@main@end=\arabic{page};%
+   \fi
 }
 \def\sp@main@end{-1}
 
 
-% special sp cover page ==================================================
+% macros for the sp cover page ===========================================
 
 % this is the collection of macros (`\examnumber`, ...) which is required
 % so that we can set the titlepage with `\maketitle`.
@@ -196,7 +197,36 @@
 
 \sp@make@cmd{additionalpaper}{Zusätzliches benötigtes Paper wird Ihnen von der Aufsicht zur Verfügung gestellt.}
 
-\errorcontextlines\maxdimen
+% the exercise/points magic ==============================================
+\newcounter{exercise}
+\def\sp@exercises@totalcount{0}% default value of total exercises
+
+
+% #1 name of the exercise
+\def\sp@exercise#1{%
+   % first, we step the number of total exercises
+   \refstepcounter{exercise}%
+}
+
+% at the end of the exercise we persist two things:
+% 1. the number of total points for this exercise
+% 2. the formula to calculate the points for this exercise (to present to the students)
+% please note, that we name this `endsp@exercise` to be theoretically compatible with the latex environments
+% to be used as `\begin{exercise} ... \end{exercise}`
+\def\endsp@exercise{%
+\immediate\write\@auxout{%
+      \string\gdef\string\sp@exercise@\the\numexpr\sp@exercises@totalcount\relax @points{\sp@exercise@points}%
+      \string\gdef\string\sp@exercise@\the\numexpr\sp@exercises@totalcount\relax @formula{\sp@exercise@formula}%
+   }%
+}
+
+
+% at the end of the document we must persist all counts for the next round!
+\AtEndDocument{%
+   \sp@persist\sp@exercises@totalcount=\arabic{exercise};%
+}
+
+% the sp cover page ======================================================
 
 % TODO: add solution
 \def\maketitle{%
