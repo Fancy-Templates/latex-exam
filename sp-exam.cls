@@ -38,8 +38,9 @@
 
 % immediately persist the value #2 in #1 to be active on the next run
 \def\sp@persist#1=#2;{%
+   % with csgdef we can include numbers!
    \immediate\write\@auxout{%
-      \string\gdef\string#1{#2}%
+      \string\csgdef{#1}{#2}%
    }%
 }
 
@@ -49,7 +50,7 @@
 \PassOptionsToPackage{ngerman}{babel}
 \RequirePackage{babel}
 \RequirePackage{xcolor}
-\RequirePackage{array}
+\RequirePackage{tabularx}
 \RequirePackage{graphicx}
 \RequirePackage{fancyhdr}
 
@@ -99,25 +100,25 @@
 % at the end of the document we just store the current page(s)
 \AtEndDocument{%
    \ifsp@in@appendix
-      \sp@persist\sp@main@end=\sp@main@end;%
-      \sp@persist\sp@appendix@end=\arabic{page};%
+      \sp@persist sp@main@end=\sp@main@end;%
+      \sp@persist sp@appendix@end=\arabic{page};%
    \else
-      \sp@persist\sp@main@end=\arabic{page};%
+      \sp@persist sp@main@end=\arabic{page};%
    \fi
 }
 \def\sp@main@end{-1}
-
 
 % macros for the sp cover page ===========================================
 
 % this is the collection of macros (`\examnumber`, ...) which is required
 % so that we can set the titlepage with `\maketitle`.
+% with \def\@x{...} we create a one-way compatibility mapping for the default latex macros
 \sp@make@required@cmd{examnumber}
-\sp@make@required@cmd{examname}
-\sp@make@required@cmd{examiner}
+\sp@make@required@cmd{examname}     \def\@title{\sp@@examname}
+\sp@make@required@cmd{examiner}     \def\@author{\sp@@examiner}
 \sp@make@required@cmd{year}
 \sp@make@required@cmd{semester}
-\sp@make@required@cmd{date}
+\sp@make@required@cmd{date}         \def\@date{\sp@@date}
 \sp@make@required@cmd{time}
 \sp@make@required@cmd{duration}
 \sp@make@required@cmd{permittedmaterial}
@@ -199,31 +200,62 @@
 
 % the exercise/points magic ==============================================
 \newcounter{exercise}
+% we automatically scope subtasks to the current exercise they are in!
+\newcounter{subtask}[exercise]
 \def\sp@exercises@totalcount{0}% default value of total exercises
 
+% to avoid the need for xfp or other calc libraries (we rely on etex only), we add a '\sp@pt' marker to allow for
+% dimexpr when calculating (i.e., expand to points/pt) but hide it when presenting the points to the user
+\def\sp@pt{pt} \robustify\sp@pt
 
 % #1 name of the exercise
-\def\sp@exercise#1{%
+\def\sp@exercise#1{\par
    % first, we step the number of total exercises
    \refstepcounter{exercise}%
+   \edef\sp@current@exercise@formula{sp@exercise@\arabic{exercise}@formula}%
+   \begingroup
+      \raggedleft
+      \begin{tabularx}{\linewidth}{@{}Xr@{}}%
+         \textbf{\Large Aufgabe~\arabic{exercise}~--- \large#1} &
+         % if the command pointed to by '\sp@current@exercise@formula' exists, we display its formula and the result
+         % we add +\z@ to compensate faulty formulas
+         \expandafter\ifcsname\sp@current@exercise@formula\endcsname
+            \edef\sp@result{\expandafter\strip@pt\expandafter\dimexpr\csname\sp@current@exercise@formula\endcsname+\z@\relax}%
+            \edef\sp@result{\sp@result}% remote the pt marker from the result
+            \let\sp@pt\space% hide the pt marker
+            % currently we avoid math-mode
+            \textbf{\csname\sp@current@exercise@formula\endcsname= \sp@result\space Punkt\ifdim\sp@result\p@=\p@\else e\fi}
+         \fi
+      \end{tabularx}
+   \endgroup
+   % update the point macros for the next round
+   \expandafter\let\csname\sp@current@exercise@formula\endcsname\@empty\relax
 }
 
-% at the end of the exercise we persist two things:
-% 1. the number of total points for this exercise
-% 2. the formula to calculate the points for this exercise (to present to the students)
+% create a points-padding for a subtask
+% #1 number of points for the subtask (if it is a floating point, it must be given with a dot/period, not a comma)
+\def\sp@subtask#1{%
+   \refstepcounter{subtask}%
+   % if the current subtask formula is empty, we just add the given points, otherwise, we precede it with a plus sign
+   \expandafter\ifx\csname\sp@current@exercise@formula\endcsname\@empty
+      \csdef\sp@current@exercise@formula{#1\sp@pt}%
+   \else
+      \csappto\sp@current@exercise@formula{+\space#1\sp@pt}%
+   \fi
+}
+
+
+% at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
 % please note, that we name this `endsp@exercise` to be theoretically compatible with the latex environments
 % to be used as `\begin{exercise} ... \end{exercise}`
 \def\endsp@exercise{%
-\immediate\write\@auxout{%
-      \string\gdef\string\sp@exercise@\the\numexpr\sp@exercises@totalcount\relax @points{\sp@exercise@points}%
-      \string\gdef\string\sp@exercise@\the\numexpr\sp@exercises@totalcount\relax @formula{\sp@exercise@formula}%
-   }%
+   \expandafter\sp@persist\sp@current@exercise@formula=\csname\sp@current@exercise@formula\endcsname;%
 }
 
 
 % at the end of the document we must persist all counts for the next round!
 \AtEndDocument{%
-   \sp@persist\sp@exercises@totalcount=\arabic{exercise};%
+   \sp@persist sp@exercises@totalcount=\arabic{exercise};%
 }
 
 % the sp cover page ======================================================
