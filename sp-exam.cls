@@ -188,14 +188,14 @@
 
 % so that other, nested lists work, we have to recover item within then explicitly
 \let\sp@item\item\relax
-\setlist{first=\let\item\sp@item}
+\setlist{first*=\let\item\sp@item}
 
 \newlist{tasks}{enumerate}{2}
 % within task, every `\item` takes in a subtask argument
 \setlist[tasks]{%
    leftmargin=*,%
    font=\normalfont\bfseries,%
-   first=\let\item\sp@task@error\relax\let\task\sp@task@item%
+   first*=\let\item\sp@task@error\relax\let\task\sp@task@item%
 }
 \setlist[tasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
 \setlist[tasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
@@ -641,12 +641,34 @@
 \setbox0=\hbox{$\bigcirc$}
 \newdimen\sp@square@size
 \sp@square@size=\dimexpr.9\wd0-.5\p@
-\def\sp@bigsquare{{\fboxsep\z@\framebox[\sp@square@size]{\rule\z@\sp@square@size}}}
+\def\sp@bigsquare{{\fboxsep\z@\raisebox{-.2\height}{\framebox[\sp@square@size]{\rule\z@\sp@square@size}}}}
 \newlist{radioboxes}{itemize}{1}
 \newlist{checkboxes}{itemize}{1}
-\setlist[checkboxes,radioboxes]{label=$\bigcirc$,itemsep=2\p@\@plus1\p@\@minus1\p@}
-\setlist[checkboxes]{label=\sp@bigsquare}
-% TODO: mark the correct one
+
+% TODO: make more beautiful
+% \hbox{\setbox0=\hbox{#1}\phantom{\copy0}\llap{
+\def\sp@place@cross#1{\hbox{\setbox0=\hbox{#1}\clap{\raisebox{-.235\height}{\scalebox{2.25}{$\times$}}}\clap{\copy0}\kern.5\wd0}}
+
+\sp@make@cmd{radioboxlabel}{$\bigcirc$}
+\sp@make@cmd{checkboxlabel}{\sp@bigsquare\kern\p@\relax}
+\ifshowsolution
+   {%
+      \sp@make@cmd{radioboxcorrectlabel}{\sp@place@cross{\sp@@radioboxlabel}}%
+      \sp@make@cmd{checkboxcorrectlabel}{\sp@place@cross{\sp@@checkboxlabel\kern-\p@\relax}\kern\p@\relax}%
+   }{%
+      \sp@make@cmd{radioboxcorrectlabel}{\sp@@radioboxlabel}%
+      \sp@make@cmd{checkboxcorrectlabel}{\sp@@checkboxlabel}%
+   }
+
+\setlist[checkboxes,radioboxes]{itemsep=2\p@\@plus1\p@\@minus1\p@}
+\setlist[radioboxes]{%
+   label=\sp@@radioboxlabel,
+   first*=\def\correct{\item[\sp@@radioboxcorrectlabel]}%
+}
+\setlist[checkboxes]{
+   label=\sp@@checkboxlabel,
+   first*=\def\correct{\item[\sp@@checkboxcorrectlabel]}%
+}
 
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
