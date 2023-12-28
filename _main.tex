@@ -21,23 +21,10 @@
 \begin{document}
    \maketitle
 
-   \makeatletter
-   \begin{Exercise}{Hi!}
-      \begin{tasks}
-         % \item Hello % this would cause an error (as a safe-guard)
-         \task{3} This is a subtask with 3 points.
-         \task{2.5} This is a subtask with 2.5 points. It can be arbitrarily long if you want that!
-         \newpage
-         \task{3} This is a subtask with 3 points (again).
-         \task{0} Actually, this subtask has no points at all
-      \end{tasks}
-   \end{Exercise}
+   \input{exercises/fun}
+   \input{exercises/second}
 
-   \begin{Exercise}[5]{Ha ha ha Ha ha ha Ha ha ha!}
-      % \Subtask{3}% this would be forbidden and throw an error when running, as you gave
-      % a fixed amount of points with the exercise
-   \end{Exercise}
-
+   % if we are to lazy, we can specify exercises in-place as well
    \begin{Exercise}{Ho!}
       \Subtask{1}
       \Subtask{3}

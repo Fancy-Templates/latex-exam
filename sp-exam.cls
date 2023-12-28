@@ -56,6 +56,8 @@
 % so that no-one is surprised when placing a subtask:
 \RequirePackage{marginnote}
 \RequirePackage{enumitem}
+\RequirePackage{etoolbox}
+\RequirePackage{parskip}
 
 \RequirePackage{microtype}
 
@@ -254,7 +256,7 @@
                \fi
                \sp@result\space Punkt\ifdim\sp@result\p@=\p@\else e\fi}
          \fi
-      \end{tabularx}
+      \end{tabularx}\smallskip\par
    \endgroup
    % update the point macros for the next round
    \expandafter\let\csname\sp@current@exercise@formula\endcsname\@empty\relax
@@ -414,7 +416,6 @@
 
 % #1: only if this exercise has no subtasks, you can give the points here directly
 % #2: name of the exercise
-% TODO: forbid subtasks if #1 is given
 \newenvironment{Exercise}[2][]{\begingroup%
    \sp@exercise{#2}%
    % test if the optional argument is given
@@ -427,3 +428,8 @@
 
 % #1: number of points
 \def\Subtask#1{\sp@subtask{#1}\sp@subtask@marker{#1}}
+
+% TODO: allow to define space for user inputs
+% * checkboxes
+% * space to enter text (single line)
+% * space to enter code
