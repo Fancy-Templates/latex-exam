@@ -205,16 +205,13 @@
 % we allow the '\appendix' command to be used in the document to separate
 % additional pages from those for the main exam
 \newif\ifsp@in@appendix
-\ifshowsolution
-   % in the solution, we do not want an appendix!
-   {\def\appendix{\end{document}}}
-   {\def\appendix{%
-      \xdef\sp@main@end{\arabic{page}}% we store the number of pages in a macro to test for single pages
-      \clearpage
-      \global\sp@in@appendixtrue
-      \pagenumbering{arabic}%
-      \setcounter{page}{1}%
-   }}
+\def\appendix{%
+   \xdef\sp@main@end{\arabic{page}}% we store the number of pages in a macro to test for single pages
+   \clearpage
+   \global\sp@in@appendixtrue
+   \pagenumbering{arabic}%
+   \setcounter{page}{1}%
+}
 
 % at the end of the document we just store the current page(s)
 \AtEndDocument{%
