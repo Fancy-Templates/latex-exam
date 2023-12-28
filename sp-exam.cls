@@ -236,6 +236,7 @@
 \newcounter{exercise}
 % we automatically scope subtasks to the current exercise they are in!
 \newcounter{subtask}[exercise]
+\def\thesubtask{\hbox{\textbf{\arabic{exercise}.\alph{subtask})}}}
 \def\sp@exercises@totalcount{0}% default value of total exercises
 
 % to avoid the need for xfp or other calc libraries (we rely on etex only), we add a '\sp@pt' marker to allow for
@@ -263,15 +264,19 @@
    \expandafter\let\expandafter#1\csname\sp@tmp\sp@res\endcsname
 }
 
+\sp@make@cmd{exercisename}{Aufgabe}
 % we allow the user to configure the style of exercises with the number in the
 % exercise counter and the name in exercisename
-\sp@make@cmd{exerciseformat}{\textbf{\Large Aufgabe~\arabic{exercise}~--- \large\exercisename}}
+\sp@make@cmd{exerciseformat}{\textbf{\Large \sp@@exercisename~\arabic{exercise}~--- \large\exercisename}}
+
 
 % \textbf{\Large Aufgabe~\arabic{exercise}~--- \large#1}
 % #1 name of the exercise
 \def\sp@exercise#1{\par
    % first, we step the number of total exercises
    \refstepcounter{exercise}%
+   \let\@currentname\sp@@exercisename\relax
+   \let\@currentlabel\theexercise\relax
    \edef\sp@current@exercise@formula{sp@exercise@\arabic{exercise}@formula}%
    \edef\sp@current@exercise@subtask{sp@exercise@\arabic{exercise}@subtaskcount}%
    \begingroup
@@ -305,10 +310,14 @@
 
 % TODO: solution and correction modes
 
+\sp@make@cmd{subtaskname}{Teilaufgabe}
+
 % create a points-padding for a subtask
 % #1 number of points for the subtask (if it is a floating point, it must be given with a dot/period, not a comma)
 \def\sp@subtask#1{%
    \refstepcounter{subtask}%
+   \let\@currentname\sp@@subtaskname\relax
+   \let\@currentlabel\thesubtask\relax
    % if the current subtask formula is empty, we just add the given points, otherwise, we precede it with a plus sign
    \expandafter\ifx\csname\sp@current@exercise@formula\endcsname\@empty
       \csgdef\sp@current@exercise@formula{#1\sp@pt}%
@@ -330,13 +339,18 @@
    }\fi
 }
 
+\sp@make@cmd{endofexercise}{\clearpage}
+
 % at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
 % and the number of subtasks
 % please note, that we name this `endsp@exercise` to be theoretically compatible with the latex environments
 % to be used as `\begin{exercise} ... \end{exercise}`
+% TODO: write total exercise points in the margin again for full grading (bottom of page?)
 \def\endsp@exercise{%
    \expandafter\sp@persist\sp@current@exercise@formula=\csname\sp@current@exercise@formula\endcsname;%
    \expandafter\sp@persist sp@exercise@\arabic{exercise}@subtaskcount=\arabic{subtask};%
+   % every exercise gets it's own page
+   \sp@@endofexercise
 }
 
 % at the end of the document we must persist all counts for the next round!

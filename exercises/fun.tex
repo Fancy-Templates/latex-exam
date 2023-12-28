@@ -3,7 +3,7 @@
    % \item Hello % this would cause an error (as a safe-guard)
    \task{3} Dies ist eine Teilaufgabe die drei Punkte wert ist. Für die Antwort geben wir den Studierenden (dynamisch viel) freien Platz!
    \VerticalSpace
-   \task{2.5} Diese Teilaufgabe hat nur zwei-ein-halb Punkte. Der Text kann beliebig lang sein. Hier geben wir den Studierenden vier Antwortmöglichkeiten, von denen eine richtig ist:
+   \task{2.5} \label{tsk:exampletask}Diese Teilaufgabe hat nur zwei-ein-halb Punkte. Der Text kann beliebig lang sein. Hier geben wir den Studierenden vier Antwortmöglichkeiten, von denen eine richtig ist:
    \begin{radioboxes}
       \item Antwortmöglichkeit 1
       \item Antwortmöglichkeit 2
@@ -17,7 +17,7 @@
       \item Antwortmöglichkeit 3
       \item Antwortmöglichkeit 4
    \end{checkboxes}
-   \task{0} Diese Aufgabe gibt zwar keine Punkte, wir erwarten von den Studierenden aber trotzdem eine Antwort:
+   \task{0} Diese Aufgabe gibt zwar keine Punkte, wir erwarten von den Studierenden aber trotzdem eine Antwort. Zudem referenzieren wir~\autoref{tsk:exampletask}.
 
    Die \StudentLine{Laterne auf der Pinguininsel} scheint mittags!
    % wir können die Abstände beliebig kontrollieren
