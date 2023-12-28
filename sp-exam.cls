@@ -318,6 +318,8 @@
 
 \sp@make@cmd{subtaskpointwidth}{9mm}
 \sp@make@cmd{subtaskpointheight}{7.5mm}
+\sp@make@cmd{exampointwidth}{9mm}
+\sp@make@cmd{exampointheight}{9mm}
 
 % TODO: solution and correction modes
 
@@ -338,12 +340,14 @@
    \fi
 }
 
+\let\sp@box\fbox
+
 % place a marker into the margin
 \def\sp@subtask@marker#1{%
    \ifdim#1\p@=\z@\relax\else
    \marginnote{\fboxsep=.5\p@
       % TODO: round corners?
-      \fbox{%
+      \sp@box{%
          \begin{minipage}[b][\sp@@subtaskpointheight]{\sp@@subtaskpointwidth}
             \raggedleft\tiny\bfseries/#1\relax
          \end{minipage}
@@ -351,7 +355,28 @@
    }\fi
 }
 
-\sp@make@cmd{endofexercise}{\clearpage}
+
+% #1 box configuration, #2 content
+\def\sp@exercise@point@marker@{%
+% total points of exercise
+\sp@get@points@of@task\sp@result{\arabic{exercise}}
+\ifdim\sp@result\p@=\z@\relax\else
+\marginnote{\fboxsep=.5\p@\fboxrule=2\p@
+   % TODO: round corners?
+   \smash{\raisebox{.5\height}{\sp@box{%
+      \begin{minipage}[b][\sp@@exampointheight]{\sp@@exampointwidth}
+         \raggedleft\tiny\bfseries/\sp@result\relax
+      \end{minipage}
+   }}}%
+}\fi
+}
+
+% by default we clear the page and write the total number of pages in the margin
+\sp@make@cmd{endofexercise}{%
+   \rfoot{\sp@exercise@point@marker@}%
+   \clearpage
+   \rfoot{}%
+}
 
 % at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
 % and the number of subtasks
