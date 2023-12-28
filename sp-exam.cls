@@ -636,7 +636,9 @@
 
 % #1 relative weight of the space if you place multiple
 % the space is only active in the exercise mode
-\newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}
+\ifshowsolution
+   {\newcommand*\VerticalSpace[1][]{\vspace*{\z@}}}
+   {\newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}}
 
 \setbox0=\hbox{$\bigcirc$}
 \newdimen\sp@square@size
