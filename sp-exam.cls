@@ -61,7 +61,7 @@
 % setup fonts ============================================================
 
 \RequirePackage{newtxtt} % ttfamily
-\RequirePackage{sfmath}  % TODO: find better sf font
+\RequirePackage{sfmath}  % TODO: find better sf fonts
 \renewcommand\familydefault{\sfdefault}
 
 % page layout ============================================================
@@ -301,7 +301,7 @@
 % #2 symbol/string to place at the bottom
 \def\sp@points@row@entry#1#2{%
    \parbox\linewidth{%
-      \Large\strut#1\strut\\[2.5ex]
+      \Large\strut#1\strut\\[2.25ex]
       \hbox{\footnotesize\strut#2\strut}%
    }%
 }
@@ -312,19 +312,21 @@
 \edef\sp@total@columns{\the\numexpr\sp@exercises@totalcount+2}%
 % to calculate the sum of all points
 \def\sp@total{0}%
-% we define the header of the line to enter the points
-\def\sp@numbers{}%
+% we define the header of the line to enter the points and the fields for the correctors
+\def\sp@numbers{}\def\sp@correctors{}%
 \sp@points@iter{%
    \sp@get@points@of@task\sp@result{\i}%
    \message{\i}% \sp@result
    \xappto\sp@numbers{\noexpand\sp@points@row@entry{\i}{von \sp@result} & }%
    \xdef\sp@total{\expandafter\strip@pt\dimexpr\sp@total\p@+\sp@result\p@}%
+   \xappto\sp@correctors{&}
 }%
 \begin{tabularx}{\linewidth}{|*{\sp@exercises@totalcount}{X|}X||X|}
    \hline
    \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}\textit{Punkteverteilung}}\\
    \hline
    \sp@numbers \sp@points@row@entry{$\sum$}{von \sp@total} & \sp@points@row@entry{{\LARGE\strut}\textbf{Note}}{} \\ \hline
+   \rule\z@{2\ht\strutbox}\sp@correctors & \tiny Korrektur\\ \hline
    \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}Einsichtnahme ohne Nachkorrektur $\bigcirc$ \hskip2cm Einsichtnahme mit Nachkorrektur $\bigcirc$}\\[4pt]
    \hline
 \end{tabularx}%
