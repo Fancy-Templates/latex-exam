@@ -1,6 +1,14 @@
+% Theoretically we can allow _any_ mode but this *should* help in preventing
+% typos. Yet, nothing hinders a user to use `\def\spexammode{foo}` and subsequently
+% use '\only' with 'foo' as a desired mode.
+% Moreover, our default/convenience macros consider these as special modes
 \DeclareOption{exam}{\def\spexammode{exam}}
 \DeclareOption{solution}{\def\spexammode{solution}}
 \DeclareOption{correction}{\def\spexammode{correction}}
+\providecommand\spexammode{exam}
+
+% we provide default lists that theoretical class-hackers can use to add their own modes
+\def\sp@modes@hide@solutions{solution,correction}
 
 % pass unknown options to article
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
@@ -15,24 +23,49 @@
 
 % modes ==========================================================
 
-\providecommand\spexammode{exam}%
+% we use this if as a helper to store if we are in a desired
+% mode or not
 \newif\if@sp@tmp@
 
-% only activate the content if any of the modes in #1 are active
+% helper macros to select arguments based on if we are in a
+% desired mode
+\def\sp@firstoftwo#1#2{#1}
+\def\sp@secondoftwo#1#2{#2}
+
+% this sets `\@sp@tmp@true` if any of the modes in `\sp@mode@list`
+% is equal to the mode selected by `\spexammode`
+\def\sp@checkmode{\@sp@tmp@false
+% we check if any of the modes is set
+\@for\sp@mode@tmp:=\sp@mode@list\do{%
+   \ifx\sp@mode@tmp\spexammode
+      \@sp@tmp@true
+   \fi
+}}
+
+% if we are in one of the modes given by #1, we execute #2, otherwise #3
+\newcommand\ifinmode[1]{%
+   \def\sp@mode@list{#1}\sp@checkmode
+   \if@sp@tmp@\expandafter\sp@firstoftwo
+   \else
+      \expandafter\sp@secondoftwo
+   \fi
+}
+
+% only activate the content if any of the modes in #2 are active
 % they are expected in a comma-separated list
-\newenvironment{onlyenv}[1]{%
-   \def\sp@mode@list{#1}%
-   \@sp@tmp@false
-   % we check if any of the modes is set
-   \@for\sp@mode@tmp:=\sp@mode@list\do{%
-      \ifx\sp@mode@tmp\spexammode
-         \@sp@tmp@true
-      \fi
-   }%
+\newenvironment{onlyenv}[2][]{%
+   \def\sp@mode@list{#1}\sp@checkmode
    \if@sp@tmp@
 }{\fi}
-\newcommand\only[2]{\begin{onlyenv}{#1}#2\end{onlyenv}}
 
+% \only if we are in the modes given by #1, we execute #2
+\newcommand\only[2]{\ifinmode{#1}{#2}\relax}
+
+% another convenience wrapper, execute #1 for the solution and #2
+% if the solution is to be hidden
+\newcommand*\ifshowsolution{%
+   \expandafter\ifinmode\expandafter{\sp@modes@hide@solutions}%
+}
 
 % TODO: solution and correction modes
 
@@ -560,7 +593,11 @@
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
 % #1 holds the solution that we want to be there
-\def\StudentLine#1{\StudentStrut{\hrulefill}}
+\ifshowsolution{
+   \def\StudentLine#1{\StudentStrut{\rlap{#1}\color{gray}\hrulefill}}
+}{
+   \def\StudentLine#1{\StudentStrut{\hrulefill}}
+}
 
 
 % TODO: allow to define space for user inputs
