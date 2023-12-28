@@ -428,7 +428,7 @@
    {\def\sp@subtask@marker#1{\marginnote{\color{purple}{\tiny\bfseries#1 Punkt\ifdim#1\p@=\p@\else e\fi}}}}
    {\def\sp@subtask@marker#1{%
       \ifdim#1\p@=\z@\relax\else
-      \marginnote{\color{darkgray}\fboxsep=.5\p@
+      \marginnote{\fboxsep=.5\p@
          \sp@box{%
             \begin{minipage}[b][\sp@@subtaskpointheight]{\sp@@subtaskpointwidth}
                \raggedleft\tiny\bfseries/#1\relax
@@ -442,7 +442,7 @@
    % total points of exercise
    \sp@get@points@of@task\sp@result{\arabic{exercise}}
    \ifdim\sp@result\p@=\z@\relax\else
-   \marginnote{\color{darkgray}\fboxsep=.5\p@\relax\fboxrule=2\p@
+   \marginnote{\fboxsep=.5\p@\relax\fboxrule=1.66\p@
       \smash{\raisebox{.5\height}{\sp@box{%
          \begin{minipage}[b][\sp@@exampointheight]{\sp@@exampointwidth}
             \raggedleft\tiny\bfseries/\sp@result\relax
