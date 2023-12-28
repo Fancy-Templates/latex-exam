@@ -360,7 +360,6 @@
       \sp@@studentdatatable
    % hints ===============================================================
    \endgroup\vfill\par\begingroup
-   % TODO: multciolumn
    \begin{minipage}{\linewidth}
       \sp@@hintstitle\\
       % we store the hints in a box to calculate the height to align the image
