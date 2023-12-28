@@ -126,7 +126,7 @@
 % hyperlinks =============================================================
 
 \ifshowsolution
-   {\PassOptionsToPackage{colorlinks,allcolors=cyan!40!black,pdfusetitle}{hyperref}}
+   {\PassOptionsToPackage{colorlinks,allcolors=purple,pdfusetitle}{hyperref}}
    {\PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}}
 
 \RequirePackage{hyperref}
@@ -318,6 +318,7 @@
 \sp@make@cmd{additionalpaper}{Zusätzliches benötigtes Paper wird Ihnen von der Aufsicht zur Verfügung gestellt.}
 
 % the exercise/points magic ==============================================
+
 \newcounter{exercise}
 \def\sp@format@counter#1{\hbox{\textbf{#1}}}
 \robustify\sp@format@counter
@@ -420,38 +421,42 @@
 \let\sp@box\fbox
 
 % place a marker into the margin
-\def\sp@subtask@marker#1{%
-   \ifdim#1\p@=\z@\relax\else
-   \marginnote{\fboxsep=.5\p@
-      \sp@box{%
-         \begin{minipage}[b][\sp@@subtaskpointheight]{\sp@@subtaskpointwidth}
-            \raggedleft\tiny\bfseries/#1\relax
-         \end{minipage}
-      }%
-   }\fi
-}
-
+\ifshowsolution
+   {\def\sp@subtask@marker#1{\marginnote{\color{purple}{\tiny\bfseries#1 Punkt\ifdim#1\p@=\p@\else e\fi}}}}
+   {\def\sp@subtask@marker#1{%
+      \ifdim#1\p@=\z@\relax\else
+      \marginnote{\fboxsep=.5\p@
+         \sp@box{%
+            \begin{minipage}[b][\sp@@subtaskpointheight]{\sp@@subtaskpointwidth}
+               \raggedleft\tiny\bfseries/#1\relax
+            \end{minipage}
+         }%
+      }\fi
+   }}
 
 % #1 box configuration, #2 content
 \def\sp@exercise@point@marker@{%
-% total points of exercise
-\sp@get@points@of@task\sp@result{\arabic{exercise}}
-\ifdim\sp@result\p@=\z@\relax\else
-\marginnote{\fboxsep=.5\p@\fboxrule=2\p@
-   \smash{\raisebox{.5\height}{\sp@box{%
-      \begin{minipage}[b][\sp@@exampointheight]{\sp@@exampointwidth}
-         \raggedleft\tiny\bfseries/\sp@result\relax
-      \end{minipage}
-   }}}%
-}\fi
-}
+   % total points of exercise
+   \sp@get@points@of@task\sp@result{\arabic{exercise}}
+   \ifdim\sp@result\p@=\z@\relax\else
+   \marginnote{\fboxsep=.5\p@\fboxrule=2\p@
+      \smash{\raisebox{.5\height}{\sp@box{%
+         \begin{minipage}[b][\sp@@exampointheight]{\sp@@exampointwidth}
+            \raggedleft\tiny\bfseries/\sp@result\relax
+         \end{minipage}
+      }}}%
+   }\fi
+}%
 
 % by default we clear the page and write the total number of pages in the margin
-\sp@make@cmd{endofexercise}{%
-   \rfoot{\sp@exercise@point@marker@}%
-   \clearpage
-   \rfoot{}%
-}
+% for the solution, we do not want point marker
+\ifshowsolution
+   {\sp@make@cmd{endofexercise}{\clearpage\rfoot{}}}
+   {\sp@make@cmd{endofexercise}{%
+      \rfoot{\sp@exercise@point@marker@}%
+      \clearpage
+      \rfoot{}%
+   }}
 
 % at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
 % and the number of subtasks
@@ -523,9 +528,7 @@
 
 % the sp cover page ======================================================
 
-\def\maketitle{%
-\newgeometry{top=1cm,bottom=1cm,left=2cm,right=2cm,ignorehead}%
-\thispagestyle{empty}%
+\sp@make@cmd{coverpage}{%
 \begin{center}
    \parskip\z@\relax\parindent\z@\relax
    \begingroup
@@ -567,8 +570,14 @@
    % points --------------------------------------------------------------
    \sp@@pointstable
    \endgroup
-\end{center}
-\restoregeometry\newpage
+\end{center}%
+}
+
+\def\maketitle{%
+   \newgeometry{top=1cm,bottom=1cm,left=2cm,right=2cm,ignorehead}%
+   \thispagestyle{empty}%
+   \sp@@coverpage
+   \restoregeometry\newpage
 }
 
 
@@ -580,7 +589,6 @@
    \sp@exercise{#2}%
    % test if the optional argument is given
    \edef\@tmp{#1}\ifx\@tmp\@empty\else
-
       \sp@subtask{#1}%
       % if yes, we forbid further subtasks from occurring
       \def\sp@subtask##1{\ClassError{sp-exam}{You cannot use subtasks in an exercise with a given number of points}{Either remove the optional argument to \string\Exercise\space or remove the subtask!}}%
@@ -593,7 +601,7 @@
 }{\endsp@exercise\endgroup\bigskip}
 
 % #1: number of points
-\def\Subtask#1{\sp@subtask{#1}\sp@subtask@marker{#1}}
+\def\Subtask#1{\strut\sp@subtask{#1}\sp@subtask@marker{#1}}
 
 % #1 relative weight of the space if you place multiple
 % the space is only active in the exercise mode
