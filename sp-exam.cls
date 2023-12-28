@@ -635,7 +635,9 @@
 }{\endsp@exercise\endgroup\bigskip}
 
 % #1: number of points
-\def\Subtask#1{\strut\sp@subtask{#1}\sp@subtask@marker{#1}}
+\def\Subtask{\@ifstar\sp@Subtask@star\sp@Subtask@}
+\def\sp@Subtask@star#1{\strut\sp@subtask{#1}}
+\def\sp@Subtask@#1{\strut\sp@subtask{#1}\sp@subtask@marker{#1}}
 
 % #1 relative weight of the space if you place multiple
 % the space is only active in the exercise mode
