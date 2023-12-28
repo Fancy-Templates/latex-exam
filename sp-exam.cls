@@ -87,7 +87,7 @@
 
 % page head ==============================================================
 
-% TODO
+% TODO: headers and footers
 \pagestyle{fancy}
 \headheight=13.6pt
 
@@ -345,7 +345,6 @@
 \def\sp@numbers{}\def\sp@correctors{}%
 \sp@points@iter{%
    \sp@get@points@of@task\sp@result{\i}%
-   \message{\i}% \sp@result
    \xappto\sp@numbers{\noexpand\sp@points@row@entry{\i}{von \sp@result} & }%
    \xdef\sp@total{\expandafter\strip@pt\dimexpr\sp@total\p@+\sp@result\p@}%
    \xappto\sp@correctors{&}
