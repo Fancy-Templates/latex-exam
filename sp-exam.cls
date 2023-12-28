@@ -49,11 +49,6 @@
 % mode or not
 \newif\if@sp@tmp@
 
-% helper macros to select arguments based on if we are in a
-% desired mode
-\long\def\sp@firstoftwo#1#2{#1}
-\long\def\sp@secondoftwo#1#2{#2}
-
 % this sets `\@sp@tmp@true` if any of the modes in `\sp@mode@list`
 % is equal to the mode selected by `\spexammode`
 \def\sp@checkmode{\@sp@tmp@false
@@ -67,10 +62,7 @@
 % if we are in one of the modes given by #1, we execute #2, otherwise #3
 \newcommand\ifinmode[1]{%
    \edef\sp@mode@list{#1}\sp@checkmode
-   \if@sp@tmp@\expandafter\sp@firstoftwo
-   \else
-      \expandafter\sp@secondoftwo
-   \fi
+   \if@sp@tmp@
 }
 
 % only activate the content if any of the modes in #1 are active
@@ -81,9 +73,9 @@
 }
 
 % \only if we are in the modes given by #1, we execute #2
-\newcommand\only[2]{\ifinmode{#1}{#2}\relax}
+\newcommand\only[2]{\ifinmode{#1}#2\fi}
 
-% another convenience wrapper, execute #1 for the solution and #2
+% another convenience wrapper, execute then for the solution and `\else` otherwise
 % if the solution is to be hidden
 \newcommand*\ifshowsolution{%
    \ifinmode{\sp@modes@show@solutions}%
@@ -130,8 +122,10 @@
 % hyperlinks =============================================================
 
 \ifshowsolution
-   {\PassOptionsToPackage{colorlinks,allcolors=purple,pdfusetitle}{hyperref}}
-   {\PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}}
+   \PassOptionsToPackage{colorlinks,allcolors=purple,pdfusetitle}{hyperref}
+\else
+   \PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}
+\fi
 
 \RequirePackage{hyperref}
 
@@ -171,13 +165,15 @@
 \headheight=13.6\p@
 \lhead{\sp@@examname}
 \ifshowsolution
-   {\chead{%
+   \chead{%
       \smash{\parbox[b]{3cm}{\centering
          \sp@@solutionmarker\\
          \sp@@examcount
       }}%
-   }}
-   {\chead{\sp@@examcount}}
+   }
+\else
+   \chead{\sp@@examcount}
+\fi
 \rhead{\sp@@date}
 \lfoot{}
 \cfoot{\textsf{\thepage}}
@@ -436,8 +432,9 @@
 
 % place a marker into the margin
 \ifshowsolution
-   {\def\sp@subtask@marker#1{\marginnote{\color{purple}{\tiny\bfseries#1 Punkt\ifdim#1\p@=\p@\else e\fi}}}}
-   {\def\sp@subtask@marker#1{%
+   \def\sp@subtask@marker#1{\marginnote{\color{purple}{\tiny\bfseries#1 Punkt\ifdim#1\p@=\p@\else e\fi}}}
+\else
+   \def\sp@subtask@marker#1{%
       \ifdim#1\p@=\z@\relax\else
       \marginnote{\fboxsep=.5\p@
          \sp@box{%
@@ -446,7 +443,8 @@
             \end{minipage}
          }%
       }\fi
-   }}
+   }
+\fi
 
 % #1 box configuration, #2 content
 \def\sp@exercise@point@marker@{%
@@ -465,12 +463,14 @@
 % by default we clear the page and write the total number of pages in the margin
 % for the solution, we do not want point marker
 \ifshowsolution
-   {\sp@make@cmd{endofexercise}{\clearpage\rfoot{}}}
-   {\sp@make@cmd{endofexercise}{%
+   \sp@make@cmd{endofexercise}{\clearpage\rfoot{}}
+\else
+   \sp@make@cmd{endofexercise}{%
       \rfoot{\sp@exercise@point@marker@}%
       \clearpage
       \rfoot{}%
-   }}
+   }
+\fi
 
 % at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
 % and the number of subtasks
@@ -612,15 +612,17 @@
    \endgroup\par\vfill\vfill\par\begingroup
       \huge\bfseries\color{purple}%
       Musterlösung
-      \ifinmode{correction}{\\\normalsize mit Korrekturhinweisen}{}%
+      \ifinmode{correction}\\\normalsize mit Korrekturhinweisen\fi%
    \vfill\strut
    \endgroup
 \end{center}%
 }
 
 \ifshowsolution
-   {\sp@make@cmd{coverpage}{\sp@@coverpage@solution}}
-   {\sp@make@cmd{coverpage}{\sp@@coverpage@exam}}
+   \sp@make@cmd{coverpage}{\sp@@coverpage@solution}
+\else
+   \sp@make@cmd{coverpage}{\sp@@coverpage@exam}
+\fi
 
 \def\maketitle{%
    \newgeometry{top=1cm,bottom=1cm,left=2cm,right=2cm,ignorehead}%
@@ -629,6 +631,23 @@
    \restoregeometry\newpage
 }
 
+% code support ===========================================================
+
+\sp@make@cmd{outputdir}{./}
+
+\if@sp@code@support@
+
+\PassOptionsToPackage{outputdir=\sp@@outputdir}{minted}
+\RequirePackage{minted}
+
+\ifshowsolution
+   \usemintedstyle{tango}
+\else
+   % we avoid colors in the exam
+   \usemintedstyle{bw}
+\fi
+
+\fi
 
 % user commands for exercises ============================================
 
@@ -657,8 +676,10 @@
 % #1 relative weight of the space if you place multiple
 % the space is only active in the exercise mode
 \ifshowsolution
-   {\newcommand*\VerticalSpace[1][]{\vspace*{\z@}}}
-   {\newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}}
+   \newcommand*\VerticalSpace[1][]{\vspace*{\z@}}
+\else
+   \newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}
+\fi
 
 \setbox0=\hbox{$\bigcirc$}
 \newdimen\sp@square@size
@@ -672,13 +693,12 @@
 \sp@make@cmd{radioboxlabel}{$\bigcirc$}
 \sp@make@cmd{checkboxlabel}{\sp@bigsquare\kern\p@\relax}
 \ifshowsolution
-   {%
       \sp@make@cmd{radioboxcorrectlabel}{\sp@place@cross{\sp@@radioboxlabel}}%
       \sp@make@cmd{checkboxcorrectlabel}{\sp@place@cross{\sp@@checkboxlabel\kern-\p@\relax}\kern\p@\relax}%
-   }{%
+\else
       \sp@make@cmd{radioboxcorrectlabel}{\sp@@radioboxlabel}%
       \sp@make@cmd{checkboxcorrectlabel}{\sp@@checkboxlabel}%
-   }
+\fi
 
 \setlist[checkboxes,radioboxes]{itemsep=2\p@\@plus1\p@\@minus1\p@}
 \setlist[radioboxes]{%
@@ -690,8 +710,6 @@
    first*=\def\correct{\item[\sp@@checkboxcorrectlabel]}%
 }
 
-\NewEnviron{examonly}{\ifinmode{exam}{\BODY}{\relax}}
-
 % #1 height
 % #2 depth offset
 \def\sp@custom@hrulefill#1#2{%
@@ -701,20 +719,20 @@
 
 % a simple environment to wrap the actual solution
 \NewEnviron{solution}{%
-\ifshowsolution{%
+\ifshowsolution
    \par
    \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
    \BODY\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip
-}\relax}
+\fi}
 
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
 % #1 holds the solution that we want to be there
-\ifshowsolution{
+\ifshowsolution
    \def\StudentLine#1{\StudentStrut{\rlap{#1}\color{gray}\hrulefill}}
-}{
+\else
    \def\StudentLine#1{\StudentStrut{\hrulefill}}
-}
+\fi
 
 % TODO: code support
 

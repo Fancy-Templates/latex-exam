@@ -2,3 +2,4 @@
 $pdf_mode = 1;                      # use pdflatex
 $postscript_mode = 0;               # no ps
 $dvi_mode = 0;                      # no dvi
+$pdflatex = "pdflatex --shell-escape %O %S";

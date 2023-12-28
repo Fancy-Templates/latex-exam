@@ -12,5 +12,5 @@ Current changes from the draft:
    ```shell
    $ etex -ini -initialize -save-size=20000 -stack-size=20000 -jobname="sp-class-exam-fmt" "&pdflatex" mylatexformat.ltx """exam.tex"""
 
-   $ pdflatex -jobname exam -fmt sp-class-exam-fmt _main.tex
+   $ pdflatex -jobname exam -fmt sp-class-exam-fmt --shell-escape _main.tex
    ```
