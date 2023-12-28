@@ -65,13 +65,6 @@
    \if@sp@tmp@
 }
 
-% only activate the content if any of the modes in #1 are active
-% they are expected in a comma-separated list
-\NewEnviron{onlyenv}[1]{%
-   \edef\sp@mode@list{#1}\sp@checkmode
-   \if@sp@tmp@\BODY\fi
-}
-
 % \only if we are in the modes given by #1, we execute #2
 \newcommand\only[2]{\ifinmode{#1}#2\fi}
 
