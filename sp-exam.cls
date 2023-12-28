@@ -232,10 +232,27 @@
 
 % to avoid the need for xfp or other calc libraries (we rely on etex only), we add a '\sp@pt' marker to allow for
 % dimexpr when calculating (i.e., expand to points/pt) but hide it when presenting the points to the user
-\def\sp@pt{pt} \robustify\sp@pt
+\def\sp@pt{pt}
+% we "robustify" the macro so that it is written to the aux file as-is and not expanded (this way we can hide pt suffixes as we please)
+\robustify\sp@pt
+\def\sp@res{@res}
 
 \def\sp@get@points@of@task#1#2{%
-   \edef#1{\expandafter\strip@pt\expandafter\dimexpr\csname sp@exercise@#2@formula\endcsname+\z@\relax}%
+   % this is the macro-name to evaluate (and cache with the \sp@res suffix)
+   % we store it here to safe on tokens (and space) in the following
+   \edef\sp@tmp{sp@exercise@#2@formula}%
+   % we check if there is already a macro ending with @res, if so we have already calculated the points and use the cache
+   \expandafter\ifcsname\sp@tmp\sp@res\endcsname\else
+      % if not, we calculate the points and store them into the macro pointed to by \sp@tmp\sp@res
+      % we use an xdef so the cache remains even if we are inside a group
+      \expandafter\xdef\csname\sp@tmp\sp@res\endcsname{%
+         % for the calculcation we do a dimexpr (e.g. \dimexpr12pt+3pt+4pt+\z@\relax)
+         % which we subsequently remove the 'pt' suffix from to get the "floating point number"
+         \expandafter\strip@pt\expandafter\dimexpr\csname\sp@tmp\endcsname+\z@\relax
+      }%
+   \fi
+   % no we can just use the cached result
+   \expandafter\let\expandafter#1\csname\sp@tmp\sp@res\endcsname
 }
 
 % #1 name of the exercise
