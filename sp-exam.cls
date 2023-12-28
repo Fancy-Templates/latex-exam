@@ -425,9 +425,8 @@
       \usebox0\relax
    % cover image ---------------------------------------------------------
       \hfill\begin{minipage}[c][\dimexpr\ht0+\dp0][c]{\dimexpr70mm+2\fboxsep}
-         \hfill% \fboxsep=0pt
-         \sp@@coverimage\bigskip%
-
+         \hfill% \fboxsep=0pt is to be done with the image if desired
+         \sp@@coverimage\bigskip\par
          \sp@@additionalpaper
      \end{minipage}%
    \end{minipage}
