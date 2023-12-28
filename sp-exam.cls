@@ -255,6 +255,10 @@
    \expandafter\let\expandafter#1\csname\sp@tmp\sp@res\endcsname
 }
 
+% we allow the user to configure the style of exercises
+\sp@make@cmd{exerciseformat}{\textbf{\Large Aufgabe~\arabic{exercise}~--- \large\exercisename}}
+
+% \textbf{\Large Aufgabe~\arabic{exercise}~--- \large#1}
 % #1 name of the exercise
 \def\sp@exercise#1{\par
    % first, we step the number of total exercises
@@ -264,7 +268,8 @@
    \begingroup
       \raggedleft
       \begin{tabularx}{\linewidth}{@{}Xr@{}}%
-         \textbf{\Large Aufgabe~\arabic{exercise}~--- \large#1} &
+         \def\exercisename{#1}%
+         \sp@@exerciseformat &
          % if the command pointed to by '\sp@current@exercise@formula' exists, we display its formula and the result
          % we add +\z@ to compensate faulty formulas
          \expandafter\ifcsname\sp@current@exercise@formula\endcsname
