@@ -397,22 +397,22 @@
    \thispagestyle{empty}%
    \begingroup
       \sp@@logoline
-   % header ==============================================================
+   % header --------------------------------------------------------------
    \endgroup\par\begingroup
       \sp@@examlineA\\[5\p@]
       \sp@@examlineB\\[1ex]
       \sp@@whenline
-   % examiner/institute line =============================================
+   % examiner/institute line ---------------------------------------------
    \endgroup\vskip1.5em\par\begingroup
       \parbox[t]{.5\linewidth}{\sp@@examinerline}%
       \parbox[t]{.45\linewidth}{\raggedleft\sp@@instituteline}%
-   % date and time =======================================================
+   % date and time -------------------------------------------------------
    \endgroup\vskip1.5em\par\begingroup
       \strut\hfill\sp@@examdateline\hfill\sp@@examdurationline\hfill\strut
-   % student data table ==================================================
+   % student data table --------------------------------------------------
    \endgroup\vskip1.5em\par\begingroup
       \sp@@studentdatatable
-   % hints ===============================================================
+   % hints ---------------------------------------------------------------
    \endgroup\vfill\par\begingroup
    \begin{minipage}{\linewidth}
       \sp@@hintstitle\\
@@ -442,7 +442,7 @@
 
 % #1: only if this exercise has no subtasks, you can give the points here directly
 % #2: name of the exercise
-\newenvironment{Exercise}[2][]{\begingroup%
+\newenvironment{Exercise}[2][]{\begingroup
    \sp@exercise{#2}%
    % test if the optional argument is given
    \edef\@tmp{#1}\ifx\@tmp\@empty\else
