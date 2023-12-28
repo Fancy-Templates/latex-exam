@@ -21,6 +21,22 @@
 }
 \sp@documentclass
 
+% load the bare minimum of default packages ==============================
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\PassOptionsToPackage{ngerman}{babel}
+\RequirePackage{babel}
+\RequirePackage{xcolor}
+\RequirePackage{tabularx}
+\RequirePackage{graphicx}
+\RequirePackage{fancyhdr}
+% so that no-one is surprised when placing a subtask:
+\RequirePackage{marginnote}
+\RequirePackage{enumitem}
+\RequirePackage{etoolbox}
+\RequirePackage{parskip}
+
 % modes ==========================================================
 
 % we use this if as a helper to store if we are in a desired
@@ -67,8 +83,6 @@
    \expandafter\ifinmode\expandafter{\sp@modes@hide@solutions}%
 }
 
-% TODO: solution and correction modes
-
 % meta commands ==========================================================
 
 % just the internal prefix to namespace our sp commands
@@ -107,31 +121,22 @@
    }%
 }
 
-% load the bare minimum of default packages ==============================
-\RequirePackage[T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\PassOptionsToPackage{ngerman}{babel}
-\RequirePackage{babel}
-\RequirePackage{xcolor}
-\RequirePackage{tabularx}
-\RequirePackage{graphicx}
-\RequirePackage{fancyhdr}
-% so that no-one is surprised when placing a subtask:
-\RequirePackage{marginnote}
-\RequirePackage{enumitem}
-\RequirePackage{etoolbox}
-\RequirePackage{parskip}
+\sp@make@cmd{solutionformat}{\itshape}
 
 % hyperlinks =============================================================
 
-\PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}
+\ifshowsolution
+   {\PassOptionsToPackage{colorlinks,allcolors=cyan!40!black,pdfusetitle}{hyperref}}
+   {\PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}}
+
 \RequirePackage{hyperref}
 
 % setup fonts ============================================================
 
 \RequirePackage{lmodern}
 \RequirePackage{newtxtt} % ttfamily
-\RequirePackage{sfmath}  % TODO: find better sf fonts
+\RequirePackage{sfmath}
+
 \renewcommand\familydefault{\sfdefault}
 
 % page layout ============================================================
@@ -156,10 +161,23 @@
 
 % page head ==============================================================
 
+\sp@make@cmd{solutionmarker}{\textsf{\textbf{\textcolor{red}{---~Lösung~---}}}}
+
 \pagestyle{fancy}
 \headheight=13.6\p@
-\lhead{\sp@@examname}\chead{\sp@@examcount}\rhead{\sp@@date}%
-\lfoot{}\cfoot{\textsf{\thepage}}\rfoot{}%
+\lhead{\sp@@examname}
+\ifshowsolution
+   {\chead{%
+      \smash{\parbox[b]{3cm}{\centering
+         \sp@@solutionmarker\\
+         \sp@@examcount
+      }}%
+   }}
+   {\chead{\sp@@examcount}}
+\rhead{\sp@@date}
+\lfoot{}
+\cfoot{\textsf{\thepage}}
+\rfoot{}
 
 % configure lists ========================================================
 
