@@ -208,7 +208,7 @@
    \xdef\sp@main@end{\arabic{page}}% we store the number of pages in a macro to test for single pages
    \clearpage
    \global\sp@in@appendixtrue
-   \pagenumbering{arabic}%
+   \pagenumbering{roman}%
    \setcounter{page}{1}%
 }
 
