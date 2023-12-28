@@ -94,7 +94,7 @@
 
 % TODO: headers and footers
 \pagestyle{fancy}
-\headheight=13.6pt
+\headheight=13.6\p@
 
 % configure lists ========================================================
 
@@ -177,7 +177,7 @@
 \end{tabular}\vskip-4mm\relax
 }
 
-\def\sp@table@indent{6pt}
+\def\sp@table@indent{6\p@}
 % blocks start and height for a word in the coverpage table
 \def\sp@table@field#1{\hspace*{\sp@table@indent}\rule\z@{1.15\ht\strutbox}#1}
 
@@ -194,10 +194,10 @@
    \multicolumn{2}{|l|}{\sp@space@v}&\\\hline
 
    \multicolumn{3}{|p{\dimexpr.95\textwidth-\sp@table@indent}|}{%
-      \vskip-5pt\sp@table@field{\parbox[t]{\linewidth}{Hiermit erkläre ich, dass ich prüfungsfähig bin.\newline
+      \vskip-5\p@\sp@table@field{\parbox[t]{\linewidth}{Hiermit erkläre ich, dass ich prüfungsfähig bin.\newline
       Sollte ich nicht auf der Liste der angemeldeten Studierenden aufgeführt sein, dann nehme ich
       hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird. \newline\bigskip\newline
-      \rule{10cm}{0.5pt}\\[-2.66pt]%
+      \rule{10cm}{.5\p@}\\[-2.66\p@]%
       \strut Datum, Unterschrift des Prüfungsteilnehmers
    }}} \\\hline
 \end{tabular}
@@ -255,7 +255,8 @@
    \expandafter\let\expandafter#1\csname\sp@tmp\sp@res\endcsname
 }
 
-% we allow the user to configure the style of exercises
+% we allow the user to configure the style of exercises with the number in the
+% exercise counter and the name in exercisename
 \sp@make@cmd{exerciseformat}{\textbf{\Large Aufgabe~\arabic{exercise}~--- \large\exercisename}}
 
 % \textbf{\Large Aufgabe~\arabic{exercise}~--- \large#1}
@@ -382,7 +383,7 @@
    \hline
    \sp@numbers \sp@points@row@entry{$\sum$}{von \sp@total} & \sp@points@row@entry{{\LARGE\strut}\textbf{Note}}{} \\ \hline
    \rule\z@{2\ht\strutbox}\sp@correctors & \tiny Korrektur\\ \hline
-   \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}Einsichtnahme ohne Nachkorrektur $\bigcirc$ \hskip2cm Einsichtnahme mit Nachkorrektur $\bigcirc$}\\[4pt]
+   \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}Einsichtnahme ohne Nachkorrektur $\bigcirc$ \hskip2cm Einsichtnahme mit Nachkorrektur $\bigcirc$}\\[4\p@]
    \hline
 \end{tabularx}%
 }
@@ -399,7 +400,7 @@
       \sp@@logoline
    % header ==============================================================
    \endgroup\par\begingroup
-      \sp@@examlineA\\[5pt]
+      \sp@@examlineA\\[5\p@]
       \sp@@examlineB\\[1ex]
       \sp@@whenline
    % examiner/institute line =============================================
