@@ -645,8 +645,6 @@
 \newlist{radioboxes}{itemize}{1}
 \newlist{checkboxes}{itemize}{1}
 
-% TODO: make more beautiful
-% \hbox{\setbox0=\hbox{#1}\phantom{\copy0}\llap{
 \def\sp@place@cross#1{\hbox{\setbox0=\hbox{#1}\clap{\raisebox{-.235\height}{\scalebox{2.25}{$\times$}}}\clap{\copy0}\kern.5\wd0}}
 
 \sp@make@cmd{radioboxlabel}{$\bigcirc$}
