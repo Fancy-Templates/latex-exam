@@ -209,6 +209,7 @@
    \clearpage
    \global\sp@in@appendixtrue
    \pagenumbering{roman}%
+   \lfoot{Zusatzblatt}%
    \setcounter{page}{1}%
 }
 
@@ -441,7 +442,7 @@
    % total points of exercise
    \sp@get@points@of@task\sp@result{\arabic{exercise}}
    \ifdim\sp@result\p@=\z@\relax\else
-   \marginnote{\fboxsep=.5\p@\fboxrule=2\p@
+   \marginnote{\color{gray}\fboxsep=.5\p@\relax\fboxrule=2\p@
       \smash{\raisebox{.5\height}{\sp@box{%
          \begin{minipage}[b][\sp@@exampointheight]{\sp@@exampointwidth}
             \raggedleft\tiny\bfseries/\sp@result\relax
