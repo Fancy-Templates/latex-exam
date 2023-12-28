@@ -1,14 +1,40 @@
-% \errorcontextlines=10000
-% \DeclareOption*{%
-%   \PassOptionsToClass{\CurrentOption}{article}%
-% }
-% \ProcessOptions\relax
+\DeclareOption{exam}{\def\spexammode{exam}}
+\DeclareOption{solution}{\def\spexammode{solution}}
+\DeclareOption{correction}{\def\spexammode{correction}}
+
+% pass unknown options to article
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+
+\ProcessOptions*
 
 \providecommand\sp@documentclass{
    \PassOptionsToClass{11pt,a4paper}{article}
    \LoadClass{article}
 }
 \sp@documentclass
+
+% modes ==========================================================
+
+\providecommand\spexammode{exam}%
+\newif\if@sp@tmp@
+
+% only activate the content if any of the modes in #1 are active
+% they are expected in a comma-separated list
+\newenvironment{onlyenv}[1]{%
+   \def\sp@mode@list{#1}%
+   \@sp@tmp@false
+   % we check if any of the modes is set
+   \@for\sp@mode@tmp:=\sp@mode@list\do{%
+      \ifx\sp@mode@tmp\spexammode
+         \@sp@tmp@true
+      \fi
+   }%
+   \if@sp@tmp@
+}{\fi}
+\newcommand\only[2]{\begin{onlyenv}{#1}#2\end{onlyenv}}
+
+
+% TODO: solution and correction modes
 
 % meta commands ==========================================================
 
@@ -320,8 +346,6 @@
 \sp@make@cmd{subtaskpointheight}{7.5mm}
 \sp@make@cmd{exampointwidth}{9mm}
 \sp@make@cmd{exampointheight}{9mm}
-
-% TODO: solution and correction modes
 
 \sp@make@cmd{subtaskname}{Teilaufgabe}
 \appto\extrasngerman{\let\subtaskautorefname\sp@@subtaskname}
