@@ -55,6 +55,7 @@
 \RequirePackage{fancyhdr}
 % so that no-one is surprised when placing a subtask:
 \RequirePackage{marginnote}
+\RequirePackage{enumitem}
 
 \RequirePackage{microtype}
 
@@ -87,6 +88,19 @@
 % TODO
 \pagestyle{fancy}
 \headheight=13.6pt
+
+% configure lists ========================================================
+
+\setlist[itemize]{leftmargin=1.33em,itemsep=1pt}
+
+\def\sp@task@item#1{\sp@item \Subtask{#1}}
+\def\sp@task@error{\ClassError{sp-exam}{You cannot use \string\item\space in a task environment. Please use \string\task{<points>}\space instead!}{Otherwise, why would you use the tasks list?}}
+
+\newlist{tasks}{enumerate}{2}
+% within task, every `\item` takes in a subtask argument
+\setlist[tasks]{leftmargin=*,first=\let\sp@item\item\relax\let\item\sp@task@error\relax\let\task\sp@task@item}
+\setlist[tasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
+\setlist[tasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
 
 % separate pages =========================================================
 
@@ -259,14 +273,15 @@
    \refstepcounter{subtask}%
    % if the current subtask formula is empty, we just add the given points, otherwise, we precede it with a plus sign
    \expandafter\ifx\csname\sp@current@exercise@formula\endcsname\@empty
-      \csdef\sp@current@exercise@formula{#1\sp@pt}%
+      \csgdef\sp@current@exercise@formula{#1\sp@pt}%
    \else
-      \csappto\sp@current@exercise@formula{+\space#1\sp@pt}%
+      \csgappto\sp@current@exercise@formula{+\space#1\sp@pt}%
    \fi
 }
 
 % place a marker into the margin
 \def\sp@subtask@marker#1{%
+   \ifdim#1\p@=\z@\relax\else
    \marginnote{\fboxsep=.5\p@
       % TODO: round corners?
       \fbox{%
@@ -274,7 +289,7 @@
             \raggedleft\tiny\bfseries/#1\relax
          \end{minipage}
       }%
-   }%
+   }\fi
 }
 
 % at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
