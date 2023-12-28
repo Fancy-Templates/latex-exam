@@ -1,4 +1,8 @@
-\errorcontextlines=10000
+% \errorcontextlines=10000
+% \DeclareOption*{%
+%   \PassOptionsToClass{\CurrentOption}{article}%
+% }
+% \ProcessOptions\relax
 
 \providecommand\sp@documentclass{
    \PassOptionsToClass{11pt,a4paper}{article}
@@ -59,15 +63,16 @@
 \RequirePackage{etoolbox}
 \RequirePackage{parskip}
 
-\RequirePackage{microtype}
-
 % setup fonts ============================================================
 
+\RequirePackage{lmodern}
 \RequirePackage{newtxtt} % ttfamily
 \RequirePackage{sfmath}  % TODO: find better sf fonts
 \renewcommand\familydefault{\sfdefault}
 
 % page layout ============================================================
+
+\RequirePackage{microtype}
 
 \def\sp@geometry@left{2cm}%
 \def\sp@geometry@right{2cm}%
