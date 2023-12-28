@@ -528,7 +528,7 @@
 
 % the sp cover page ======================================================
 
-\sp@make@cmd{coverpage}{%
+\sp@make@cmd{coverpage@exam}{%
 \begin{center}
    \parskip\z@\relax\parindent\z@\relax
    \begingroup
@@ -572,6 +572,37 @@
    \endgroup
 \end{center}%
 }
+
+
+\sp@make@cmd{coverpage@solution}{%
+\begin{center}
+   \parskip\z@\relax\parindent\z@\relax
+   \begingroup
+      \sp@@logoline
+   % header --------------------------------------------------------------
+   \endgroup\par\begingroup
+      \sp@@examlineA\\[5\p@]
+      \sp@@examlineB\\[1ex]
+      \sp@@whenline
+   % examiner/institute line ---------------------------------------------
+   \endgroup\vskip1.5em\par\begingroup
+      \textit{\sp@@examinerline}
+   % date and time -------------------------------------------------------
+   \endgroup\vskip1.5em\par\begingroup
+      \strut\sp@@examdateline,\quad\sp@@examdurationline\strut
+   % marker --------------------------------------------------
+   \endgroup\par\vfill\vfill\par\begingroup
+      \huge\bfseries\color{purple}%
+      Musterlösung
+      \ifinmode{correction}{\\\normalsize mit Korrekturhinweisen}{}%
+   \vfill\strut
+   \endgroup
+\end{center}%
+}
+
+\ifshowsolution
+   {\sp@make@cmd{coverpage}{\sp@@coverpage@solution}}
+   {\sp@make@cmd{coverpage}{\sp@@coverpage@exam}}
 
 \def\maketitle{%
    \newgeometry{top=1cm,bottom=1cm,left=2cm,right=2cm,ignorehead}%
