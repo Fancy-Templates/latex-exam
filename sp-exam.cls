@@ -160,9 +160,11 @@
 % blocks start and height for a word in the coverpage table
 \def\sp@table@field#1{\hspace*{\sp@table@indent}\rule\z@{1.15\ht\strutbox}#1}
 
-\sp@make@cmd{studentdatatable}{%
 % we just reset tabular definitions in case someone redefines how tables look
-\tabcolsep\z@\relax\def\arraystretch{1}%
+\def\sp@tablereset{\def\arraystretch{1}}
+
+\sp@make@cmd{studentdatatable}{%
+\tabcolsep\z@\relax\sp@tablereset
 \begin{tabular}{|*2{p{.375\textwidth}|}p{.25\textwidth}|}
    \hline
    \sp@table@field{Nachname:}&\sp@table@field{Vorname:}&\sp@table@field{Matrikelnummer:}\\
@@ -211,6 +213,10 @@
 % dimexpr when calculating (i.e., expand to points/pt) but hide it when presenting the points to the user
 \def\sp@pt{pt} \robustify\sp@pt
 
+\def\sp@get@points@of@task#1#2{%
+   \edef#1{\expandafter\strip@pt\expandafter\dimexpr\csname sp@exercise@#2@formula\endcsname+\z@\relax}%
+}
+
 % #1 name of the exercise
 \def\sp@exercise#1{\par
    % first, we step the number of total exercises
@@ -223,8 +229,7 @@
          % if the command pointed to by '\sp@current@exercise@formula' exists, we display its formula and the result
          % we add +\z@ to compensate faulty formulas
          \expandafter\ifcsname\sp@current@exercise@formula\endcsname
-            \edef\sp@result{\expandafter\strip@pt\expandafter\dimexpr\csname\sp@current@exercise@formula\endcsname+\z@\relax}%
-            \edef\sp@result{\sp@result}% remote the pt marker from the result
+            \sp@get@points@of@task\sp@result{\arabic{exercise}}%
             \let\sp@pt\space% hide the pt marker
             % currently we avoid math-mode
             \textbf{\csname\sp@current@exercise@formula\endcsname= \sp@result\space Punkt\ifdim\sp@result\p@=\p@\else e\fi}
@@ -269,11 +274,62 @@
    \expandafter\sp@persist\sp@current@exercise@formula=\csname\sp@current@exercise@formula\endcsname;%
 }
 
-
 % at the end of the document we must persist all counts for the next round!
 \AtEndDocument{%
    \sp@persist sp@exercises@totalcount=\arabic{exercise};%
 }
+
+% sp cover page points table =============================================
+
+% this iterates from 1 to the total number of exercises using an increment
+% of 1 and executes #1 with `\i` set to the current step.
+\def\sp@points@iter#1{%
+   % if life gives you do-while, but you want while-do, make lemonade!
+   \ifnum\sp@exercises@totalcount>\z@
+      \begingroup
+         \count@=\z@
+         \loop
+            \advance\count@ by\@ne\relax
+            \edef\i{\the\count@}%
+            #1%
+         \ifnum\count@<\sp@exercises@totalcount\repeat
+      \endgroup
+   \fi
+}
+
+% #1 symbol/string to place at the top
+% #2 symbol/string to place at the bottom
+\def\sp@points@row@entry#1#2{%
+   \parbox\linewidth{%
+      \Large\strut#1\strut\\[2.5ex]
+      \hbox{\footnotesize\strut#2\strut}%
+   }%
+}
+
+\sp@make@cmd{pointstable}{%
+\sp@tablereset
+% additionally, we need two columns for the total sum of points and the grade
+\edef\sp@total@columns{\the\numexpr\sp@exercises@totalcount+2}%
+% to calculate the sum of all points
+\def\sp@total{0}%
+% we define the header of the line to enter the points
+\def\sp@numbers{}%
+\sp@points@iter{%
+   \sp@get@points@of@task\sp@result{\i}%
+   \message{\i}% \sp@result
+   \xappto\sp@numbers{\noexpand\sp@points@row@entry{\i}{von \sp@result} & }%
+   \xdef\sp@total{\expandafter\strip@pt\dimexpr\sp@total\p@+\sp@result\p@}%
+}%
+\begin{tabularx}{\linewidth}{|*{\sp@exercises@totalcount}{X|}X||X|}
+   \hline
+   \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}\textit{Punkteverteilung}}\\
+   \hline
+   \sp@numbers \sp@points@row@entry{$\sum$}{von \sp@total} & \sp@points@row@entry{{\LARGE\strut}\textbf{Note}}{} \\ \hline
+   \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}Einsichtnahme ohne Nachkorrektur $\bigcirc$ \hskip2cm Einsichtnahme mit Nachkorrektur $\bigcirc$}\\[4pt]
+   \hline
+\end{tabularx}%
+}
+
 
 % the sp cover page ======================================================
 
@@ -319,7 +375,8 @@
          \sp@@additionalpaper
      \end{minipage}%
    \end{minipage}
-   \vfill\strut
+   \vfill
+   \sp@@pointstable
    \endgroup
 \end{center}
 \restoregeometry\newpage
