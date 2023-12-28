@@ -392,6 +392,9 @@
    \expandafter\let\csname\sp@current@exercise@formula\endcsname\@empty\relax
    % initialize the subtask count storage
    \expandafter\def\csname\sp@current@exercise@subtask\endcsname{0}%
+   % reduce the width of an exercise
+   \begin{enumerate}[leftmargin=10\p@,rightmargin=20\p@]
+		\item[]\relax
 }
 
 \sp@make@cmd{subtaskpointwidth}{9mm}
@@ -462,6 +465,7 @@
 % please note, that we name this `endsp@exercise` to be theoretically compatible with the latex environments
 % to be used as `\begin{exercise} ... \end{exercise}`
 \def\endsp@exercise{%
+   \end{enumerate}%
    \expandafter\sp@persist\sp@current@exercise@formula=\csname\sp@current@exercise@formula\endcsname;%
    \expandafter\sp@persist sp@exercise@\arabic{exercise}@subtaskcount=\arabic{subtask};%
    % every exercise gets it's own page
