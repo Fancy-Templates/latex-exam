@@ -347,7 +347,7 @@
    \sp@get@points@of@task\sp@result{\i}%
    \xappto\sp@numbers{\noexpand\sp@points@row@entry{\i}{von \sp@result} & }%
    \xdef\sp@total{\expandafter\strip@pt\dimexpr\sp@total\p@+\sp@result\p@}%
-   \xappto\sp@correctors{&}
+   \xappto\sp@correctors{&}%
 }%
 \begin{tabularx}{\linewidth}{|*{\sp@exercises@totalcount}{X|}X||X|}
    \hline
