@@ -8,7 +8,7 @@
 \providecommand\spexammode{exam}
 
 % we provide default lists that theoretical class-hackers can use to add their own modes
-\def\sp@modes@hide@solutions{solution,correction}
+\def\sp@modes@show@solutions{solution,correction}
 
 % pass unknown options to article
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
@@ -36,6 +36,7 @@
 \RequirePackage{enumitem}
 \RequirePackage{etoolbox}
 \RequirePackage{parskip}
+\RequirePackage{environ}
 
 % modes ==========================================================
 
@@ -45,8 +46,8 @@
 
 % helper macros to select arguments based on if we are in a
 % desired mode
-\def\sp@firstoftwo#1#2{#1}
-\def\sp@secondoftwo#1#2{#2}
+\long\def\sp@firstoftwo#1#2{#1}
+\long\def\sp@secondoftwo#1#2{#2}
 
 % this sets `\@sp@tmp@true` if any of the modes in `\sp@mode@list`
 % is equal to the mode selected by `\spexammode`
@@ -60,19 +61,19 @@
 
 % if we are in one of the modes given by #1, we execute #2, otherwise #3
 \newcommand\ifinmode[1]{%
-   \def\sp@mode@list{#1}\sp@checkmode
+   \edef\sp@mode@list{#1}\sp@checkmode
    \if@sp@tmp@\expandafter\sp@firstoftwo
    \else
       \expandafter\sp@secondoftwo
    \fi
 }
 
-% only activate the content if any of the modes in #2 are active
+% only activate the content if any of the modes in #1 are active
 % they are expected in a comma-separated list
-\newenvironment{onlyenv}[2][]{%
-   \def\sp@mode@list{#1}\sp@checkmode
-   \if@sp@tmp@
-}{\fi}
+\NewEnviron{onlyenv}[1]{%
+   \edef\sp@mode@list{#1}\sp@checkmode
+   \if@sp@tmp@\BODY\fi
+}
 
 % \only if we are in the modes given by #1, we execute #2
 \newcommand\only[2]{\ifinmode{#1}{#2}\relax}
@@ -80,7 +81,7 @@
 % another convenience wrapper, execute #1 for the solution and #2
 % if the solution is to be hidden
 \newcommand*\ifshowsolution{%
-   \expandafter\ifinmode\expandafter{\sp@modes@hide@solutions}%
+   \ifinmode{\sp@modes@show@solutions}%
 }
 
 % meta commands ==========================================================
@@ -120,8 +121,6 @@
       \string\csgdef{#1}{#2}%
    }%
 }
-
-\sp@make@cmd{solutionformat}{\itshape}
 
 % hyperlinks =============================================================
 
@@ -669,6 +668,23 @@
    label=\sp@@checkboxlabel,
    first*=\def\correct{\item[\sp@@checkboxcorrectlabel]}%
 }
+
+\NewEnviron{examonly}{\ifinmode{exam}{\BODY}{\relax}}
+
+% #1 height
+% #2 depth offset
+\def\sp@custom@hrulefill#1#2{%
+   \leavevmode\leaders\hrule\@height#1\@depth\dimexpr#2-#1\hfill\kern\z@
+}
+\def\sp@vertical@hrulefill{\sp@custom@hrulefill{.7ex}{.5pt}}
+
+% a simple environment to wrap the actual solution
+\NewEnviron{solution}{%
+\ifshowsolution{%
+   \par
+   \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
+   \BODY\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip
+}\relax}
 
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
