@@ -63,6 +63,11 @@
 \RequirePackage{etoolbox}
 \RequirePackage{parskip}
 
+% hyperlinks =============================================================
+
+\PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}
+\RequirePackage{hyperref}
+
 % setup fonts ============================================================
 
 \RequirePackage{lmodern}
@@ -234,9 +239,12 @@
 
 % the exercise/points magic ==============================================
 \newcounter{exercise}
+\def\sp@format@counter#1{\hbox{\textbf{#1}}}
+\robustify\sp@format@counter
+\def\theexercise{\sp@format@counter{\arabic{exercise}}}
 % we automatically scope subtasks to the current exercise they are in!
 \newcounter{subtask}[exercise]
-\def\thesubtask{\hbox{\textbf{\arabic{exercise}.\alph{subtask})}}}
+\def\thesubtask{\sp@format@counter{\arabic{exercise}.\alph{subtask})}}
 \def\sp@exercises@totalcount{0}% default value of total exercises
 
 % to avoid the need for xfp or other calc libraries (we rely on etex only), we add a '\sp@pt' marker to allow for
@@ -268,6 +276,7 @@
 % we allow the user to configure the style of exercises with the number in the
 % exercise counter and the name in exercisename
 \sp@make@cmd{exerciseformat}{\textbf{\Large \sp@@exercisename~\arabic{exercise}~--- \large\exercisename}}
+\appto\extrasngerman{\let\exerciseautorefname\sp@@exercisename}
 
 
 % \textbf{\Large Aufgabe~\arabic{exercise}~--- \large#1}
@@ -311,6 +320,7 @@
 % TODO: solution and correction modes
 
 \sp@make@cmd{subtaskname}{Teilaufgabe}
+\appto\extrasngerman{\let\subtaskautorefname\sp@@subtaskname}
 
 % create a points-padding for a subtask
 % #1 number of points for the subtask (if it is a floating point, it must be given with a dot/period, not a comma)
@@ -469,9 +479,15 @@
    \sp@exercise{#2}%
    % test if the optional argument is given
    \edef\@tmp{#1}\ifx\@tmp\@empty\else
+
       \sp@subtask{#1}%
       % if yes, we forbid further subtasks from occurring
       \def\sp@subtask##1{\ClassError{sp-exam}{You cannot use subtasks in an exercise with a given number of points}{Either remove the optional argument to \string\Exercise\space or remove the subtask!}}%
+      % we manually restore the label references here, the user should not know that we handle this
+      % with a subtask as well!
+      \let\@currentname\sp@@exercisename\relax
+      \hyper@makecurrent{exercise}%
+      \let\@currentlabel\theexercise\relax
    \fi
 }{\endsp@exercise\endgroup\bigskip}
 
