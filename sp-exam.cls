@@ -423,6 +423,7 @@
          \end{itemize}
       }}%
       \usebox0\relax
+   % cover image ---------------------------------------------------------
       \hfill\begin{minipage}[c][\dimexpr\ht0+\dp0][c]{\dimexpr70mm+2\fboxsep}
          \hfill% \fboxsep=0pt
          \sp@@coverimage\bigskip%
@@ -431,6 +432,7 @@
      \end{minipage}%
    \end{minipage}
    \vfill
+   % points --------------------------------------------------------------
    \sp@@pointstable
    \endgroup
 \end{center}
