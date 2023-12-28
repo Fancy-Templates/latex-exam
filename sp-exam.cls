@@ -7,6 +7,11 @@
 \DeclareOption{correction}{\def\spexammode{correction}}
 \providecommand\spexammode{exam}
 
+% code support loads everything to present code with the minted package
+% using it requires python, pygments, and the `--shell-escape`
+\newif\if@sp@code@support@
+\DeclareOption{code}{\@sp@code@support@true}
+
 % we provide default lists that theoretical class-hackers can use to add their own modes
 \def\sp@modes@show@solutions{solution,correction}
 
@@ -365,6 +370,8 @@
 \def\sp@exercise#1{\par
    % first, we step the number of total exercises
    \refstepcounter{exercise}%
+   % for convenience, we add an automatic label to each exercise, with this we can link it in the points table!
+   \label{sp@@ex:\arabic{exercise}}%
    \let\@currentname\sp@@exercisename\relax
    \let\@currentlabel\theexercise\relax
    \edef\sp@current@exercise@formula{sp@exercise@\arabic{exercise}@formula}%
@@ -496,13 +503,16 @@
    \fi
 }
 
-% #1 symbol/string to place at the top
-% #2 symbol/string to place at the bottom
-\def\sp@points@row@entry#1#2{%
-   \parbox\linewidth{%
-      \Large\strut#1\strut\\[2.25ex]
-      \hbox{\footnotesize\strut#2\strut}%
-   }%
+\def\sp@hyperto@do{\hyperref[\sp@hyperto]}
+% #1 link target to ref everything to, if empty we do not link
+% #2 symbol/string to place at the top
+% #3 symbol/string to place at the bottom
+\def\sp@points@row@entry#1#2#3{%
+   \def\sp@hyperto{#1}\ifx\@empty\sp@hyperto\else\expandafter\sp@hyperto@do\fi
+   {\parbox\linewidth{%
+      \Large\strut#2\strut\\[2.25ex]
+      \hbox{\footnotesize\strut#3\strut}%
+   }}%
 }
 
 \sp@make@cmd{pointstable}{%
@@ -515,7 +525,7 @@
 \def\sp@numbers{}\def\sp@correctors{}%
 \sp@points@iter{%
    \sp@get@points@of@task\sp@result{\i}%
-   \xappto\sp@numbers{\noexpand\sp@points@row@entry{\i}{von \sp@result} & }%
+   \xappto\sp@numbers{\noexpand\sp@points@row@entry{sp@@ex:\i}{\i}{von \sp@result} & }%
    \xdef\sp@total{\expandafter\strip@pt\dimexpr\sp@total\p@+\sp@result\p@}%
    \xappto\sp@correctors{&}%
 }%
@@ -523,7 +533,7 @@
    \hline
    \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}\textit{Punkteverteilung}}\\
    \hline
-   \sp@numbers \sp@points@row@entry{$\sum$}{von \sp@total} & \sp@points@row@entry{{\LARGE\strut}\textbf{Note}}{} \\ \hline
+   \sp@numbers \sp@points@row@entry\@empty{$\sum$}{von \sp@total} & \sp@points@row@entry\@empty{{\LARGE\strut}\textbf{Note}}{} \\ \hline
    \rule\z@{2\ht\strutbox}\sp@correctors & \tiny Korrektur\\ \hline
    \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}Einsichtnahme ohne Nachkorrektur $\bigcirc$ \hskip2cm Einsichtnahme mit Nachkorrektur $\bigcirc$}\\[4\p@]
    \hline
