@@ -381,7 +381,6 @@
 % and the number of subtasks
 % please note, that we name this `endsp@exercise` to be theoretically compatible with the latex environments
 % to be used as `\begin{exercise} ... \end{exercise}`
-% TODO: write total exercise points in the margin again for full grading (bottom of page?)
 \def\endsp@exercise{%
    \expandafter\sp@persist\sp@current@exercise@formula=\csname\sp@current@exercise@formula\endcsname;%
    \expandafter\sp@persist sp@exercise@\arabic{exercise}@subtaskcount=\arabic{subtask};%
