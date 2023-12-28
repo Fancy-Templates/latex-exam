@@ -1,7 +1,7 @@
 \documentclass{sp-exam}
 
 \examnumber{1} % 1. Klausur
-\examname{Grundlagen der praktischen Informatik} % Einführung in die Kryptographie
+\examname{Grundlagen der praktischen Informatik}
 \examiner{Anonymous Examiner~A, Anonymous Examiner~B, Prof. Unknown}
 
 % date and time of the exam
@@ -12,7 +12,7 @@
 \year{2023/24}
 
 % hints on the exam cover page
-\permittedmaterial{Sie dürfen ein beidseitig, handbeschriebenes DIN A4~Blatt verwenden.}
+\permittedmaterial{Sie dürfen ein beidseitig, handbeschriebenes DIN-A4-Blatt verwenden.}
 % \morehints{
 %    \item Consider to avoid cheating, please!
 % }
@@ -22,17 +22,22 @@
    \maketitle
 
    \makeatletter
-   \begin{sp@exercise}{Hi!}
-      \sp@subtask{1}
-      \sp@subtask{2.5}
-      \sp@subtask{0}
-      \sp@subtask{3}
-   \end{sp@exercise}
+   \begin{Exercise}{Hi!}
+      \Subtask{1}
+      \Subtask{2.5}
+      \Subtask{0}
+      \Subtask{3}
+   \end{Exercise}
 
-   \begin{sp@exercise}{Ho!}
-      \sp@subtask{1}
-      \sp@subtask{3}
-   \end{sp@exercise}
+   \begin{Exercise}[5]{Ha ha ha Ha ha ha Ha ha ha!}
+      % \Subtask{3}% this would be forbidden and throw an error when running, as you gave
+      % a fixed amount of points with the exercise
+   \end{Exercise}
+
+   \begin{Exercise}{Ho!}
+      \Subtask{1}
+      \Subtask{3}
+   \end{Exercise}
    \appendix
    Bar
 \end{document}

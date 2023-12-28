@@ -222,6 +222,7 @@
    % first, we step the number of total exercises
    \refstepcounter{exercise}%
    \edef\sp@current@exercise@formula{sp@exercise@\arabic{exercise}@formula}%
+   \edef\sp@current@exercise@subtask{sp@exercise@\arabic{exercise}@subtaskcount}%
    \begingroup
       \raggedleft
       \begin{tabularx}{\linewidth}{@{}Xr@{}}%
@@ -232,12 +233,19 @@
             \sp@get@points@of@task\sp@result{\arabic{exercise}}%
             \let\sp@pt\space% hide the pt marker
             % currently we avoid math-mode
-            \textbf{\csname\sp@current@exercise@formula\endcsname= \sp@result\space Punkt\ifdim\sp@result\p@=\p@\else e\fi}
+            \textbf{%
+               % we only print the formula if there is more than one subtask!
+               \ifnum\csname\sp@current@exercise@subtask\endcsname>\@ne
+                  \csname\sp@current@exercise@formula\endcsname=\space
+               \fi
+               \sp@result\space Punkt\ifdim\sp@result\p@=\p@\else e\fi}
          \fi
       \end{tabularx}
    \endgroup
    % update the point macros for the next round
    \expandafter\let\csname\sp@current@exercise@formula\endcsname\@empty\relax
+   % initialize the subtask count storage
+   \expandafter\def\csname\sp@current@exercise@subtask\endcsname{0}%
 }
 
 \sp@make@cmd{subtaskpointwidth}{9mm}
@@ -255,7 +263,10 @@
    \else
       \csappto\sp@current@exercise@formula{+\space#1\sp@pt}%
    \fi
-   % write it to the marginpar too
+}
+
+% place a marker into the margin
+\def\sp@subtask@marker#1{%
    \marginnote{\fboxsep=.5\p@
       % TODO: round corners?
       \fbox{%
@@ -263,15 +274,16 @@
             \raggedleft\tiny\bfseries/#1\relax
          \end{minipage}
       }%
-   }
+   }%
 }
 
-
 % at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
+% and the number of subtasks
 % please note, that we name this `endsp@exercise` to be theoretically compatible with the latex environments
 % to be used as `\begin{exercise} ... \end{exercise}`
 \def\endsp@exercise{%
    \expandafter\sp@persist\sp@current@exercise@formula=\csname\sp@current@exercise@formula\endcsname;%
+   \expandafter\sp@persist sp@exercise@\arabic{exercise}@subtaskcount=\arabic{subtask};%
 }
 
 % at the end of the document we must persist all counts for the next round!
@@ -332,7 +344,6 @@
 \end{tabularx}%
 }
 
-
 % the sp cover page ======================================================
 
 % TODO: add solution
@@ -382,3 +393,22 @@
 \end{center}
 \restoregeometry\newpage
 }
+
+
+% user commands for exercises ============================================
+
+% #1: only if this exercise has no subtasks, you can give the points here directly
+% #2: name of the exercise
+% TODO: forbid subtasks if #1 is given
+\newenvironment{Exercise}[2][]{\begingroup%
+   \sp@exercise{#2}%
+   % test if the optional argument is given
+   \edef\@tmp{#1}\ifx\@tmp\@empty\else
+      \sp@subtask{#1}%
+      % if yes, we forbid further subtasks from occurring
+      \def\sp@subtask##1{\ClassError{sp-exam}{You cannot use subtasks in an exercise with a given number of points}{Either remove the optional argument to \string\Exercise\space or remove the subtask!}}%
+   \fi
+}{\endsp@exercise\endgroup\bigskip}
+
+% #1: number of points
+\def\Subtask#1{\sp@subtask{#1}\sp@subtask@marker{#1}}
