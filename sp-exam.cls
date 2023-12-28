@@ -100,12 +100,20 @@
 
 \setlist[itemize]{leftmargin=2em,itemsep=\smallskipamount}
 
-\def\sp@task@item#1{\sp@item \Subtask{#1}}
+\def\sp@task@item#1{\sp@item \Subtask{#1}\ignorespaces}
 \def\sp@task@error{\ClassError{sp-exam}{You cannot use \string\item\space in a task environment. Please use \string\task{<points>}\space instead!}{Otherwise, why would you use the tasks list?}}
+
+% so that other, nested lists work, we have to recover item within then explicitly
+\let\sp@item\item\relax
+\setlist{first=\let\item\sp@item}
 
 \newlist{tasks}{enumerate}{2}
 % within task, every `\item` takes in a subtask argument
-\setlist[tasks]{leftmargin=*,font=\normalfont\bfseries,first=\let\sp@item\item\relax\let\item\sp@task@error\relax\let\task\sp@task@item}
+\setlist[tasks]{%
+   leftmargin=*,%
+   font=\normalfont\bfseries,%
+   first=\let\item\sp@task@error\relax\let\task\sp@task@item%
+}
 \setlist[tasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
 \setlist[tasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
 
@@ -456,7 +464,25 @@
 % #1: number of points
 \def\Subtask#1{\sp@subtask{#1}\sp@subtask@marker{#1}}
 
+% #1 relative weight of the space if you place multiple
+% the space is only active in the exercise mode
+\newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}
+
+\setbox0=\hbox{$\bigcirc$}
+\newdimen\sp@square@size
+\sp@square@size=\dimexpr\wd0-1.1\p@
+\def\sp@bigsquare{{\fboxsep\z@\framebox[\sp@square@size]{\rule\z@\sp@square@size}}}
+\newlist{radioboxes}{itemize}{1}
+\newlist{checkboxes}{itemize}{1}
+\setlist[checkboxes,radioboxes]{label=$\bigcirc$,itemsep=2\p@\@plus1\p@\@minus1\p@}
+\setlist[checkboxes]{label=\sp@bigsquare}
+% TODO: mark the correct one
+
+% we use this to strut space for students to write one
+\def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
+% #1 holds the solution that we want to be there
+\def\StudentLine#1{\StudentStrut{\hrulefill}}
+
+
 % TODO: allow to define space for user inputs
-% * checkboxes
-% * space to enter text (single line)
 % * space to enter code
