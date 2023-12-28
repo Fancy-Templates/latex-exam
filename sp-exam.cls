@@ -542,14 +542,14 @@
       \sp@@examlineB\\[1ex]
       \sp@@whenline
    % examiner/institute line ---------------------------------------------
-   \endgroup\vskip1.5em\par\begingroup
+   \endgroup\vskip2em\par\begingroup
       \parbox[t]{.5\linewidth}{\sp@@examinerline}%
       \parbox[t]{.45\linewidth}{\raggedleft\sp@@instituteline}%
    % date and time -------------------------------------------------------
-   \endgroup\vskip1.5em\par\begingroup
+   \endgroup\vskip2em\par\begingroup
       \strut\hfill\sp@@examdateline\hfill\sp@@examdurationline\hfill\strut
    % student data table --------------------------------------------------
-   \endgroup\vskip1.5em\par\begingroup
+   \endgroup\vskip2em\par\begingroup
       \sp@@studentdatatable
    % hints ---------------------------------------------------------------
    \endgroup\vfill\par\begingroup
