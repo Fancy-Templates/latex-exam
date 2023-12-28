@@ -93,14 +93,14 @@
 
 % configure lists ========================================================
 
-\setlist[itemize]{leftmargin=1.33em,itemsep=1pt}
+\setlist[itemize]{leftmargin=2em,itemsep=\smallskipamount}
 
 \def\sp@task@item#1{\sp@item \Subtask{#1}}
 \def\sp@task@error{\ClassError{sp-exam}{You cannot use \string\item\space in a task environment. Please use \string\task{<points>}\space instead!}{Otherwise, why would you use the tasks list?}}
 
 \newlist{tasks}{enumerate}{2}
 % within task, every `\item` takes in a subtask argument
-\setlist[tasks]{leftmargin=*,first=\let\sp@item\item\relax\let\item\sp@task@error\relax\let\task\sp@task@item}
+\setlist[tasks]{leftmargin=*,font=\normalfont\bfseries,first=\let\sp@item\item\relax\let\item\sp@task@error\relax\let\task\sp@task@item}
 \setlist[tasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
 \setlist[tasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
 
@@ -200,7 +200,7 @@
 
 % now we define the hints, for the number of pages we will infer them automatically
 % with the '\appendix' marker
-\sp@make@cmd{hintstitle}{\textbf{Zur allgemeinen Beachtung:}}%
+\sp@make@cmd{hintstitle}{\textbf{Zur allgemeinen Beachtung:}\medskip}%
 % morehints can be used to add more hints using `\item` prefixes, at the bottom of the list.
 % we make no attempts to make more space for them!
 \sp@make@cmd{morehints}{}
