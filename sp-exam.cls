@@ -97,9 +97,10 @@
 
 % page head ==============================================================
 
-% TODO: headers and footers
 \pagestyle{fancy}
 \headheight=13.6\p@
+\lhead{\sp@@examname}\chead{\sp@@examcount}\rhead{\sp@@date}%
+\lfoot{}\cfoot{\textsf{\thepage}}\rfoot{}%
 
 % configure lists ========================================================
 
@@ -172,7 +173,8 @@
 % all of these commands could be redefined just the same but we not require the user to
 % in other words, the defaults should be satisfactory for most users
 % the following lines define them roughly from top to bottom regarding their appearance on the (exam/solution) title page
-\sp@make@cmd{examlineA}{\sp@@examnumber. Klausur zur Veranstaltung}
+\sp@make@cmd{examcount}{\sp@@examnumber. Klausur}
+\sp@make@cmd{examlineA}{\sp@@examcount{} zur Veranstaltung}
 \sp@make@cmd{examlineB}{\textbf{\LARGE\sp@@examname}}
 \sp@make@cmd{examinerline}{\@hangfrom{Prüfer:\space}{\strut\sp@@examiner\strut}}
 
@@ -424,9 +426,9 @@
 
 \def\maketitle{%
 \newgeometry{top=1cm,bottom=1cm,left=2cm,right=2cm,ignorehead}%
+\thispagestyle{empty}%
 \begin{center}
    \parskip\z@\relax\parindent\z@\relax
-   \thispagestyle{empty}%
    \begingroup
       \sp@@logoline
    % header --------------------------------------------------------------
@@ -500,7 +502,7 @@
 
 \setbox0=\hbox{$\bigcirc$}
 \newdimen\sp@square@size
-\sp@square@size=\dimexpr\wd0-1.1\p@
+\sp@square@size=\dimexpr.9\wd0-.5\p@
 \def\sp@bigsquare{{\fboxsep\z@\framebox[\sp@square@size]{\rule\z@\sp@square@size}}}
 \newlist{radioboxes}{itemize}{1}
 \newlist{checkboxes}{itemize}{1}
