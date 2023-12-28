@@ -657,6 +657,7 @@
    \def\StudentLine#1{\StudentStrut{\hrulefill}}
 }
 
+% TODO: code support
 
 % TODO: allow to define space for user inputs
 % * space to enter code
