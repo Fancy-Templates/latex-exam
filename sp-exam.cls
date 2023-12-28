@@ -390,7 +390,6 @@
 
 % the sp cover page ======================================================
 
-% TODO: add solution
 \def\maketitle{%
 \newgeometry{top=1cm,bottom=1cm,left=2cm,right=2cm,ignorehead}%
 \begin{center}
