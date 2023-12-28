@@ -645,12 +645,12 @@
 
 \setbox0=\hbox{$\bigcirc$}
 \newdimen\sp@square@size
-\sp@square@size=\dimexpr.9\wd0-.5\p@
-\def\sp@bigsquare{{\fboxsep\z@\raisebox{-.2\height}{\framebox[\sp@square@size]{\rule\z@\sp@square@size}}}}
+\sp@square@size=\dimexpr.95\wd0-.5\p@
+\def\sp@bigsquare{{\fboxsep\z@\raisebox{-.15\height}{\framebox[\sp@square@size]{\rule\z@\sp@square@size}}}}
 \newlist{radioboxes}{itemize}{1}
 \newlist{checkboxes}{itemize}{1}
 
-\def\sp@place@cross#1{\hbox{\setbox0=\hbox{#1}\clap{\raisebox{-.235\height}{\scalebox{2.25}{$\times$}}}\clap{\copy0}\kern.5\wd0}}
+\def\sp@place@cross#1{\hbox{\setbox0=\hbox{#1}\clap{\raisebox{-.215\height}{\scalebox{2.25}{$\times$}}}\clap{\copy0}\kern.5\wd0}}
 
 \sp@make@cmd{radioboxlabel}{$\bigcirc$}
 \sp@make@cmd{checkboxlabel}{\sp@bigsquare\kern\p@\relax}
