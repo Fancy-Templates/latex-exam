@@ -340,13 +340,13 @@
    \fi
 }
 
+% TODO: round corners if not in draft
 \let\sp@box\fbox
 
 % place a marker into the margin
 \def\sp@subtask@marker#1{%
    \ifdim#1\p@=\z@\relax\else
    \marginnote{\fboxsep=.5\p@
-      % TODO: round corners?
       \sp@box{%
          \begin{minipage}[b][\sp@@subtaskpointheight]{\sp@@subtaskpointwidth}
             \raggedleft\tiny\bfseries/#1\relax
@@ -362,7 +362,6 @@
 \sp@get@points@of@task\sp@result{\arabic{exercise}}
 \ifdim\sp@result\p@=\z@\relax\else
 \marginnote{\fboxsep=.5\p@\fboxrule=2\p@
-   % TODO: round corners?
    \smash{\raisebox{.5\height}{\sp@box{%
       \begin{minipage}[b][\sp@@exampointheight]{\sp@@exampointwidth}
          \raggedleft\tiny\bfseries/\sp@result\relax
