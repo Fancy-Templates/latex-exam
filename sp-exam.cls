@@ -206,11 +206,15 @@
 
 % separate pages =========================================================
 
+% we reduce one as every exercise inserts a clearpage at the end
+\sp@make@cmd{finalpageoffset}{-1}
+
 % we allow the '\appendix' command to be used in the document to separate
 % additional pages from those for the main exam
 \newif\ifsp@in@appendix
 \def\appendix{%
-   \xdef\sp@main@end{\arabic{page}}% we store the number of pages in a macro to test for single pages
+   % we store the number of pages in a macro to test for single pages
+   \xdef\sp@main@end{\the\numexpr\arabic{page}+\sp@@finalpageoffset}%
    \clearpage
    \global\sp@in@appendixtrue
    \pagenumbering{roman}%
