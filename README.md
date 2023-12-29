@@ -240,6 +240,9 @@ So, `examonly` is just a shorthand for `\ifinmode{exam} ... \fi` and `solution` 
   - Sie dürfen ein beidseitig, handbeschriebenes DIN-A4-Blatt verwenden.
   - Sie dürfen das Cheat-Sheet der Veranstaltung mit handschriftlichen Ergänzungen verwenden.
   - Es sind keine Hilfsmittel erlaubt.
+- [ ] Do we really want to enforce 50% transparency for the "Siegelkasten"
+- [ ] Do we want the alternatives:
+   > Für einen Abschnitt kann immer eine Gesamtpunktezahl angegeben werden, die ggf. gegen die errechnete Gesamtpunktezahl aus den Aufgaben geprüft wird.
 
 ## More Nice Things
 
