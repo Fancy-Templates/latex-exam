@@ -1,7 +1,7 @@
 # The SP exam template
 
 This is the exam template of the _Institute of Software Engineering and Programming Languages_ at the University of Ulm, composed in the single file [_sp-exam.cls_](sp-exam.cls) (supplementary images are located in [_img/_](img/)).
-It is currently in its draft phase and open for comments. See the [CHANGELOG.md](CHANGELOG.md) for a list of changes.
+It is currently in its draft phase and [open for comments](#open-discussion-points). See the [CHANGELOG.md](CHANGELOG.md) for a list of changes.
 
 - [The SP exam template](#the-sp-exam-template)
   - [Quickstart Guide](#quickstart-guide)
@@ -18,6 +18,7 @@ It is currently in its draft phase and open for comments. See the [CHANGELOG.md]
     - [Outsourcing exercises](#outsourcing-exercises)
     - [Exam Modes](#exam-modes)
       - [Conditional Content](#conditional-content)
+  - [Open Discussion Points](#open-discussion-points)
   - [More Nice Things](#more-nice-things)
 
 ## Quickstart Guide
@@ -215,6 +216,16 @@ So, `examonly` is just a shorthand for `\ifinmode{exam} ... \fi` and `solution` 
    \end{solutionbox}
 \fi
 ```
+
+## Open Discussion Points
+
+- [ ] How should we style the point boxes/solution blocks
+- [ ] Are there other modes required/desired (in FP we had "supersize")
+- [ ] Should we reduce the ways to check for a given mode. For example, we could allow for multiple modes to be active (`correction` and `solution`) so that everything is `\ifinmode{solution} ... \fi`.
+- [ ] Should there be compatibility modes for old exam templates?
+- [ ] What _code_ environments do we want (e.g., one with line numbers and a frame, space for the students with vertical lines)
+- [ ] Do we want unified language setups for prolog, haskell, java, typescript, ...? (some exams use `\java`, ...)
+- [ ] What kind of "workflow" to we want to setup the exam? (e.g., a template repository so that each exam will be a new repository in the respective group of the lecture, should the uulm logos be included in the `.cls` so that it is only one file to copy/include as a submodule/...)
 
 ## More Nice Things
 
