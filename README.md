@@ -25,7 +25,7 @@ It is currently in its draft phase and [open for comments](#open-discussion-poin
 
 There are just a handful of steps required to get started.
 
-**TODO**. See [the example exam](_main.tex) for now.
+**TODO**. See [the example exam](_main.tex) or [inspect the output](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/jobs/artifacts/main/browse?job=build-pdf) for now.
 
 ### General Information
 
