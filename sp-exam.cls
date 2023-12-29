@@ -99,10 +99,10 @@
    \csname#1\endcsname{#2}%
 }
 % format #1 to indicate a missing value
-\def\sp@missing#1{\textbf{\color{red}#1}}
+\def\sp@missing#1{\textbf{\color{red}\texttt{\textbackslash #1\{??\}}}\ClassWarning{sp-exam}{Please use \textbackslash#1{??} to configure the '#1' which is required.}}
 
 % comfort overload for `\sp@make@cmd` for macros which are required
-\def\sp@make@required@cmd#1{\sp@make@cmd{#1}{\sp@missing{\texttt{\textbackslash #1\{??\}}}}}
+\def\sp@make@required@cmd#1{\sp@make@cmd{#1}{\sp@missing{#1}}}
 
 % immediately persist the value #2 in #1 to be active on the next run
 \def\sp@persist#1=#2;{%
