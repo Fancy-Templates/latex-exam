@@ -37,7 +37,35 @@ There are plenty of configuration options, but only a few of them are required (
 We show example definitions for all required options below:
 
 ```latex
+\examnumber{1}                                % first exam, second, ...?
+\examname{Funktionale Programmierung}         % name of the exam/lecture
+\examiner{Florian Sihler, Alexander Raschke}  % name of the examiner(s)
 
+\semester{Winter}                             % summer or wintersemester?
+\year{2023/24}                                % year of the semester
+\date{12. März 2024}                          % date of the exam
+\time{9:00 Uhr}                               % time of the exam
+\duration{90}                                 % allowed duration in minutes
+
+% information regarding the permitted material
+\permittedmaterial{Sie dürfen ein beidseitig, handbeschriebenes DIN-A4-Blatt verwenden.}
+```
+
+Besides these, there are probably just two more options that you are potentially interested in:
+
+```latex
+% This allows to add more information to the cover page
+\morehints{
+   \item Consider to avoid cheating, please!
+}
+% this allows to set the given image inside the stamp rectangle on the cover page
+\framedcoverimage{img/nilpferd}
+```
+
+If you _really_ want to know about what you can configure besides that, you can take a look at the [source code](sp-exam.cls). Every `\sp@make@cmd{<name>}{<default value>}` indicates a configuration option that you can set via `\<name>{<new value>}`. For example, you can overwrite the institute like this:
+
+```latex
+\institute{Fluffy Penguins Research Center}
 ```
 
 ## More Nice Things
