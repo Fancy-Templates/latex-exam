@@ -655,13 +655,13 @@
 
 % #1: only if this exercise has no subtasks, you can give the points here directly
 % #2: name of the exercise
-\newenvironment{Exercise}[2][]{\begingroup
+\newenvironment{exercise}[2][]{\begingroup
    \sp@exercise{#2}%
    % test if the optional argument is given
    \edef\@tmp{#1}\ifx\@tmp\@empty\else
       \sp@subtask{#1}%
       % if yes, we forbid further subtasks from occurring
-      \def\sp@subtask##1{\ClassError{sp-exam}{You cannot use subtasks in an exercise with a given number of points}{Either remove the optional argument to \string\Exercise\space or remove the subtask!}}%
+      \def\sp@subtask##1{\ClassError{sp-exam}{You cannot use subtasks in an exercise with a given number of points}{Either remove the optional argument to \string\exercise\space or remove the subtask!}}%
       % we manually restore the label references here, the user should not know that we handle this
       % with a subtask as well!
       \let\@currentname\sp@@exercisename\relax

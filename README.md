@@ -10,12 +10,12 @@ It is currently in its draft phase and open for comments. See the [CHANGELOG.md]
     - [Class Options](#class-options)
     - [Configuring the Exam](#configuring-the-exam)
     - [Basic Document Structure](#basic-document-structure)
-    - [A First Exercise](#a-first-exercise)
+    - [A First exercise](#a-first-exercise)
       - [Solutions](#solutions)
       - [Radio- and Checkboxes](#radio--and-checkboxes)
       - [Free-Text Answers and Spacing](#free-text-answers-and-spacing)
       - [Free-Form Subtasks](#free-form-subtasks)
-    - [Outsourcing Exercises](#outsourcing-exercises)
+    - [Outsourcing exercises](#outsourcing-exercises)
     - [Exam Modes](#exam-modes)
       - [Conditional Content](#conditional-content)
   - [More Nice Things](#more-nice-things)
@@ -111,22 +111,22 @@ After [loading the class](#class-options) and [configuring the exam](#configurin
 \end{document}
 ```
 
-### A First Exercise
+### A First exercise
 
 Most of the time you are probably fine with one of the following two forms. You can create an exercise with a single task (i.e., no subtasks) like this:
 
 ```latex
 % This exercise has 7 points
-\begin{Exercise}[7]{Eine interessante Aufgabe}
+\begin{exercise}[7]{Eine interessante Aufgabe}
    Eine interessante Aufgabenbeschreibung
    % ... (solutions)
-\end{Exercise}
+\end{exercise}
 ```
 
 If you want subtasks, you can drop the optional argument and use the `tasks` environment, which allows you to specify the points for each subtask (calculating the total number of points automatically along the way):
 
 ```latex
-\begin{Exercise}{Eine interessante Aufgabe}
+\begin{exercise}{Eine interessante Aufgabe}
    Eine interessante Aufgabenbeschreibung
    \begin{tasks}
       \task{1} Eine Teilaufgabe
@@ -134,7 +134,7 @@ If you want subtasks, you can drop the optional argument and use the `tasks` env
       \task{2} Eine weitere Teilaufgabe
       \task{4} Eine letzte Teilaufgabe
    \end{tasks}
-\end{Exercise}
+\end{exercise}
 ```
 
 #### Solutions
@@ -171,7 +171,7 @@ For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effect
 
 Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to freely layout your exercise.
 
-### Outsourcing Exercises
+### Outsourcing exercises
 
 We recommend, that you create a separate file for each exercise, including it using `\input{<filename>}` or `\include{<filename>}`.
 This not only allows easier re-use and -order exercises but also keeps the [main](_main.tex) file clean and readable.
