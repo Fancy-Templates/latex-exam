@@ -5,9 +5,18 @@ It is currently in its draft phase and open for comments. See the [CHANGELOG.md]
 
 - [The SP exam template](#the-sp-exam-template)
   - [Quickstart Guide](#quickstart-guide)
+    - [General Information](#general-information)
   - [What This Template Offers](#what-this-template-offers)
     - [Class Options](#class-options)
     - [Configuring the Exam](#configuring-the-exam)
+    - [Basic Document Structure](#basic-document-structure)
+    - [A First Exercise](#a-first-exercise)
+      - [Solutions](#solutions)
+      - [Radio- and Checkboxes](#radio--and-checkboxes)
+      - [Free-Text Answers and Spacing](#free-text-answers-and-spacing)
+    - [Outsourcing Exercises](#outsourcing-exercises)
+    - [Exam Modes](#exam-modes)
+      - [Conditional Content](#conditional-content)
   - [More Nice Things](#more-nice-things)
 
 ## Quickstart Guide
@@ -15,6 +24,20 @@ It is currently in its draft phase and open for comments. See the [CHANGELOG.md]
 There are just a handful of steps required to get started.
 
 **TODO**. See [the example exam](_main.tex) for now.
+
+### General Information
+
+- The template requires _two_ compilations to correctly calculate all points
+- For each desired version (exam, solution, correction), you need to create a separate file (see [exam modes](#exam-modes) for more information on the modes) like this:
+
+   ```latex
+   \PassOptionsToClass{solution}{sp-exam}
+   \input{_main.tex}
+   ```
+
+- This repository contains a [_.latexmkrc_](.latexmkrc) file that can be used with [`latexmk`](https://ctan.org/pkg/latexmk/).
+- You can naturally label and reference exercises and (sub-)tasks using `\label{<name>}` and `\ref{<name>}`/`\autoref{<name>}`.
+- The layout is currently designed for exams in german.
 
 ## What This Template Offers
 
@@ -68,14 +91,118 @@ If you _really_ want to know about what you can configure besides that, you can 
 \institute{Fluffy Penguins Research Center}
 ```
 
+### Basic Document Structure
+
+After [loading the class](#class-options) and [configuring the exam](#configuring-the-exam), your document may have the following basic structure:
+
+```latex
+\begin{document}
+   % Typeset the coverpage
+   \maketitle
+
+   % ... (exercises)
+
+   % This is optional and only required if you have additional pages.
+   % For example, to repeat definitions.
+   \appendix
+
+   % ... (optional additional pages)
+\end{document}
+```
+
+### A First Exercise
+
+Most of the time you are probably fine with one of the following two forms. You can create an exercise with a single task (i.e., no subtasks) like this:
+
+```latex
+% This exercise has 7 points
+\begin{Exercise}[7]{Eine interessante Aufgabe}
+   Eine interessante Aufgabenbeschreibung
+   % ... (solutions)
+\end{Exercise}
+```
+
+If you want subtasks, you can drop the optional argument and use the `tasks` environment, which allows you to specify the points for each subtask (calculating the total number of points automatically along the way):
+
+```latex
+\begin{Exercise}{Eine interessante Aufgabe}
+   Eine interessante Aufgabenbeschreibung
+   \begin{tasks}
+      \task{1} Eine Teilaufgabe
+      % ... (solutions)
+      \task{2} Eine weitere Teilaufgabe
+      \task{4} Eine letzte Teilaufgabe
+   \end{tasks}
+\end{Exercise}
+```
+
+#### Solutions
+
+See [conditional content](#conditional-content) for how to present solutions.
+
+#### Radio- and Checkboxes
+
+ToDo
+
+#### Free-Text Answers and Spacing
+
+ToDo
+
+### Outsourcing Exercises
+
+We recommend, that you create a separate file for each exercise, including it using `\input{<filename>}` or `\include{<filename>}`.
+This not only allows easier re-use and -order exercises but also keeps the [main](_main.tex) file clean and readable.
+
+### Exam Modes
+
+Even though we allow for a lot of flexible constructs behind the scenes, you are probably fine with using only two environments.
+
+***The begin and end markers for these environments must be given in their OWN line, without any leading whitespace. If, for whatever reason, you dislike that, see [conditional content](#conditional-content) for an alternative.***
+
+```latex
+\begin{examonly}
+   Dieser Text erscheint nur in der Klausur, nicht in den Lösungen.
+\end{examonly}
+
+\begin{solution}
+   Dieser Text erscheint nur in den Lösungen, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst).
+\end{solution}
+```
+
+These environments work with `minted` as well.
+
+#### Conditional Content
+
+At its core, you can use `\ifinmode{<modelist>} ... \else ... \fi` to conditionally insert content into the document:
+
+```latex
+\ifinmode{solution}
+   Dieser Text erscheint nur in den Lösungen, nicht in der Klausur.
+\else
+   Dieser Text erscheint in allen anderen Modi.
+\fi
+```
+
+So, `examonly` is just a shorthand for `\ifinmode{exam} ... \fi` and `solution` can be written like this:
+
+```latex
+\ifinmode{solution,correction}
+   \begin{solutionbox}
+      Dieser Text erscheint nur in den Lösungen, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst).
+   \end{solutionbox}
+\fi
+```
+
 ## More Nice Things
 
-* Wem alles zu langsam geht: wir unterstützten latex formats
+If compilation is too slow for you, you can create a format file and use that instead:
 
-   ```shell
-   $ etex -ini -initialize -save-size=20000 -stack-size=20000 -jobname="sp-class-exam-fmt" "&pdflatex" mylatexformat.ltx """exam.tex"""
+```shell
+$ etex -ini -initialize -save-size=20000 -stack-size=20000 -jobname="sp-class-exam-fmt" "&pdflatex" mylatexformat.ltx """exam.tex"""
 
-   $ pdflatex -jobname exam -fmt sp-class-exam-fmt --shell-escape _main.tex
-   ```
+$ pdflatex -jobname exam -fmt sp-class-exam-fmt --shell-escape _main.tex
+```
+
+However, please do not forget to re-create the format file if you change the template or any other configuration in the preamble.
 
 [^1]: In theory, you can simply create your _own_ mode by defining `\spexammode` with a value of your choice. If this mode should be a solution mode, you should add it to `\sp@modes@show@solutions` as well.

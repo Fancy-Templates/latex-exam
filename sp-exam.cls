@@ -62,7 +62,7 @@
 % if we are in one of the modes given by #1, we execute #2, otherwise #3
 \newcommand\ifinmode[1]{%
    \edef\sp@mode@list{#1}\sp@checkmode
-   \if@sp@tmp@
+   \if@sp@tmp@\ignorespaces
 }
 
 % \only if we are in the modes given by #1, we execute #2
@@ -733,7 +733,7 @@
 
 % a simple environment to wrap the actual solution
 \ifshowsolution
-\specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
+   \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
 \else
    \excludecomment{solution}
 \fi
@@ -747,7 +747,4 @@
    \def\StudentLine#1{\StudentStrut{\hrulefill}}
 \fi
 
-% TODO: code support
-
-% TODO: allow to define space for user inputs
-% * space to enter code
+% TODO: space to enter code with indentation lines?
