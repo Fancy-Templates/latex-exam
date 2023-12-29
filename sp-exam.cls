@@ -99,7 +99,10 @@
    \csname#1\endcsname{#2}%
 }
 % format #1 to indicate a missing value
-\def\sp@missing#1{\textbf{\color{red}\texttt{\textbackslash #1\{??\}}}\ClassWarning{sp-exam}{Please use \expandafter\string\csname #1\endcsname{??} to configure the '#1' which is required.}}
+\def\sp@missing#1{%
+   \textbf{\color{red}\texttt{\textbackslash #1\{??\}}}%
+   \ClassError{sp-exam}{Please use \expandafter\string\csname #1\endcsname{??} to configure the '#1' which is required}{If you do not provide '#1', we have a problem (it is required after all)!}%
+}
 
 % comfort overload for `\sp@make@cmd` for macros which are required
 \def\sp@make@required@cmd#1{\sp@make@cmd{#1}{\sp@missing{#1}}}
@@ -236,15 +239,16 @@
 \sp@make@required@cmd{time}
 \sp@make@required@cmd{duration}
 \sp@make@required@cmd{permittedmaterial}
-\sp@make@required@cmd{coverimage}
 
 % for the coverimage we provide a convenience command `\framedcoverimage` which directly takes a path
 % to an image and wraps it in a frame with the wanted sizes
+\sp@make@cmd{coverimage}{}
 \def\framedcoverimage#1{%
-   \sp@make@cmd{coverimage}{\fbox{\begin{minipage}[b][41mm][c]{70mm}
-      \centering\includegraphics[width=\linewidth,height=41mm,keepaspectratio]{#1}\relax
+   \coverimage{\fbox{\begin{minipage}[b][41mm][c]{70mm}
+      \centering\def\sp@tmp{#1}\ifx\sp@tmp\@empty~\else\includegraphics[width=\linewidth,height=41mm,keepaspectratio]{#1}\fi
    \end{minipage}}}%
 }
+\framedcoverimage{}
 
 % all of these commands could be redefined just the same but we not require the user to
 % in other words, the defaults should be satisfactory for most users

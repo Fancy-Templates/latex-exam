@@ -33,7 +33,12 @@ we use `\PassOptionsToClass{exam}{sp-exam}` to pass the options to the document 
 
 ### Configuring the Exam
 
-There are plenty of configuration options, but only a few of them are required (and if you fail to provide them, displayed quite prominently in the layout and shown as warnings).
+There are plenty of configuration options, but only a few of them are required (and if you fail to provide them, they are displayed quite prominently in the layout and shown as an error).
+We show example definitions for all required options below:
+
+```latex
+
+```
 
 ## More Nice Things
 
