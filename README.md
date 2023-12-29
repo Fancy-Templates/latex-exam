@@ -221,8 +221,9 @@ So, `examonly` is just a shorthand for `\ifinmode{exam} ... \fi` and `solution` 
 If compilation is too slow for you, you can create a format file and use that instead:
 
 ```shell
-$ etex -ini -initialize -save-size=20000 -stack-size=20000 -jobname="sp-class-exam-fmt" "&pdflatex" mylatexformat.ltx """exam.tex"""
+$ etex -shell-escape -ini -initialize -save-size=20000 -stack-size=20000 -jobname="sp-class-exam-fmt" "&pdflatex" mylatexformat.ltx """exam.tex"""
 
+# issue this twice
 $ pdflatex -jobname exam -fmt sp-class-exam-fmt --shell-escape _main.tex
 ```
 
