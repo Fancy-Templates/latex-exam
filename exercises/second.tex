@@ -27,5 +27,27 @@ public class Foo {
 \end{minted}
 \end{examonly}
 
+\begin{solution}
+\begin{minted}{java}
+public class Solution {
+   public static void main(String[] args) {
+      System.out.println("Solution");
+   }
+}
+\end{minted}
+\end{solution}
+
+\ifinmode{solution,correction}
+Much more flexible would be to build stuff up manually with the \string\ifinmode\space command.
+
+\begin{solutionbox}
+   Have some fun with magic!
+
+\begin{minted}{haskell}
+main :: IO ()
+main = putStrLn "Hello World!"
+\end{minted}
+\end{solutionbox}
+\fi
 
 \end{Exercise}

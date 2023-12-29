@@ -718,13 +718,13 @@
 
 \errorcontextlines=99999
 
+\newenvironment{solutionbox}{\par
+   \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
+}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip}
+
 % a simple environment to wrap the actual solution
 \ifshowsolution
-\specialcomment{solution}{\par
-   \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
-}{%
-   \nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip
-}
+\specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
 \else
    \excludecomment{solution}
 \fi
