@@ -416,7 +416,7 @@
 }
 
 \sp@make@cmd{subtaskpointwidth}{9mm}
-\sp@make@cmd{subtaskpointheight}{7.5mm}
+\sp@make@cmd{subtaskpointheight}{7.33mm}
 \sp@make@cmd{exampointwidth}{9mm}
 \sp@make@cmd{exampointheight}{9mm}
 
@@ -439,7 +439,7 @@
 
 \if@sp@rounded@support@
    \def\sp@box#1{%
-      \tikz[baseline={(@.base)}]{\node[rounded corners=2\p@,draw,line width=\fboxrule,inner sep=\fboxsep] (@) {#1};}%
+      \tikz[baseline={(@.base)}]{\node[rounded corners=3\p@,draw,line width=\fboxrule,inner sep=\fboxsep] (@) {#1};}%
    }
 \else
    \let\sp@box\fbox
@@ -451,11 +451,11 @@
 \else
    \def\sp@subtask@marker#1{%
       \ifdim#1\p@=\z@\relax\else
-      \marginnote{\fboxsep=.5\p@
+      \marginnote{\fboxsep=\p@
          \sp@box{%
             \begin{minipage}[b][\sp@@subtaskpointheight]{\sp@@subtaskpointwidth}
                \raggedleft\tiny\bfseries/#1\relax
-            \end{minipage}
+            \end{minipage}~\strut
          }%
       }\fi
    }
@@ -466,11 +466,11 @@
    % total points of exercise
    \sp@get@points@of@task\sp@result{\arabic{exercise}}
    \ifdim\sp@result\p@=\z@\relax\else
-   \marginnote{\fboxsep=.5\p@\relax\fboxrule=1.66\p@
+   \marginnote{\fboxsep=\p@\relax\fboxrule=1.66\p@
       \smash{\raisebox{.5\height}{\sp@box{%
          \begin{minipage}[b][\sp@@exampointheight]{\sp@@exampointwidth}
             \raggedleft\tiny\bfseries/\sp@result\relax
-         \end{minipage}
+         \end{minipage}~\strut
       }}}%
    }\fi
 }%
@@ -699,7 +699,7 @@
 \setbox0=\hbox{$\bigcirc$}
 \newdimen\sp@square@size
 \sp@square@size=\dimexpr.95\wd0-.5\p@
-\def\sp@bigsquare{{\fboxsep\z@\raisebox{-.15\height}{\framebox[\sp@square@size]{\rule\z@\sp@square@size}}}}
+\def\sp@bigsquare{{\fboxsep\z@\raisebox{-.15\height}{\sp@box{\rule\sp@square@size\z@\relax\rule\z@\sp@square@size}}}}
 \newlist{radioboxes}{itemize}{1}
 \newlist{checkboxes}{itemize}{1}
 
