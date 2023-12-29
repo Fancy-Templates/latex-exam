@@ -14,6 +14,7 @@ It is currently in its draft phase and open for comments. See the [CHANGELOG.md]
       - [Solutions](#solutions)
       - [Radio- and Checkboxes](#radio--and-checkboxes)
       - [Free-Text Answers and Spacing](#free-text-answers-and-spacing)
+      - [Free-Form Subtasks](#free-form-subtasks)
     - [Outsourcing Exercises](#outsourcing-exercises)
     - [Exam Modes](#exam-modes)
       - [Conditional Content](#conditional-content)
@@ -142,11 +143,33 @@ See [conditional content](#conditional-content) for how to present solutions.
 
 #### Radio- and Checkboxes
 
-ToDo
+If your task requires a radio- or checkbox, you can use the following environments. Within them `\correct` can be used to mark the respective (correct) answer(s):
+
+```latex
+\begin{radioboxes}
+   \item    Antwortmöglichkeit 1
+   \item    Antwortmöglichkeit 2
+   \correct Antwortmöglichkeit 3
+   \item    Antwortmöglichkeit 4
+\end{radioboxes}
+
+\begin{checkboxes}
+   \correct Antwortmöglichkeit 1
+   \item    Antwortmöglichkeit 2
+   \correct Antwortmöglichkeit 3
+   \correct Antwortmöglichkeit 4
+\end{checkboxes}
+```
 
 #### Free-Text Answers and Spacing
 
-ToDo
+The `\VerticalSpace` inserts effectively a `\vfill` in the exam mode (and therefore just creates blank vertical space for the students to write). An optional argument allows to (relatively) weigh the space against other `\VerticalSpace` commands. For example, if you use `\VerticalSpace[2]` and `\VerticalSpace`, the first one will be twice as large as the second one.
+
+For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effectively use the remaining space on a line (use `\parbox{<width>}{\StudentLine{<solution>}}` to limit the width) and set a placeholder for the student to write in. The given solution is added in the solution mode.
+
+#### Free-Form Subtasks
+
+Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to freely layout your exercise.
 
 ### Outsourcing Exercises
 

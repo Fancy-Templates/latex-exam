@@ -725,8 +725,6 @@
    \excludecomment{examonly}
 \fi
 
-\errorcontextlines=99999
-
 \newenvironment{solutionbox}{\par
    \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
 }{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip}
