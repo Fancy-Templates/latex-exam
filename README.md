@@ -46,9 +46,9 @@ There are just a handful of steps required to get started.
 
 Essentially, there are three main modes that you can load the template with[^1]:
 
-* `\documentclass[exam]{sp-exam}`: This is the default mode. It hides all solutions and additional hints for corrections.
-* `\documentclass[solution]{sp-exam}`: This mode shows all solutions.
-* `\documentclass[correction]{sp-exam}`: This mode shows all solutions and additional hints for corrections.
+- `\documentclass[exam]{sp-exam}`: This is the default mode. It hides all solutions and additional hints for corrections.
+- `\documentclass[solution]{sp-exam}`: This mode shows all solutions.
+- `\documentclass[correction]{sp-exam}`: This mode shows all solutions and additional hints for corrections.
 
 Besides the mode, you can pass `code` to automatically set up [_minted_](https://ctan.org/pkg/minted) and `rounded` to use rounded boxes instead of the default ones (this, however, loads [_TikZ_](https://ctan.org/pkg/pgf)).
 
