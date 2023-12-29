@@ -437,6 +437,7 @@
    \fi
 }
 
+% TODO: use pgf directly for the node instead of the tikz layer?
 \if@sp@rounded@support@
    \def\sp@box#1{%
       \tikz[baseline={(@.base)}]{\node[rounded corners=3\p@,draw,line width=\fboxrule,inner sep=\fboxsep] (@) {#1};}%

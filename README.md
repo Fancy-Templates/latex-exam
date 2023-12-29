@@ -50,7 +50,7 @@ Essentially, there are three main modes that you can load the template with[^1]:
 * `\documentclass[solution]{sp-exam}`: This mode shows all solutions.
 * `\documentclass[correction]{sp-exam}`: This mode shows all solutions and additional hints for corrections.
 
-Besides the mode, you can pass `code` to automatically set up [_minted_](https://ctan.org/pkg/minted).
+Besides the mode, you can pass `code` to automatically set up [_minted_](https://ctan.org/pkg/minted) and `rounded` to use rounded boxes instead of the default ones (this, however, loads [_TikZ_](https://ctan.org/pkg/pgf)).
 
 Instead of passing the options directly to the document class,
 we use `\PassOptionsToClass{exam}{sp-exam}` to pass the options to the document class (this simplifies the files that we create per-mode).
