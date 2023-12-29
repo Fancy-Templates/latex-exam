@@ -41,7 +41,7 @@
 \RequirePackage{enumitem}
 \RequirePackage{etoolbox}
 \RequirePackage{parskip}
-\RequirePackage{environ}
+\RequirePackage{comment}
 
 % modes ==========================================================
 
@@ -710,13 +710,24 @@
 }
 \def\sp@vertical@hrulefill{\sp@custom@hrulefill{.7ex}{.5pt}}
 
+\ifinmode{exam}
+   \includecomment{examonly}
+\else
+   \excludecomment{examonly}
+\fi
+
+\errorcontextlines=99999
+
 % a simple environment to wrap the actual solution
-\NewEnviron{solution}{%
 \ifshowsolution
-   \par
+\specialcomment{solution}{\par
    \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
-   \BODY\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip
-\fi}
+}{%
+   \nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip
+}
+\else
+   \excludecomment{solution}
+\fi
 
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
