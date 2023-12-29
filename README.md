@@ -73,7 +73,8 @@ We show example definitions for all required options below:
 \duration{90}                                 % allowed duration in minutes
 
 % information regarding the permitted material
-\permittedmaterial{Sie dürfen ein beidseitig, handbeschriebenes DIN-A4-Blatt verwenden.}
+\permittedmaterial{\allowhandwrittensheet}
+% alternatively: \allowcheatsheet, \allownothing, or free text
 ```
 
 Besides these, there are probably just two more options that you are potentially interested in:
@@ -225,9 +226,14 @@ So, `examonly` is just a shorthand for `\ifinmode{exam} ... \fi` and `solution` 
 - [ ] Should there be compatibility modes for old exam templates?
 - [ ] What _code_ environments do we want (e.g., one with line numbers and a frame, space for the students with vertical lines)
 - [ ] Do we want unified language setups for prolog, haskell, java, typescript, ...? (some exams use `\java`, ...)
-- [ ] What kind of "workflow" to we want to setup the exam? (e.g., a template repository so that each exam will be a new repository in the respective group of the lecture, should the uulm logos be included in the `.cls` so that it is only one file to copy/include as a submodule/...)
+- [ ] What kind of "workflow" do we want to setup the exam? (e.g., a template repository so that each exam will be a new repository in the respective group of the lecture, should the uulm logos be included in the `.cls` so that it is only one file to copy/include as a submodule/...)
 - [ ] Should we force an exam structure (e.g., force to outsource exercises)
 - [ ] Should there be more predefined/additional macros (e.g. for the creation of tables, usage with tikz-externalize, ...)
+- [ ] Should we provide a makefile/bash script (which can replace the need for separate `.tex` files for each version)
+- [ ] Do we want more additional hints for the permitted material? How should they be worded?
+  - Sie dürfen ein beidseitig, handbeschriebenes DIN-A4-Blatt verwenden.
+  - Sie dürfen das Cheat-Sheet der Veranstaltung mit handschriftlichen Ergänzungen verwenden.
+  - Es sind keine Hilfsmittel erlaubt.
 
 ## More Nice Things
 

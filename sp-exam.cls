@@ -246,6 +246,11 @@
 \sp@make@required@cmd{time}
 \sp@make@required@cmd{duration}
 \sp@make@required@cmd{permittedmaterial}
+
+\def\allowhandwrittensheet{Sie dürfen ein beidseitig, handbeschriebenes DIN-A4-Blatt verwenden.}
+\def\allowcheatsheet{Sie dürfen das Cheat-Sheet der Veranstaltung mit handschriftlichen Ergänzungen verwenden.}
+\def\allownothing{Es sind keine Hilfsmittel erlaubt.}
+
 % create a one-way compatibility mapping for the default latex macros
 % this makes hyperref work as well
 \AtEndPreamble{
