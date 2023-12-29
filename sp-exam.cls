@@ -751,5 +751,3 @@
    \newcommand*\StudentLine[1]{\StudentStrut{\hrulefill}}
    \newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}
 \fi
-
-% TODO: space to enter code with indentation lines?
