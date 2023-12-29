@@ -12,6 +12,10 @@
 \newif\if@sp@code@support@
 \DeclareOption{code}{\@sp@code@support@true}
 
+% this loads tikz and makes rounded rectangles
+\newif\if@sp@rounded@support@
+\DeclareOption{rounded}{\@sp@rounded@support@true}
+
 % we provide default lists that theoretical class-hackers can use to add their own modes
 \def\sp@modes@show@solutions{solution,correction}
 
@@ -42,6 +46,10 @@
 \RequirePackage{etoolbox}
 \RequirePackage{parskip}
 \RequirePackage{comment}
+
+\if@sp@rounded@support@
+   \RequirePackage{tikz}
+\fi
 
 % modes ==========================================================
 
@@ -429,8 +437,13 @@
    \fi
 }
 
-% TODO: round corners if not in draft
-\let\sp@box\fbox
+\if@sp@rounded@support@
+   \def\sp@box#1{%
+      \tikz[baseline={(@.base)}]{\node[rounded corners=2\p@,draw,line width=\fboxrule,inner sep=\fboxsep] (@) {#1};}%
+   }
+\else
+   \let\sp@box\fbox
+\fi
 
 % place a marker into the margin
 \ifshowsolution
