@@ -10,12 +10,12 @@ It is currently in its draft phase and [open for comments](#open-discussion-poin
     - [Class Options](#class-options)
     - [Configuring the Exam](#configuring-the-exam)
     - [Basic Document Structure](#basic-document-structure)
-    - [A First exercise](#a-first-exercise)
+    - [A First Exercise](#a-first-exercise)
       - [Solutions](#solutions)
       - [Radio- and Checkboxes](#radio--and-checkboxes)
       - [Free-Text Answers and Spacing](#free-text-answers-and-spacing)
       - [Free-Form Subtasks](#free-form-subtasks)
-    - [Outsourcing exercises](#outsourcing-exercises)
+    - [Outsourcing Exercises](#outsourcing-exercises)
     - [Exam Modes](#exam-modes)
       - [Conditional Content](#conditional-content)
   - [Open Discussion Points](#open-discussion-points)
@@ -119,7 +119,7 @@ After [loading the class](#class-options) and [configuring the exam](#configurin
 \end{document}
 ```
 
-### A First exercise
+### A First Exercise
 
 Most of the time you are probably fine with one of the following two forms. You can create an exercise with a single task (i.e., no subtasks) like this:
 
@@ -177,9 +177,9 @@ For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effect
 
 #### Free-Form Subtasks
 
-Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to freely layout your exercise.
+Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to layout your exercise freely.
 
-### Outsourcing exercises
+### Outsourcing Exercises
 
 We recommend, that you create a separate file for each exercise, including it using `\input{<filename>}` or `\include{<filename>}`.
 This not only allows easier re-use and -order exercises but also keeps the [main](_main.tex) file clean and readable.
