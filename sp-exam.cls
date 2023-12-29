@@ -229,16 +229,21 @@
 
 % this is the collection of macros (`\examnumber`, ...) which is required
 % so that we can set the titlepage with `\maketitle`.
-% with \def\@x{...} we create a one-way compatibility mapping for the default latex macros
 \sp@make@required@cmd{examnumber}
-\sp@make@required@cmd{examname}     \def\@title{\sp@@examname}
-\sp@make@required@cmd{examiner}     \def\@author{\sp@@examiner}
+\sp@make@required@cmd{examname}
+\sp@make@required@cmd{examiner}
 \sp@make@required@cmd{year}
 \sp@make@required@cmd{semester}
-\sp@make@required@cmd{date}         \def\@date{\sp@@date}
+\sp@make@required@cmd{date}
 \sp@make@required@cmd{time}
 \sp@make@required@cmd{duration}
 \sp@make@required@cmd{permittedmaterial}
+% create a one-way compatibility mapping for the default latex macros
+% this makes hyperref work as well
+\AtEndPreamble{
+   \author{\sp@@examiner}
+   \title{\sp@@examname}
+}
 
 % for the coverimage we provide a convenience command `\framedcoverimage` which directly takes a path
 % to an image and wraps it in a frame with the wanted sizes
