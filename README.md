@@ -226,6 +226,8 @@ So, `examonly` is just a shorthand for `\ifinmode{exam} ... \fi` and `solution` 
 - [ ] What _code_ environments do we want (e.g., one with line numbers and a frame, space for the students with vertical lines)
 - [ ] Do we want unified language setups for prolog, haskell, java, typescript, ...? (some exams use `\java`, ...)
 - [ ] What kind of "workflow" to we want to setup the exam? (e.g., a template repository so that each exam will be a new repository in the respective group of the lecture, should the uulm logos be included in the `.cls` so that it is only one file to copy/include as a submodule/...)
+- [ ] Should we force an exam structure (e.g., force to outsource exercises)
+- [ ] Should there be more predefined/additional macros (e.g. for the creation of tables, usage with tikz-externalize, ...)
 
 ## More Nice Things
 
