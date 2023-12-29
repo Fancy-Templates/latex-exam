@@ -689,14 +689,6 @@
 \def\sp@Subtask@star#1{\strut\sp@subtask{#1}}
 \def\sp@Subtask@#1{\strut\sp@subtask{#1}\sp@subtask@marker{#1}}
 
-% #1 relative weight of the space if you place multiple
-% the space is only active in the exercise mode
-\ifshowsolution
-   \newcommand*\VerticalSpace[1][]{\vspace*{\z@}}
-\else
-   \newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}
-\fi
-
 \setbox0=\hbox{$\bigcirc$}
 \newdimen\sp@square@size
 \sp@square@size=\dimexpr.95\wd0-.5\p@
@@ -743,20 +735,21 @@
    \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
 }{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip}
 
-% a simple environment to wrap the actual solution
-\ifshowsolution
-   \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
-\else
-   \excludecomment{solution}
-\fi
-
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
-% #1 holds the solution that we want to be there
+
 \ifshowsolution
-   \def\StudentLine#1{\StudentStrut{\rlap{#1}\color{gray}\hrulefill}}
+   % a simple environment to wrap the actual solution
+   \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
+   % #1 holds the solution that we want to be there
+   \newcommand*\StudentLine[1]{\StudentStrut{\rlap{#1}\color{gray}\hrulefill}}
+   % #1 relative weight of the space if you place multiple
+   % the space is only active in the exercise mode
+   \newcommand*\VerticalSpace[1][]{\vspace*{\z@}}
 \else
-   \def\StudentLine#1{\StudentStrut{\hrulefill}}
+   \excludecomment{solution}
+   \newcommand*\StudentLine[1]{\StudentStrut{\hrulefill}}
+   \newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}
 \fi
 
 % TODO: space to enter code with indentation lines?
