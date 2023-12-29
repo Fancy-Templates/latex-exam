@@ -94,6 +94,12 @@ If you _really_ want to know about what you can configure besides that, you can 
 \institute{Fluffy Penguins Research Center}
 ```
 
+If you want to forbid the students to remove the additional sheets (if there are any), you can use:
+
+```latex
+\additionalsheets{Die Zusatzblätter dürfen \textbf{nicht} herausgelöst werden.}
+```
+
 ### Basic Document Structure
 
 After [loading the class](#class-options) and [configuring the exam](#configuring-the-exam), your document may have the following basic structure:
