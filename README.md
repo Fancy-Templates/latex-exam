@@ -227,6 +227,7 @@ $ etex -shell-escape -ini -initialize -save-size=20000 -stack-size=20000 -jobnam
 $ pdflatex -jobname exam -fmt sp-class-exam-fmt --shell-escape _main.tex
 ```
 
+You may be able to drop the `-shell-escape`/`--shell-escape` flags (if your exam does not require them).
 However, please do not forget to re-create the format file if you change the template or any other configuration in the preamble.
 
 [^1]: In theory, you can simply create your _own_ mode by defining `\spexammode` with a value of your choice. If this mode should be a solution mode, you should add it to `\sp@modes@show@solutions` as well.
