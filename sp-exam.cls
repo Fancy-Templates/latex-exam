@@ -32,8 +32,10 @@
 
 % load the bare minimum of default packages ==============================
 
-\RequirePackage[T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
+\PassOptionsToPackage{T1}{fontenc}
+\RequirePackage{fontenc}
+\PassOptionsToPackage{utf8}{inputenc}
+\RequirePackage{inputenc}
 \PassOptionsToPackage{ngerman}{babel}
 \RequirePackage{babel}
 \RequirePackage{xcolor}
