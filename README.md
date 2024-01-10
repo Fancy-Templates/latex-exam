@@ -25,21 +25,21 @@ It is currently in its draft phase and [open for comments](#open-discussion-poin
 
 There are just a handful of steps required to get started.
 
-**TODO**. See [the example exam](_main.tex) or [inspect the output](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/jobs/artifacts/main/browse?job=build-pdf) for now.
+**TODO**. See [the example exam](exam.tex) or [inspect the output](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/jobs/artifacts/main/browse?job=build-pdf) for now.
 
 ### General Information
 
 - The template requires _two_ compilations to correctly calculate all points
-- For each desired version (exam, solution, correction), you need to create a separate file (see [exam modes](#exam-modes) for more information on the modes) like this:
+- For each desired version (exam, solution, correction), you need to create a separate file (see [exam modes](#exam-modes) for more information on the modes) like this, but can make `exam.tex` the default one:
 
    ```latex
    \PassOptionsToClass{solution}{sp-exam}
-   \input{_main.tex}
+   \input{exam.tex}
    ```
 
 - This repository contains a [_.latexmkrc_](.latexmkrc) file that can be used with [`latexmk`](https://ctan.org/pkg/latexmk/).
 - You can naturally label and reference exercises and (sub-)tasks using `\label{<name>}` and `\ref{<name>}`/`\autoref{<name>}`.
-- The layout is currently designed for exams in german.
+- The layout is currently designed for exams in German.
 
 ## What This Template Offers
 
@@ -182,7 +182,7 @@ Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a su
 ### Outsourcing Exercises
 
 We recommend, that you create a separate file for each exercise, including it using `\input{<filename>}` or `\include{<filename>}`.
-This not only allows easier re-use and -order exercises but also keeps the [main](_main.tex) file clean and readable.
+This not only allows easier re-use and -order exercises but also keeps the [main](exam.tex) file clean and readable.
 
 ### Exam Modes
 
@@ -252,7 +252,7 @@ If compilation is too slow for you, you can create a format file and use that in
 $ etex -shell-escape -ini -initialize -save-size=20000 -stack-size=20000 -jobname="sp-class-exam-fmt" "&pdflatex" mylatexformat.ltx """exam.tex"""
 
 # issue this twice
-$ pdflatex -jobname exam -fmt sp-class-exam-fmt -shell-escape _main.tex
+$ pdflatex -jobname exam -fmt sp-class-exam-fmt -shell-escape exam.tex
 ```
 
 You may be able to drop the `-shell-escape` flags (if your exam does not require them).
