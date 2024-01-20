@@ -383,7 +383,7 @@
 \sp@make@cmd{exerciseformat}{\textbf{\Large \sp@@exercisename~\arabic{exercise}~--- \large\exercisename}}
 \appto\extrasngerman{\let\exerciseautorefname\sp@@exercisename}
 
-
+\errorcontextlines=999
 % \textbf{\Large Aufgabe~\arabic{exercise}~--- \large#1}
 % #1 name of the exercise
 \def\sp@exercise#1{\par
@@ -393,6 +393,7 @@
    \label{sp@@ex:\arabic{exercise}}%
    \let\@currentname\sp@@exercisename\relax
    \let\@currentlabel\theexercise\relax
+   \hyper@makecurrent{exercise}%
    \edef\sp@current@exercise@formula{sp@exercise@\arabic{exercise}@formula}%
    \edef\sp@current@exercise@subtask{sp@exercise@\arabic{exercise}@subtaskcount}%
    \begingroup
@@ -403,7 +404,11 @@
          % if the command pointed to by '\sp@current@exercise@formula' exists, we display its formula and the result
          % we add +\z@ to compensate faulty formulas
          \expandafter\ifcsname\sp@current@exercise@formula\endcsname
-            \sp@get@points@of@task\sp@result{\arabic{exercise}}%
+            \ifnum\csname\sp@current@exercise@subtask\endcsname<\@ne\relax
+               \def\sp@result{\sp@current@exercise@expected@points}%
+            \else
+               \sp@get@points@of@task\sp@result{\arabic{exercise}}%
+            \fi
             \let\sp@pt\space% hide the pt marker
             % currently we avoid math-mode
             \textbf{%
@@ -411,7 +416,17 @@
                \ifnum\csname\sp@current@exercise@subtask\endcsname>\@ne
                   \csname\sp@current@exercise@formula\endcsname=\space
                \fi
-               \sp@result\space Punkt\ifdim\sp@result\p@=\p@\else e\fi}
+               \sp@result\space Punkt\ifdim\sp@result\p@=\p@\else e\fi}%
+            % if the user has specified the expected number of points we check if they match
+            \ifcsname sp@current@exercise@expected@points\endcsname
+               % we check if the expected points are equal to the calculated points
+               \def\sp@tmp{\csname sp@current@exercise@expected@points\endcsname}%
+               \ifdim\sp@result\p@=\sp@tmp\p@ \else
+                  % otherwise we issue a warning
+                  \ClassWarning{sp-exam}{This warning is expected when you just changed the points/on the first run as two passes are required to get stable points. So please, first rerun latex to see if the problem persists. The expected points for exercise \arabic{exercise} do not match the calculated points! You wanted '\sp@tmp' but the subtask only sum to \sp@result. Please check the expected points and the points given to the subtasks! If you think this is an error, contact the maintainer and remove the expected points}%
+                  \rlap{\textbf{\color{red}(vs.\,\sp@tmp)}}%
+               \fi
+            \fi
          \fi
       \end{tabularx}\smallskip\par
    \endgroup
@@ -706,21 +721,16 @@
 
 % user commands for exercises ============================================
 
-% #1: only if this exercise has no subtasks, you can give the points here directly
+% #1: you can give the points here directly, if the exercise has subtasks,
+%     they must sum up to this number
 % #2: name of the exercise
 \newenvironment{exercise}[2][]{\begingroup
-   \sp@exercise{#2}%
    % test if the optional argument is given
    \edef\@tmp{#1}\ifx\@tmp\@empty\else
-      \sp@subtask{#1}%
-      % if yes, we forbid further subtasks from occurring
-      \def\sp@subtask##1{\ClassError{sp-exam}{You cannot use subtasks in an exercise with a given number of points}{Either remove the optional argument to \string\exercise\space or remove the subtask!}}%
-      % we manually restore the label references here, the user should not know that we handle this
-      % with a subtask as well!
-      \let\@currentname\sp@@exercisename\relax
-      \hyper@makecurrent{exercise}%
-      \let\@currentlabel\theexercise\relax
+      % we have to get exactly these points!
+      \def\sp@current@exercise@expected@points{#1}%
    \fi
+   \sp@exercise{#2}%
 }{\endsp@exercise\endgroup\bigskip}
 
 % #1: number of points
