@@ -748,11 +748,16 @@
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
 
 \newdimen\sp@lines@space \sp@lines@space=1cm
-\def\sp@lines@rule#1{\rule{0.1pt}{#1}\hspace*{\sp@lines@space}}
+\newdimen\sp@lines@width \sp@lines@width=.1\p@
+\def\IndentGuidesDistance#1{\setlength\sp@lines@space{#1}}
+
+% used below to create multiple lines
+\def\sp@lines@rule#1{\rule\sp@lines@width{#1}\hspace*{\sp@lines@space}}
 
 % #1 is the number of lines, #2 is the height using arbitrary units
-\newcommand*\CodeLines[2][5]{%
+\newcommand*\IndentGuides[2][5]{%
    \@tempcnta\z@%
+   % your average for i loop
    \loop
       \sp@lines@rule{#2}%
       \advance\@tempcnta by\@ne\relax

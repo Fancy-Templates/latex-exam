@@ -176,10 +176,11 @@ The `\VerticalSpace` inserts effectively a `\vfill` in the exam mode (and theref
 
 For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effectively use the remaining space on a line (use `\parbox{<width>}{\StudentLine{<solution>}}` to limit the width) and set a placeholder for the student to write in. The given solution is added in the solution mode.
 
-
 #### Lines for Student Code
 
-You can use the `\CodeLines{<height>}` macro to [[TODO]]
+You can use the `\IndentGuides{<height>}` macro to create vertical lines (of length `<height>`) as indent guides. For example `\IndentGuides{5cm}` creates 5cm long lines.
+You can use an optional argument if you are not satisfied with the number of lines presented. So `\IndentGuides[4]{5cm}` creates 4 lines of 5cm length.
+The default distance can be changed with `\IndentGuidesDistance{<distance>}`.
 
 
 #### Free-Form Subtasks
