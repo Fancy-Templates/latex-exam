@@ -15,6 +15,7 @@ It is currently in its draft phase and [open for comments](#open-discussion-poin
       - [Radio- and Checkboxes](#radio--and-checkboxes)
       - [Free-Text Answers and Spacing](#free-text-answers-and-spacing)
       - [Lines for Student Code](#lines-for-student-code)
+      - [Code Presentation](#code-presentation)
       - [Free-Form Subtasks](#free-form-subtasks)
     - [Outsourcing Exercises](#outsourcing-exercises)
     - [Exam Modes](#exam-modes)
@@ -182,6 +183,32 @@ You can use the `\IndentGuides{<height>}` macro to create vertical lines (of len
 You can use an optional argument if you are not satisfied with the number of lines presented. So `\IndentGuides[4]{5cm}` creates 4 lines of 5cm length.
 The default distance can be changed with `\IndentGuidesDistance{<distance>}`.
 
+#### Code Presentation
+
+If you pass the document-class option `code` to the `sp-exam` class, it will set up `minted` for you. Now, you can use `minted` to present code to your liking:
+
+```latex
+\begin{minted}{java}
+public class HelloWorld {
+   public static void main(String[] args) {
+      System.out.println("Hello World!");
+   }
+}
+\end{minted}
+```
+
+As an optional argument, you can (next to all the other keys known from `minted`) pass `numbered` to get indented line numbers (`numbered` accepts an argument which controls the amount of the indent):
+
+```latex
+% or \begin{minted}[numbered=2em]{java}
+\begin{minted}[numbered]{java}
+public class HelloWorld {
+   public static void main(String[] args) {
+      System.out.println("Hello World!");
+   }
+}
+\end{minted}
+```
 
 #### Free-Form Subtasks
 

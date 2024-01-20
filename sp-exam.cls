@@ -665,11 +665,22 @@
 \PassOptionsToPackage{outputdir=\sp@@outputdir}{minted}
 \RequirePackage{minted}
 
+\setminted{
+   numbersep=8pt
+}
+
+% define a new minted key which if given indents them
+\define@key{minted@opt@cmd}{numbered}[1.33em]{%
+   \setminted{linenos,xleftmargin=#1}
+}
+
 \ifshowsolution
    \usemintedstyle{tango}
+   \def\theFancyVerbLine{\sffamily\textcolor{gray}{\scriptsize\arabic{FancyVerbLine}}}
 \else
    % we avoid colors in the exam
    \usemintedstyle{bw}
+   \def\theFancyVerbLine{\sffamily\scriptsize\arabic{FancyVerbLine}}
 \fi
 
 \fi
