@@ -14,6 +14,7 @@ It is currently in its draft phase and [open for comments](#open-discussion-poin
       - [Solutions](#solutions)
       - [Radio- and Checkboxes](#radio--and-checkboxes)
       - [Free-Text Answers and Spacing](#free-text-answers-and-spacing)
+      - [Lines for Student Code](#lines-for-student-code)
       - [Free-Form Subtasks](#free-form-subtasks)
     - [Outsourcing Exercises](#outsourcing-exercises)
     - [Exam Modes](#exam-modes)
@@ -174,6 +175,12 @@ If your task requires a radio- or checkbox, you can use the following environmen
 The `\VerticalSpace` inserts effectively a `\vfill` in the exam mode (and therefore just creates blank vertical space for the students to write). An optional argument allows to (relatively) weigh the space against other `\VerticalSpace` commands. For example, if you use `\VerticalSpace[2]` and `\VerticalSpace`, the first one will be twice as large as the second one.
 
 For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effectively use the remaining space on a line (use `\parbox{<width>}{\StudentLine{<solution>}}` to limit the width) and set a placeholder for the student to write in. The given solution is added in the solution mode.
+
+
+#### Lines for Student Code
+
+You can use the `\CodeLines{<height>}` macro to [[TODO]]
+
 
 #### Free-Form Subtasks
 

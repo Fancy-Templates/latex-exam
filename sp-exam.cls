@@ -5,7 +5,7 @@
 \DeclareOption{exam}{\def\spexammode{exam}}
 \DeclareOption{solution}{\def\spexammode{solution}}
 \DeclareOption{correction}{\def\spexammode{correction}}
-\providecommand\spexammode{exam}
+\ifcsname spexammode\endcsname\else\def\spexammode{exam}\fi
 
 % code support loads everything to present code with the minted package
 % using it requires python, pygments, and the `--shell-escape`
@@ -746,6 +746,19 @@
 
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
+
+\newdimen\sp@lines@space \sp@lines@space=1cm
+\def\sp@lines@rule#1{\rule{0.1pt}{#1}\hspace*{\sp@lines@space}}
+
+% #1 is the number of lines, #2 is the height using arbitrary units
+\newcommand*\CodeLines[2][5]{%
+   \@tempcnta\z@%
+   \loop
+      \sp@lines@rule{#2}%
+      \advance\@tempcnta by\@ne\relax
+      \ifnum\the\@tempcnta<#1\relax
+   \repeat
+}
 
 \ifshowsolution
    % a simple environment to wrap the actual solution
