@@ -133,9 +133,10 @@ Most of the time you are probably fine with one of the following two forms. You 
 \end{exercise}
 ```
 
-If you want subtasks, you can drop the optional argument and use the `tasks` environment, which allows you to specify the points for each subtask (calculating the total number of points automatically along the way):
+If you want subtasks, you can add them like this (see below for [free-form subtasks](#free-form-subtasks)): `
 
 ```latex
+% \begin{exercise}[7]{Eine interessante Aufgabe}
 \begin{exercise}{Eine interessante Aufgabe}
    Eine interessante Aufgabenbeschreibung
    \begin{tasks}
@@ -146,6 +147,8 @@ If you want subtasks, you can drop the optional argument and use the `tasks` env
    \end{tasks}
 \end{exercise}
 ```
+
+You can combine the optional argument with the subtasks as well, as indicated by the comment. In this scenario, the template will automatically check if the sum of the subtasks is equal to the given/expected points (i.e., it issues a warning and provides a visual hint if the points are not equal). Use this as a safeguard if, for whatever reason, an exercise has to have a fixed number of points.
 
 #### Solutions
 
