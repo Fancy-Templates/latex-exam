@@ -666,12 +666,31 @@
 \RequirePackage{minted}
 
 \setminted{
-   numbersep=8pt
+   numbersep=8pt,
+   breaklines=true,
 }
 
 % define a new minted key which if given indents them
 \define@key{minted@opt@cmd}{numbered}[1.33em]{%
    \setminted{linenos,xleftmargin=#1}
+}
+
+% default language definitions as desired:
+% #1 macro and #2 language name
+\def\sp@new@mintinline#1->#2\@nil{%
+   \newmintinline[#1]{#2}{}%
+}
+\@for\lang:={%
+   java->java,%
+   ts->typescript,%
+   js->javascript,%
+   haskell->haskell,%
+   prolog->prolog,%
+   css->css,%
+   xml->xml,%
+   html->html%
+}\do{
+   \expandafter\sp@new@mintinline\lang\@nil
 }
 
 \ifshowsolution

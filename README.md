@@ -210,6 +210,18 @@ public class HelloWorld {
 \end{minted}
 ```
 
+Additionally, we provide several inline macros that can be used to write code for common languages:
+```latex
+\java{System.out.println("Hello Java!");}
+\ts{console.log("Hello TypeScript!");}
+\js{console.log("Hello JavaScript!");}
+\haskell{main = putStrLn "Hello Haskell!"}
+\prolog{main :- write('Hello Prolog!'), nl.}
+\css{body:before { content: "Hello CSS"; }}
+\xml{<hello>XML</hello>}
+\html{<html><body>Hello HTML!</body></html>}
+```
+
 #### Free-Form Subtasks
 
 Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to layout your exercise freely.
