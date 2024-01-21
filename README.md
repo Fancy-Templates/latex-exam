@@ -282,22 +282,6 @@ So, `examonly` is just a shorthand for `\ifinmode{exam} ... \fi` and `solution` 
 ## Open Discussion Points
 
 - [ ] How should we style the point boxes/solution blocks
-- [ ] Are there other modes required/desired (in FP we had "supersize")
-- [ ] Should we reduce the ways to check for a given mode. For example, we could allow for multiple modes to be active (`correction` and `solution`) so that everything is `\ifinmode{solution} ... \fi`.
-- [ ] Should there be compatibility modes for old exam templates?
-- [ ] What _code_ environments do we want (e.g., one with line numbers and a frame, space for the students with vertical lines)
-- [ ] Do we want unified language setups for prolog, haskell, java, typescript, ...? (some exams use `\java`, ...)
-- [ ] What kind of "workflow" do we want to setup the exam? (e.g., a template repository so that each exam will be a new repository in the respective group of the lecture, should the uulm logos be included in the `.cls` so that it is only one file to copy/include as a submodule/...)
-- [ ] Should we force an exam structure (e.g., force to outsource exercises)
-- [ ] Should there be more predefined/additional macros (e.g. for the creation of tables, usage with tikz-externalize, ...)
-- [ ] Should we provide a makefile/bash script (which can replace the need for separate `.tex` files for each version)
-- [ ] Do we want more additional hints for the permitted material? How should they be worded?
-  - Sie dürfen ein beidseitig, handbeschriebenes DIN-A4-Blatt verwenden.
-  - Sie dürfen das Cheat-Sheet der Veranstaltung mit handschriftlichen Ergänzungen verwenden.
-  - Es sind keine Hilfsmittel erlaubt.
-- [ ] Do we really want to enforce 50% transparency for the "Siegelkasten"
-- [ ] Do we want the alternatives:
-   > Für einen Abschnitt kann immer eine Gesamtpunktezahl angegeben werden, die ggf. gegen die errechnete Gesamtpunktezahl aus den Aufgaben geprüft wird.
 
 ## More Nice Things
 
