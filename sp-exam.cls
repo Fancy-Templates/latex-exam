@@ -274,23 +274,23 @@
 % in other words, the defaults should be satisfactory for most users
 % the following lines define them roughly from top to bottom regarding their appearance on the (exam/solution) title page
 \sp@make@cmd{examcount}{\sp@@examnumber. Klausur}
-\sp@make@cmd{examlineA}{\sp@@examcount{} zur Veranstaltung}
-\sp@make@cmd{examlineB}{\textbf{\LARGE\sp@@examname}}
-\sp@make@cmd{examinerline}{\@hangfrom{Prüfer:\space}{\strut\sp@@examiner\strut}}
+\sp@make@cmd{examlineA}{\strut\sp@@examcount{} zur Veranstaltung}
+\sp@make@cmd{examlineB}{\textbf{\Large\strut\LARGE\sp@@examname\Large\strut}}
+\sp@make@cmd{examinerline}{\@hangfrom{Prüfer:\space}{\raggedright\strut\sp@@examiner\strut\endgraf}}
 
 \sp@make@cmd{whenline}{im \sp@@semester semester \sp@@year}
 \sp@make@cmd{institute}{Institut für Softwaretechnik und Programmiersprachen}
 \sp@make@cmd{instituteline}{\sp@@institute}
 
 \sp@make@cmd{examdateline}{\sp@@date, \sp@@time}
-\sp@make@cmd{examdurationline}{\textbf{Bearbeitungszeit: \sp@@duration\;min}}
+\sp@make@cmd{examdurationline}{Bearbeitungszeit: \sp@@duration\;min}
 
 \sp@make@cmd{additionalsheets}{\ifcsname sp@appendix@end\endcsname Sie dürfen \ifnum\sp@appendix@end=1\relax das Zusatzblatt\else die Zusatzblätter\fi\space herauslösen\fi}
 
 \sp@make@cmd{logolocation}{img/}
 \sp@make@cmd{logowidth}{73mm}
 \sp@make@cmd{logoline}{%
-\parbox\linewidth{\strut\hfill\includegraphics[width=\sp@@logowidth]{\sp@@logolocation logo-uulm}}\vskip2.5mm\relax
+\raisebox{-\height}{\parbox\linewidth{\strut\hfill\includegraphics[width=\sp@@logowidth]{\sp@@logolocation logo-uulm}}}%
 }
 
 \def\sp@table@indent{6\p@}
@@ -601,20 +601,25 @@
 \sp@make@cmd{coverpage@exam}{%
 \begin{center}
    \parskip\z@\relax\parindent\z@\relax
-   \begingroup
-      \sp@@logoline
+   \rlap{\smash{\sp@@logoline}}%
    % header --------------------------------------------------------------
-   \endgroup\par\begingroup
-      \parbox\linewidth{\sp@@examlineA\\[5\p@]
-      \sp@@examlineB\\[1ex]
-      \sp@@whenline}
+   \begingroup
+      % this is somewhat historically grown from a time in which the logo had
+      % its own line
+      \rlap{\parbox\linewidth{%
+         \parbox{\dimexpr\linewidth-\sp@@logowidth-1cm}{%
+            \raggedright
+            \sp@@examlineA\\[5\p@]
+            \sp@@examlineB\\[1ex]
+            \sp@@whenline}%
+      }}%
+   % date and time -------------------------------------------------------
+   \endgroup\vskip2.5em\par\begingroup
+      \strut\hfill\sp@@examdateline\hfill\sp@@examdurationline\hfill\strut
    % examiner/institute line ---------------------------------------------
    \endgroup\vskip2em\par\begingroup
-      \parbox[t]{.5\linewidth}{\sp@@examinerline}%
+      \parbox[t]{.5\linewidth}{\sp@@examinerline}\hfill%
       \parbox[t]{.45\linewidth}{\raggedleft\sp@@instituteline}%
-   % date and time -------------------------------------------------------
-   \endgroup\vskip2em\par\begingroup
-      \strut\hfill\sp@@examdateline\hfill\sp@@examdurationline\hfill\strut
    % student data table --------------------------------------------------
    \endgroup\vskip2em\par\begingroup
       \sp@@studentdatatable
