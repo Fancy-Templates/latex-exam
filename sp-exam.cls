@@ -559,6 +559,20 @@
    }}%
 }
 
+\def\sp@pointstable@last@wrapper#1{
+\multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}\let\and\qquad#1}\\[4\p@]\hline}
+
+\def\nachkorrektur{Einsichtnahme $\bigcirc$ mit / $\bigcirc$ ohne Nachkorrektur}
+
+\def\notenbonus{$\bigcirc$ mit / $\bigcirc$ ohne Notenbonus}
+
+\def\sp@pointstable@last{}
+\def\addtopointstable#1{%
+   \appto\sp@pointstable@last{\sp@pointstable@last@wrapper{#1}}%
+}
+
+
+
 \sp@make@cmd{pointstable}{%
 \sp@tablereset
 % additionally, we need two columns for the total sum of points and the grade
@@ -579,8 +593,7 @@
    \hline
    \sp@numbers \sp@points@row@entry\@empty{$\sum$}{von \sp@total} & \sp@points@row@entry\@empty{{\LARGE\strut}\textbf{Note}}{} \\ \hline
    \rule\z@{2\ht\strutbox}\sp@correctors & \tiny Korrektur\\ \hline
-   \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}Einsichtnahme ohne Nachkorrektur $\bigcirc$ \hskip2cm Einsichtnahme mit Nachkorrektur $\bigcirc$}\\[4\p@]
-   \hline
+   \sp@pointstable@last
 \end{tabularx}%
 }
 
