@@ -290,7 +290,7 @@
 \sp@make@cmd{logolocation}{img/}
 \sp@make@cmd{logoline}{%
 \begin{tabular}{@{}m{.5\linewidth}@{}m{.5\linewidth}@{}}
-	\includegraphics[scale=.55]{\sp@@logolocation logo-icon} &\raggedleft\arraybackslash\includegraphics[scale=.55]{\sp@@logolocation logo-text}%
+	\includegraphics[scale=.55]{\sp@@logolocation logo-uulm}%
 \end{tabular}\vskip-4mm\relax
 }
 
