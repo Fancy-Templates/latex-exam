@@ -79,7 +79,7 @@ We show example definitions for all required options below:
 % alternatively: \allowcheatsheet, \allownothing, or free text
 ```
 
-Besides these, there are probably just two more options that you are potentially interested in:
+Besides these, there are probably just two or three more options that you are potentially interested in:
 
 ```latex
 % This allows to add more information to the cover page
@@ -88,6 +88,11 @@ Besides these, there are probably just two more options that you are potentially
 }
 % this allows to set the given image inside the stamp rectangle on the cover page
 \framedcoverimage{img/nilpferd}
+
+% allows you to freely add lines to the points table
+\addtopointstable{\notenbonus}
+% \addtopointstable{\nachkorrektur\and\notenbonus}, \addtopointstable{Intersting free text}
+% can be given multiple times if more than one line is desired/required
 ```
 
 If you _really_ want to know about what you can configure besides that, you can take a look at the [source code](sp-exam.cls). Every `\sp@make@cmd{<name>}{<default value>}` indicates a configuration option that you can set via `\<name>{<new value>}`. For example, you can overwrite the institute like this:
