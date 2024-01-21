@@ -570,8 +570,6 @@
    \appto\sp@pointstable@last{\sp@pointstable@last@wrapper{#1}}%
 }
 
-
-
 \sp@make@cmd{pointstable}{%
 \sp@tablereset
 % additionally, we need two columns for the total sum of points and the grade
@@ -596,13 +594,9 @@
 \end{tabularx}%
 }
 
-% the sp cover page ======================================================
 
-\sp@make@cmd{coverpage@exam}{%
-\begin{center}
-   \parskip\z@\relax\parindent\z@\relax
-   \rlap{\smash{\sp@@logoline}}%
-   % header --------------------------------------------------------------
+\sp@make@cmd{titleandlogo}{%
+\rlap{\smash{\sp@@logoline}}%
    \begingroup
       % this is somewhat historically grown from a time in which the logo had
       % its own line
@@ -613,8 +607,17 @@
             \sp@@examlineB\\[1ex]
             \sp@@whenline}%
       }}%
+   \endgroup
+}
+
+% the sp cover page ======================================================
+\sp@make@cmd{coverpage@exam}{%
+\begin{center}
+   \parskip\z@\relax\parindent\z@\relax
+   % header --------------------------------------------------------------
+   \sp@@titleandlogo
    % date and time -------------------------------------------------------
-   \endgroup\vskip2.5em\par\begingroup
+   \vskip2.5em\par\begingroup
       \strut\hfill\sp@@examdateline\hfill\sp@@examdurationline\hfill\strut
    % examiner/institute line ---------------------------------------------
    \endgroup\vskip2em\par\begingroup
@@ -652,15 +655,8 @@
 \sp@make@cmd{coverpage@solution}{%
 \begin{center}
    \parskip\z@\relax\parindent\z@\relax
-   \begingroup
-      \sp@@logoline
-   % header --------------------------------------------------------------
-   \endgroup\par\begingroup
-      \sp@@examlineA\\[5\p@]
-      \sp@@examlineB\\[1ex]
-      \sp@@whenline
-   % examiner/institute line ---------------------------------------------
-   \endgroup\vskip1.5em\par\begingroup
+   \sp@@titleandlogo
+   \vskip2.5em\par\begingroup
       \textit{\sp@@examinerline}
    % date and time -------------------------------------------------------
    \endgroup\vskip1.5em\par\begingroup
