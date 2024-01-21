@@ -288,10 +288,9 @@
 \sp@make@cmd{additionalsheets}{\ifcsname sp@appendix@end\endcsname Sie dürfen \ifnum\sp@appendix@end=1\relax das Zusatzblatt\else die Zusatzblätter\fi\space herauslösen\fi}
 
 \sp@make@cmd{logolocation}{img/}
+\sp@make@cmd{logowidth}{73mm}
 \sp@make@cmd{logoline}{%
-\begin{tabular}{@{}m{.5\linewidth}@{}m{.5\linewidth}@{}}
-	\includegraphics[scale=.55]{\sp@@logolocation logo-uulm}%
-\end{tabular}\vskip-4mm\relax
+\parbox\linewidth{\strut\hfill\includegraphics[width=\sp@@logowidth]{\sp@@logolocation logo-uulm}}\vskip2.5mm\relax
 }
 
 \def\sp@table@indent{6\p@}
@@ -606,9 +605,9 @@
       \sp@@logoline
    % header --------------------------------------------------------------
    \endgroup\par\begingroup
-      \sp@@examlineA\\[5\p@]
+      \parbox\linewidth{\sp@@examlineA\\[5\p@]
       \sp@@examlineB\\[1ex]
-      \sp@@whenline
+      \sp@@whenline}
    % examiner/institute line ---------------------------------------------
    \endgroup\vskip2em\par\begingroup
       \parbox[t]{.5\linewidth}{\sp@@examinerline}%
