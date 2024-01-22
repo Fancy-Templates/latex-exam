@@ -214,11 +214,12 @@
 \sp@make@required@cmd{date}
 \sp@make@required@cmd{time}
 \sp@make@required@cmd{duration}
-\sp@make@required@cmd{permittedmaterial}
 
 \def\allowhandwrittensheet{Sie dürfen ein beidseitig, handbeschriebenes DIN-A4-Blatt verwenden.}
 \def\allowcheatsheet{Sie dürfen das Cheat-Sheet der Veranstaltung mit handschriftlichen Ergänzungen verwenden.}
 \def\allownothing{Es sind keine Hilfsmittel erlaubt.}
+
+\sp@make@cmd{permittedmaterial}{\allownothing}
 
 % create a one-way compatibility mapping for the default latex macros
 % this makes hyperref work as well
@@ -257,7 +258,8 @@
 \ifx\CurrentFilePathUsed\@empty
    \sp@make@cmd{rootpath}{}
 \else
-   \sp@make@cmd{rootpath}{\CurrentFilePathUsed/}
+   \edef\sp@cur@file@used@e{\CurrentFilePathUsed}
+   \sp@make@cmd{rootpath}{\sp@cur@file@used@e/}
 \fi
 
 % we assume that, by default, user's will give th relative path to the cls
@@ -265,7 +267,7 @@
 \sp@make@cmd{logolocation}{\sp@@rootpath img/}
 \sp@make@cmd{logowidth}{73mm}
 \sp@make@cmd{logoline}{%
-\raisebox{-\height}{\parbox\linewidth{\strut\hfill\includegraphics[width=\sp@@logowidth]{\sp@@logolocation logo-uulm}}}%
+\raisebox{-\height}{\parbox\linewidth{\strut\hfill\includegraphics[width=\sp@@logowidth]{\sp@@logolocation logo-uulm.pdf}}}%
 }
 
 \def\sp@table@indent{6\p@}
