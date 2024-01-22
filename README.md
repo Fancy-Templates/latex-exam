@@ -7,9 +7,110 @@ It is currently in its draft phase and [open for comments](#open-discussion-poin
 
 ## Quickstart Guide
 
-There are just a handful of steps required to get started.
+> If you encounter any problem, please write me an [email](mailto:florian.sihler@uni-ulm.de) or open an [issue](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/issues/new)!
 
-**TODO**. See [the example exam](exam.tex) or [inspect the output](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/jobs/artifacts/main/browse?job=build-pdf) for now.
+There are just a handful of steps required to get started. You can [inspect the output](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/jobs/artifacts/main/browse?job=build-pdf) to see the pdfs produced.
+
+1. Within your repository, navigate to wherever you want to create your exam.\
+   The following examples will assume that the folder is empty (but this is not required).
+
+2. <details><summary>Retrieve the respective submodule.</summary>
+
+   * With SSH:
+
+      ```shell
+      $ git submodule add git@spgit.informatik.uni-ulm.de:teaching/templates/exam.git template
+      ```
+
+   * With HTTPS:
+
+      ```shell
+      $ git submodule add https://spgit.informatik.uni-ulm.de/teaching/templates/exam.git template
+      ```
+
+   Now, there should be a new folder `template` that contains the exam template:
+
+   ```text
+    + /
+      | - template/
+      |   | - sp-exam.cls
+      |   | - ...
+   ```
+
+   If you have never worked with [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules), cloning with the `--recursive` flag is usually sufficient.
+
+   </details>
+
+   **Note, that for submodules to work, everyone working with your repository must have access to the exam repository. In other words, if you work with students, they require access to the exam template repository as well.**
+
+3. <details><summary> <i>(optional)</i> Create a folder for your first exam (e.g., "exam1").</summary>
+
+   ```shell
+   $ mkdir exam1
+   ```
+
+   Now, your folder structure should look like this:
+
+   ```text
+    + /
+      | - exam1/
+      | - template/
+      |   | - sp-exam.cls
+      |   | - ...
+   ```
+
+   </details>
+
+   Although this is technically just required if you want to create multiple exams for your lecture, it is probably best to plan ahead.
+
+4. <details><summary> Setup the default exam structure </summary>
+
+   Copy at least `template/exam.tex`, `template/solution.tex`, and `template/correction.tex` to your exam folder (or create them from scratch) as you probably want to modify them anyway.
+   Besides, create a new folder `exercises` (or copy the one from the template)
+
+   ```shell
+   $ cp template/exam.tex template/solution.tex template/correction.tex exam1/
+   $ cp -r template/exercises exam1/
+   ```
+
+   If you use `latexmk` you can copy the [_.latexmkrc_](.latexmkrc) file as well.
+
+   Now, your folder structure should look like this:
+
+   ```text
+    + /
+      | - exam1/
+      |   | - exercises/
+      |   |   | - ...
+      |   | - exam.tex
+      |   | - solution.tex
+      |   | - correction.tex
+      | - template/
+      |   | - sp-exam.cls
+      |   | - ...
+   ```
+
+   </details>
+
+   With this, the main exam lives in the `exam.tex`, while the exercises live in the `exercises` folder. Your exam/project now resides in the `exam1` folder.
+
+5. <details><summary> Configure the exam </summary>
+
+   Within the `exam.tex`, you first have to include the correct documentclass, by specifying the correct path to the template (which should do most of the magic from there). If you changed nothing in the steps before, the template should check automatically, if `../template/sp-exam.cls` is present. Otherwise, make sure to give the correct relative path here.
+
+   Now, update the remaining fields so they match your lecture.
+
+   </details>
+
+If you want to just get started, and you are in an empty directory, the following commands should work for you:
+
+```shell
+git submodule add https://spgit.informatik.uni-ulm.de/teaching/templates/exam.git template
+mkdir exam1
+cp template/exam.tex template/solution.tex template/correction.tex exam1/
+cp -r template/exercises exam1/
+# configure exam1/exam.tex...
+```
 
 ### General Information
 
