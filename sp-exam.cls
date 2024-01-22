@@ -782,7 +782,7 @@
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
 
 \newdimen\sp@lines@space \sp@lines@space=1cm
-\newdimen\sp@lines@width \sp@lines@width=.1\p@
+\newdimen\sp@lines@width \sp@lines@width=.42\p@
 \def\IndentGuidesDistance#1{\setlength\sp@lines@space{#1}}
 
 % used below to create multiple lines
