@@ -403,11 +403,7 @@
          % if the command pointed to by '\sp@current@exercise@formula' exists, we display its formula and the result
          % we add +\z@ to compensate faulty formulas
          \expandafter\ifcsname\sp@current@exercise@formula\endcsname
-            \ifnum\csname\sp@current@exercise@subtask\endcsname<\@ne\relax
-               \def\sp@result{\sp@current@exercise@expected@points}%
-            \else
-               \sp@get@points@of@task\sp@result{\arabic{exercise}}%
-            \fi
+            \sp@get@points@of@task\sp@result{\arabic{exercise}}%
             \let\sp@pt\space% hide the pt marker
             % currently we avoid math-mode
             \textbf{%
@@ -517,6 +513,10 @@
 % to be used as `\begin{exercise} ... \end{exercise}`
 \def\endsp@exercise{%
    \end{enumerate}%
+   % define the expected points first if none given
+   \ifnum\value{subtask}=\z@\relax
+      \expandafter\def\csname\sp@current@exercise@formula\endcsname{\sp@current@exercise@expected@points\sp@pt}%
+   \fi
    \expandafter\sp@persist\sp@current@exercise@formula=\csname\sp@current@exercise@formula\endcsname;%
    \expandafter\sp@persist sp@exercise@\arabic{exercise}@subtaskcount=\arabic{subtask};%
    % every exercise gets it's own page
