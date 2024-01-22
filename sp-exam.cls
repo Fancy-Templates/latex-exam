@@ -1,11 +1,12 @@
-% Theoretically we can allow _any_ mode but this *should* help in preventing
-% typos. Yet, nothing hinders a user to use `\def\spexammode{foo}` and subsequently
-% use '\only' with 'foo' as a desired mode.
+% we by default support three modes
+\newif\ifexam        \examtrue
+\newif\ifsolution    \solutionfalse
+\newif\ifcorrection  \correctionfalse
+
 % Moreover, our default/convenience macros consider these as special modes
-\DeclareOption{exam}{\def\spexammode{exam}}
-\DeclareOption{solution}{\def\spexammode{solution}}
-\DeclareOption{correction}{\def\spexammode{correction}}
-\ifcsname spexammode\endcsname\else\def\spexammode{exam}\fi
+\DeclareOption{exam}{\examtrue\solutionfalse\correctionfalse}
+\DeclareOption{solution}{\examfalse\solutiontrue\correctionfalse}
+\DeclareOption{correction}{\examfalse\solutiontrue\correctiontrue}
 
 % code support loads everything to present code with the minted package
 % using it requires python, pygments, and the `--shell-escape`
@@ -15,9 +16,6 @@
 % this loads tikz and makes rounded rectangles
 \newif\if@sp@rounded@support@
 \DeclareOption{rounded}{\@sp@rounded@support@true}
-
-% we provide default lists that theoretical class-hackers can use to add their own modes
-\def\sp@modes@show@solutions{solution,correction}
 
 % pass unknown options to article
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
@@ -52,37 +50,6 @@
 \if@sp@rounded@support@
    \RequirePackage{tikz}
 \fi
-
-% modes ==========================================================
-
-% we use this if as a helper to store if we are in a desired
-% mode or not
-\newif\if@sp@tmp@
-
-% this sets `\@sp@tmp@true` if any of the modes in `\sp@mode@list`
-% is equal to the mode selected by `\spexammode`
-\def\sp@checkmode{\@sp@tmp@false
-% we check if any of the modes is set
-\@for\sp@mode@tmp:=\sp@mode@list\do{%
-   \ifx\sp@mode@tmp\spexammode
-      \@sp@tmp@true
-   \fi
-}}
-
-% if we are in one of the modes given by #1, we execute #2, otherwise #3
-\newcommand\ifinmode[1]{%
-   \edef\sp@mode@list{#1}\sp@checkmode
-   \if@sp@tmp@\ignorespaces
-}
-
-% \only if we are in the modes given by #1, we execute #2
-\newcommand\only[2]{\ifinmode{#1}#2\fi}
-
-% another convenience wrapper, execute then for the solution and `\else` otherwise
-% if the solution is to be hidden
-\newcommand*\ifshowsolution{%
-   \ifinmode{\sp@modes@show@solutions}%
-}
 
 % meta commands ==========================================================
 
@@ -127,7 +94,7 @@
 
 % hyperlinks =============================================================
 
-\ifshowsolution
+\ifsolution
    \PassOptionsToPackage{colorlinks,allcolors=purple,pdfusetitle}{hyperref}
 \else
    \PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}
@@ -141,7 +108,7 @@
 \RequirePackage{newtxtt} % ttfamily
 \RequirePackage{sfmath}
 
-\renewcommand\familydefault{\sfdefault}
+\def\familydefault{\sfdefault}
 
 % page layout ============================================================
 
@@ -170,7 +137,7 @@
 \pagestyle{fancy}
 \headheight=13.6\p@
 \lhead{\sp@@examname}
-\ifshowsolution
+\ifsolution
    \chead{%
       \smash{\parbox[b]{3cm}{\centering
          \sp@@solutionmarker\\
@@ -287,7 +254,15 @@
 
 \sp@make@cmd{additionalsheets}{\ifcsname sp@appendix@end\endcsname Sie dürfen \ifnum\sp@appendix@end=1\relax das Zusatzblatt\else die Zusatzblätter\fi\space herauslösen\fi}
 
-\sp@make@cmd{logolocation}{img/}
+\ifx\CurrentFilePathUsed\@empty
+   \sp@make@cmd{rootpath}{}
+\else
+   \sp@make@cmd{rootpath}{\CurrentFilePathUsed/}
+\fi
+
+% we assume that, by default, user's will give th relative path to the cls
+% so we can make use of \CurrentFilePathUsed
+\sp@make@cmd{logolocation}{\sp@@rootpath img/}
 \sp@make@cmd{logowidth}{73mm}
 \sp@make@cmd{logoline}{%
 \raisebox{-\height}{\parbox\linewidth{\strut\hfill\includegraphics[width=\sp@@logowidth]{\sp@@logolocation logo-uulm}}}%
@@ -466,7 +441,7 @@
 \fi
 
 % place a marker into the margin
-\ifshowsolution
+\ifsolution
    \def\sp@subtask@marker#1{\marginnote{\color{purple}{\tiny\bfseries#1 Punkt\ifdim#1\p@=\p@\else e\fi}}}
 \else
    \def\sp@subtask@marker#1{%
@@ -497,7 +472,7 @@
 
 % by default we clear the page and write the total number of pages in the margin
 % for the solution, we do not want point marker
-\ifshowsolution
+\ifsolution
    \sp@make@cmd{endofexercise}{\clearpage\rfoot{}}
 \else
    \sp@make@cmd{endofexercise}{%
@@ -665,13 +640,13 @@
    \endgroup\par\vfill\vfill\par\begingroup
       \huge\bfseries\color{purple}%
       Musterlösung
-      \ifinmode{correction}\\\normalsize mit Korrekturhinweisen\fi%
+      \ifcorrection\\\normalsize mit Korrekturhinweisen\fi
    \vfill\strut
    \endgroup
 \end{center}%
 }
 
-\ifshowsolution
+\ifsolution
    \sp@make@cmd{coverpage}{\sp@@coverpage@solution}
 \else
    \sp@make@cmd{coverpage}{\sp@@coverpage@exam}
@@ -721,10 +696,12 @@
    \expandafter\sp@new@mintinline\lang\@nil
 }
 
-\ifshowsolution
+\typeout{Load code setup}
+\ifsolution
    \usemintedstyle{tango}
    \def\theFancyVerbLine{\sffamily\textcolor{gray}{\scriptsize\arabic{FancyVerbLine}}}
 \else
+   \typeout{Load code setup}
    % we avoid colors in the exam
    \usemintedstyle{bw}
    \def\theFancyVerbLine{\sffamily\scriptsize\arabic{FancyVerbLine}}
@@ -762,7 +739,7 @@
 
 \sp@make@cmd{radioboxlabel}{$\bigcirc$}
 \sp@make@cmd{checkboxlabel}{\sp@bigsquare\kern\p@\relax}
-\ifshowsolution
+\ifsolution
       \sp@make@cmd{radioboxcorrectlabel}{\sp@place@cross{\sp@@radioboxlabel}}%
       \sp@make@cmd{checkboxcorrectlabel}{\sp@place@cross{\sp@@checkboxlabel\kern-\p@\relax}\kern\p@\relax}%
 \else
@@ -786,12 +763,6 @@
    \leavevmode\leaders\hrule\@height#1\@depth\dimexpr#2-#1\hfill\kern\z@
 }
 \def\sp@vertical@hrulefill{\sp@custom@hrulefill{.7ex}{.5pt}}
-
-\ifinmode{exam}
-   \includecomment{examonly}
-\else
-   \excludecomment{examonly}
-\fi
 
 \newenvironment{solutionbox}{\par
    \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
@@ -818,7 +789,7 @@
    \repeat
 }
 
-\ifshowsolution
+\ifsolution
    % a simple environment to wrap the actual solution
    \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
    % #1 holds the solution that we want to be there

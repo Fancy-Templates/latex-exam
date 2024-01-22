@@ -15,8 +15,7 @@ public class Main {
 }
 \end{minted}
 
-% \ifinmode{exam}
-\begin{examonly}
+\ifexam
 Warum auch immer zeigen wir zudem, nur in der eigentlichen Klausur den folgenden Code (z.B. um einfach Code mit und ohne Lücken zu trennen):
 
 \begin{minted}[numbered]{java}
@@ -33,7 +32,7 @@ public class Foo {
 \IndentGuidesDistance{0.5cm}
 \IndentGuides[4]{5cm}
 
-\end{examonly}
+\fi
 
 
 Inline code? Inline code!
@@ -57,17 +56,5 @@ public class Solution {
 \end{minted}
 \end{solution}
 
-\ifinmode{solution,correction}
-Much more flexible would be to build stuff up manually with the \string\ifinmode\space command.
-
-\begin{solutionbox}
-   Have some fun with magic!
-
-\begin{minted}{haskell}
-main :: IO ()
-main = putStrLn "Hello World!"
-\end{minted}
-\end{solutionbox}
-\fi
 
 \end{exercise}

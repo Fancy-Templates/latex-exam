@@ -243,15 +243,15 @@ This not only allows easier re-use and -order exercises but also keeps the [main
 
 Even though we allow for a lot of flexible constructs behind the scenes, you are probably fine with using only two environments.
 
-***The begin and end markers for these environments must be given in their OWN line, without any leading whitespace. If, for whatever reason, you dislike that, see [conditional content](#conditional-content) for an alternative.***
+***The begin and end markers for the `solution` environment must be given in their OWN line, without any leading whitespace. If, for whatever reason, you dislike that, see [conditional content](#conditional-content) for an alternative.***
 
 ```latex
-\begin{examonly}
+\ifexam
    Dieser Text erscheint nur in der Klausur, nicht in den Lösungen.
-\end{examonly}
+\fi
 
 \begin{solution}
-   Dieser Text erscheint nur in den Lösungen, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst).
+   Dieser Text erscheint nur in den Lösungen, in einer Lösungsbox, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst).
 \end{solution}
 ```
 
@@ -259,23 +259,13 @@ These environments work with `minted` as well.
 
 #### Conditional Content
 
-At its core, you can use `\ifinmode{<modelist>} ... \else ... \fi` to conditionally insert content into the document:
+There are three switches you can use: `\ifexam`, `\ifsolution`, and `\ifcorrection`, active in the respective modes (keep in mind, that correction implies solution). You can use them like this:
 
 ```latex
-\ifinmode{solution}
+\ifsolution
    Dieser Text erscheint nur in den Lösungen, nicht in der Klausur.
 \else
    Dieser Text erscheint in allen anderen Modi.
-\fi
-```
-
-So, `examonly` is just a shorthand for `\ifinmode{exam} ... \fi` and `solution` can be written like this:
-
-```latex
-\ifinmode{solution,correction}
-   \begin{solutionbox}
-      Dieser Text erscheint nur in den Lösungen, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst).
-   \end{solutionbox}
 \fi
 ```
 
