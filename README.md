@@ -9,7 +9,7 @@ It is currently in its draft phase and [open for comments](#open-discussion-poin
 
 > If you encounter any problem, please write me an [email](mailto:florian.sihler@uni-ulm.de) or open an [issue](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/issues/new)!
 
-There are just a handful of steps required to get started. You can [inspect the output](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/jobs/artifacts/main/browse?job=build-pdf) to see the pdfs produced.
+There are just a handful of steps required to get started. You can [inspect the output](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/jobs/artifacts/main/browse?job=build-pdf) to see the PDFs produced.
 
 1. Within your repository, navigate to wherever you want to create your exam.\
    The following examples will assume that the folder is empty (but this is not required).
