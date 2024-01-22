@@ -126,6 +126,7 @@ cp -r template/exercises exam1/
 - This repository contains a [_.latexmkrc_](.latexmkrc) file that can be used with [`latexmk`](https://ctan.org/pkg/latexmk/).
 - You can naturally label and reference exercises and (sub-)tasks using `\label{<name>}` and `\ref{<name>}`/`\autoref{<name>}`.
 - The layout is currently designed for exams in German.
+- If you want, you can use the [_.gitlab-ci.yml_](.gitlab-ci.yml) file to automatically let the CI build the PDFs of your exam for you.
 
 ## What This Template Offers
 
