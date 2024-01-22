@@ -255,16 +255,24 @@
 
 \sp@make@cmd{additionalsheets}{\ifcsname sp@appendix@end\endcsname Sie dürfen \ifnum\sp@appendix@end=1\relax das Zusatzblatt\else die Zusatzblätter\fi\space herauslösen\fi}
 
+
+% we assume that, by default, user's will give th relative path to the cls
+% so we can make use of \CurrentFilePathUsed
+
 \ifx\CurrentFilePathUsed\@empty
    \sp@make@cmd{rootpath}{}
 \else
    \edef\sp@cur@file@used@e{\CurrentFilePathUsed}
    \sp@make@cmd{rootpath}{\sp@cur@file@used@e/}
+   \AtEndPreamble{%
+      % this way, users are no longer surprised regarding *where* the other template
+      % files live
+      \appto\Ginput@path{{\sp@cur@file@used@e/}}%
+      \appto\input@path{{\sp@cur@file@used@e/}}%
+   }%
 \fi
 
-% we assume that, by default, user's will give th relative path to the cls
-% so we can make use of \CurrentFilePathUsed
-\sp@make@cmd{logolocation}{\sp@@rootpath img/}
+\sp@make@cmd{logolocation}{img/}
 \sp@make@cmd{logowidth}{73mm}
 \sp@make@cmd{logoline}{%
 \raisebox{-\height}{\parbox\linewidth{\strut\hfill\includegraphics[width=\sp@@logowidth]{\sp@@logolocation logo-uulm.pdf}}}%

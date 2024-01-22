@@ -16,13 +16,13 @@ There are just a handful of steps required to get started. You can [inspect the 
 
 2. <details><summary>Retrieve the respective submodule.</summary>
 
-   * With SSH:
+   - With SSH:
 
       ```shell
       $ git submodule add git@spgit.informatik.uni-ulm.de:teaching/templates/exam.git template
       ```
 
-   * With HTTPS:
+   - With HTTPS:
 
       ```shell
       $ git submodule add https://spgit.informatik.uni-ulm.de/teaching/templates/exam.git template
@@ -96,10 +96,9 @@ There are just a handful of steps required to get started. You can [inspect the 
 
 5. <details><summary> Configure the exam </summary>
 
+   See [configuring the exam](#configuring-the-exam) for more information on the options.
+
    Within the `exam.tex`, you first have to include the correct documentclass, by specifying the correct path to the template (which should do most of the magic from there). If you changed nothing in the steps before, the template should check automatically, if `../template/sp-exam.cls` is present. Otherwise, make sure to give the correct relative path here.
-
-   Now, update the remaining fields so they match your lecture.
-
    </details>
 
 If you want to just get started, and you are in an empty directory, the following commands should work for you:
