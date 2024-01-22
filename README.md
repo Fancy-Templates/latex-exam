@@ -3,25 +3,7 @@
 This is the exam template of the _Institute of Software Engineering and Programming Languages_ at the University of Ulm, composed in the single file [_sp-exam.cls_](sp-exam.cls) (supplementary images are located in [_img/_](img/)).
 It is currently in its draft phase and [open for comments](#open-discussion-points). See the [CHANGELOG.md](CHANGELOG.md) for a list of changes.
 
-- [The SP exam template](#the-sp-exam-template)
-  - [Quickstart Guide](#quickstart-guide)
-    - [General Information](#general-information)
-  - [What This Template Offers](#what-this-template-offers)
-    - [Class Options](#class-options)
-    - [Configuring the Exam](#configuring-the-exam)
-    - [Basic Document Structure](#basic-document-structure)
-    - [A First Exercise](#a-first-exercise)
-      - [Solutions](#solutions)
-      - [Radio- and Checkboxes](#radio--and-checkboxes)
-      - [Free-Text Answers and Spacing](#free-text-answers-and-spacing)
-      - [Lines for Student Code](#lines-for-student-code)
-      - [Code Presentation](#code-presentation)
-      - [Free-Form Subtasks](#free-form-subtasks)
-    - [Outsourcing Exercises](#outsourcing-exercises)
-    - [Exam Modes](#exam-modes)
-      - [Conditional Content](#conditional-content)
-  - [Open Discussion Points](#open-discussion-points)
-  - [More Nice Things](#more-nice-things)
+[[_TOC_]]
 
 ## Quickstart Guide
 
