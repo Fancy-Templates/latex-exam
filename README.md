@@ -100,7 +100,7 @@ There are just a handful of steps required to get started. You can [inspect the 
 
    See [configuring the exam](#configuring-the-exam) for more information on the options.
 
-   Within the `exam.tex`, you first have to include the correct documentclass, by specifying the correct path to the template (which should do most of the magic from there). If you changed nothing in the steps before, the template should check automatically, if `../template/sp-exam.cls` is present. Otherwise, make sure to give the correct relative path here.
+   Within the `exam.tex`, you first have to include the correct documentclass, by specifying the correct path to the template (which should do most of the magic from there by adding important paths to TeX's default input list (`input@path`)). If you changed nothing in the steps before, the template should check automatically, if `../template/sp-exam.cls` is present. Otherwise, make sure to give the correct relative path here.
    </details>
 
 If you want to just get started, and you are in an empty directory, the following commands should work for you:
