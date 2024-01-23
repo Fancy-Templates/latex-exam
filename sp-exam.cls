@@ -94,11 +94,7 @@
 
 % hyperlinks =============================================================
 
-\ifsolution
-   \PassOptionsToPackage{colorlinks,allcolors=purple,pdfusetitle}{hyperref}
-\else
-   \PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}
-\fi
+\PassOptionsToPackage{hidelinks,pdfusetitle}{hyperref}
 
 \RequirePackage{hyperref}
 
@@ -451,7 +447,7 @@
 
 % place a marker into the margin
 \ifsolution
-   \def\sp@subtask@marker#1{\marginnote{\color{purple}{\tiny\bfseries#1 Punkt\ifdim#1\p@=\p@\else e\fi}}}
+   \def\sp@subtask@marker#1{\marginnote{\tiny\bfseries\solutionstyle#1 Punkt\ifdim#1\p@=\p@\else e\fi}}
 \else
    \def\sp@subtask@marker#1{%
       \ifdim#1\p@=\z@\relax\else
@@ -647,7 +643,7 @@
       \strut\sp@@examdateline,\quad\sp@@examdurationline\strut
    % marker --------------------------------------------------
    \endgroup\par\vfill\vfill\par\begingroup
-      \huge\bfseries\color{purple}%
+      \huge\bfseries\solutionstyle
       Musterlösung
       \ifcorrection\\\normalsize mit Korrekturhinweisen\fi
    \vfill\strut
@@ -672,6 +668,7 @@
 
 \colorlet{sp@solution@color}{cyan!80!purple}
 \def\SolutionColor#1{\colorlet{sp@solution@color}{#1}}
+\def\solutionstyle{\color{sp@solution@color}}
 
 % code support ===========================================================
 
@@ -749,7 +746,7 @@
 \newlist{radioboxes}{itemize}{1}
 \newlist{checkboxes}{itemize}{1}
 
-\def\sp@place@solution@cross#1{\hbox{\setbox0=\hbox{#1}\clap{\raisebox{-.215\height}{\scalebox{2.25}{\color{sp@solution@color}$\times$}}}\clap{\copy0}\kern.5\wd0}}
+\def\sp@place@solution@cross#1{\hbox{\setbox0=\hbox{#1}\clap{\raisebox{-.215\height}{\scalebox{2.25}{\solutionstyle$\times$}}}\clap{\copy0}\kern.5\wd0}}
 
 \sp@make@cmd{radioboxlabel}{$\bigcirc$}
 \sp@make@cmd{checkboxlabel}{\sp@bigsquare\kern\p@\relax}
@@ -779,7 +776,7 @@
 \def\sp@vertical@hrulefill{\sp@custom@hrulefill{.7ex}{.5pt}}
 
 \newenvironment{solutionbox}{\begingroup\par
-   \color{sp@solution@color}\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
+   \solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
 }{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
 
 % we use this to strut space for students to write one
@@ -809,7 +806,7 @@
    % a simple environment to wrap the actual solution
    \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
    % #1 holds the solution that we want to be there
-   \newcommand*\StudentLine[1]{\StudentStrut{\rlap{#1}\color{gray}\hrulefill}}
+   \newcommand*\StudentLine[1]{\StudentStrut{\rlap{\solutionstyle#1}\color{gray}\hrulefill}}
    % #1 relative weight of the space if you place multiple
    % the space is only active in the task mode
    \newcommand*\VerticalSpace[1][]{\vspace*{\z@}}
