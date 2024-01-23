@@ -240,7 +240,7 @@
 \sp@make@cmd{examcount}{\sp@@examnumber. Klausur}
 \sp@make@cmd{examlineA}{\strut\sp@@examcount{} zur Veranstaltung}
 \sp@make@cmd{examlineB}{\textbf{\Large\strut\LARGE\sp@@examname\Large\strut}}
-\sp@make@cmd{examinerline}{\@hangfrom{Prüfer:\space}{\raggedright\strut\sp@@examiner\strut\endgraf}}
+\sp@make@cmd{examinerline}{{\raggedright\strut\sp@@examiner\strut\endgraf}}
 
 \sp@make@cmd{whenline}{im \sp@@semester semester \sp@@year}
 \sp@make@cmd{institute}{Institut für Softwaretechnik und Programmiersprachen}
