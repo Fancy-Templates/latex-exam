@@ -274,7 +274,7 @@ For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effect
 
 You can use the `\IndentGuides{<height>}` macro to create vertical lines (of length `<height>`) as indent guides. For example `\IndentGuides{5cm}` creates 5cm long lines.
 You can use an optional argument if you are not satisfied with the number of lines presented. So `\IndentGuides[4]{5cm}` creates 4 lines of 5cm length.
-The default distance can be changed with `\IndentGuidesDistance{<distance>}`.
+The default distance can be changed with `\IndentGuidesDistance{<distance>}`. The default color can be changed using `\IndentGuidesColor{<color-name>}` (e.g., `\IndentGuidesColor{green}`).
 
 #### Code Presentation
 

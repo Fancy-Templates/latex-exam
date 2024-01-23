@@ -784,11 +784,13 @@
 \newdimen\sp@lines@width \sp@lines@width=.42\p@
 \def\IndentGuidesDistance#1{\setlength\sp@lines@space{#1}}
 
+\colorlet{sp@lines@color}{gray!80!white}
+\def\IndentGuidesColor#1{\colorlet{sp@lines@color}{#1}}
 % used below to create multiple lines
-\def\sp@lines@rule#1{\rule\sp@lines@width{#1}\hspace*{\sp@lines@space}}
+\def\sp@lines@rule#1{\color{sp@lines@color}\rule\sp@lines@width{#1}\hspace*{\sp@lines@space}}
 
 % #1 is the number of lines, #2 is the height using arbitrary units
-\newcommand*\IndentGuides[2][5]{%
+\newcommand*\IndentGuides[2][5]{\begingroup
    \@tempcnta\z@%
    % your average for i loop
    \loop
@@ -796,7 +798,7 @@
       \advance\@tempcnta by\@ne\relax
       \ifnum\the\@tempcnta<#1\relax
    \repeat
-}
+\endgroup}
 
 \ifsolution
    % a simple environment to wrap the actual solution
