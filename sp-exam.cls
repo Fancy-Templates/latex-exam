@@ -802,6 +802,13 @@
    \repeat
 \endgroup}
 
+% this is a classic number check which checks if #1 is a number with now additional fluff
+% (e.g., no space, units...) and if so, executes #2, otherwise #3
+\def\sp@isnum#1#2#3{%
+  \if!\ifnum9<1#1!\fi
+     #2\relax
+  \else#3\fi}
+
 \ifsolution
    % a simple environment to wrap the actual solution
    \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
@@ -813,5 +820,7 @@
 \else
    \excludecomment{solution}
    \newcommand*\StudentLine[1]{\StudentStrut{\hrulefill}}
-   \newcommand*\VerticalSpace[1][1]{\vspace*{\z@\@plus#1fill}}
+   \newcommand*\VerticalSpace[1][1]{%
+      \sp@isnum{#1}{\vspace*{\z@\@plus#1fill}}{\vspace*{#1}}%
+   }
 \fi
