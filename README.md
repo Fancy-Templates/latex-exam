@@ -354,6 +354,10 @@ There are three switches you can use: `\ifexam`, `\ifsolution`, and `\ifcorrecti
 \fi
 ```
 
+#### Changing the Solution-Color
+
+Internally, the color of solution text is guided by `\SolutionColor{<color-name>}`. You can use this to change the color of the solution text (e.g., `\SolutionColor{red}`).
+
 ## Open Discussion Points
 
 - [ ] How should we style the point boxes/solution blocks

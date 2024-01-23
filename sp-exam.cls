@@ -132,7 +132,7 @@
 
 % page head ==============================================================
 
-\sp@make@cmd{solutionmarker}{\textsf{\textbf{\textcolor{red}{---~Lösung~---}}}}
+\sp@make@cmd{solutionmarker}{\textsf{\textbf{\textcolor{sp@solution@color}{---~Lösung~---}}}}
 
 \pagestyle{fancy}
 \headheight=13.6\p@
@@ -668,6 +668,11 @@
    \restoregeometry\newpage
 }
 
+% solution colors ========================================================
+
+\colorlet{sp@solution@color}{cyan!80!purple}
+\def\SolutionColor#1{\colorlet{sp@solution@color}{#1}}
+
 % code support ===========================================================
 
 \sp@make@cmd{outputdir}{./}
@@ -744,13 +749,13 @@
 \newlist{radioboxes}{itemize}{1}
 \newlist{checkboxes}{itemize}{1}
 
-\def\sp@place@cross#1{\hbox{\setbox0=\hbox{#1}\clap{\raisebox{-.215\height}{\scalebox{2.25}{$\times$}}}\clap{\copy0}\kern.5\wd0}}
+\def\sp@place@solution@cross#1{\hbox{\setbox0=\hbox{#1}\clap{\raisebox{-.215\height}{\scalebox{2.25}{\color{sp@solution@color}$\times$}}}\clap{\copy0}\kern.5\wd0}}
 
 \sp@make@cmd{radioboxlabel}{$\bigcirc$}
 \sp@make@cmd{checkboxlabel}{\sp@bigsquare\kern\p@\relax}
 \ifsolution
-      \sp@make@cmd{radioboxcorrectlabel}{\sp@place@cross{\sp@@radioboxlabel}}%
-      \sp@make@cmd{checkboxcorrectlabel}{\sp@place@cross{\sp@@checkboxlabel\kern-\p@\relax}\kern\p@\relax}%
+      \sp@make@cmd{radioboxcorrectlabel}{\sp@place@solution@cross{\sp@@radioboxlabel}}%
+      \sp@make@cmd{checkboxcorrectlabel}{\sp@place@solution@cross{\sp@@checkboxlabel\kern-\p@\relax}\kern\p@\relax}%
 \else
       \sp@make@cmd{radioboxcorrectlabel}{\sp@@radioboxlabel}%
       \sp@make@cmd{checkboxcorrectlabel}{\sp@@checkboxlabel}%
@@ -773,9 +778,9 @@
 }
 \def\sp@vertical@hrulefill{\sp@custom@hrulefill{.7ex}{.5pt}}
 
-\newenvironment{solutionbox}{\par
-   \parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
-}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\par\medskip}
+\newenvironment{solutionbox}{\begingroup\par
+   \color{sp@solution@color}\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
+}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
 
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
