@@ -291,7 +291,7 @@
    \hline
    \sp@table@field{Nachname:}&\sp@table@field{Vorname:}&\sp@table@field{Matrikelnummer:}\\
    \sp@space@v&&\\\hline
-   \multicolumn{2}{|l|}{\sp@table@field{Studiengang und Abschluss (B.\,Sc./M.\,Sc.):}}&\sp@table@field{Fachsemester:}\\
+   \multicolumn{2}{|l|}{\sp@table@field{Studiengang und angestrebter Abschluss (B.\,Sc./M.\,Sc.):}}&\sp@table@field{Fachsemester:}\\
    \multicolumn{2}{|l|}{\sp@space@v}&\\\hline
 
    \multicolumn{3}{|p{\dimexpr.95\textwidth-\sp@table@indent}|}{%
@@ -299,8 +299,7 @@
       Sollte ich nicht auf der Liste der angemeldeten Studierenden aufgeführt sein, dann nehme ich
       hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird. \newline\bigskip\newline
       \rule{10cm}{.5\p@}\\[-2.66\p@]%
-      \strut Datum, Unterschrift des Prüfungsteilnehmers
-   }}} \\\hline
+      \strut Datum, Unterschrift}}} \\\hline
 \end{tabular}
 }
 
