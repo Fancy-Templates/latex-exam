@@ -168,14 +168,14 @@
 \setlist[subtasks]{%
    leftmargin=*,%
    font=\normalfont\bfseries,%
-   first*=\let\item\sp@task@error\relax\let\subtask\sp@task@item%
+   first*=\let\item\sp@task@error\relax\let\subtask\sp@subtask@item%
 }
 \setlist[subtasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
 \setlist[subtasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
 
 % separate pages =========================================================
 
-% we reduce one as every exercise inserts a clearpage at the end
+% we reduce one as every task inserts a clearpage at the end
 \sp@make@cmd{finalpageoffset}{-1}
 
 % we allow the '\appendix' command to be used in the document to separate
@@ -324,16 +324,16 @@
 
 \sp@make@cmd{additionalpaper}{Zusätzliches benötigtes Paper wird Ihnen von der Aufsicht zur Verfügung gestellt.}
 
-% the exercise/points magic ==============================================
+% the task/points magic ==============================================
 
-\newcounter{exercise}
+\newcounter{task}
 \def\sp@format@counter#1{\hbox{\textbf{#1}}}
 \robustify\sp@format@counter
-\def\theexercise{\sp@format@counter{\arabic{exercise}}}
-% we automatically scope subtasks to the current exercise they are in!
-\newcounter{subtask}[exercise]
-\def\thesubtask{\sp@format@counter{\arabic{exercise}.\alph{subtask})}}
-\def\sp@exercises@totalcount{0}% default value of total exercises
+\def\thetask{\sp@format@counter{\arabic{task}}}
+% we automatically scope subtasks to the current task they are in!
+\newcounter{subtask}[task]
+\def\thesubtask{\sp@format@counter{\arabic{task}.\alph{subtask})}}
+\def\sp@tasks@totalcount{0}% default value of total tasks
 
 % to avoid the need for xfp or other calc libraries (we rely on etex only), we add a '\sp@pt' marker to allow for
 % dimexpr when calculating (i.e., expand to points/pt) but hide it when presenting the points to the user
@@ -345,7 +345,7 @@
 \def\sp@get@points@of@task#1#2{%
    % this is the macro-name to evaluate (and cache with the \sp@res suffix)
    % we store it here to safe on tokens (and space) in the following
-   \edef\sp@tmp{sp@exercise@#2@formula}%
+   \edef\sp@tmp{sp@task@#2@formula}%
    % we check if there is already a macro ending with @res, if so we have already calculated the points and use the cache
    \expandafter\ifcsname\sp@tmp\sp@res\endcsname\else
       % if not, we calculate the points and store them into the macro pointed to by \sp@tmp\sp@res
@@ -360,49 +360,49 @@
    \expandafter\let\expandafter#1\csname\sp@tmp\sp@res\endcsname
 }
 
-\sp@make@cmd{exercisename}{Aufgabe}
-% we allow the user to configure the style of exercises with the number in the
-% exercise counter and the name in exercisename
-\sp@make@cmd{exerciseformat}{\textbf{\Large \sp@@exercisename~\arabic{exercise}~--- \large\exercisename}}
-\appto\extrasngerman{\let\exerciseautorefname\sp@@exercisename}
+\sp@make@cmd{taskname}{Aufgabe}
+% we allow the user to configure the style of tasks with the number in the
+% task counter and the name in taskname
+\sp@make@cmd{taskformat}{\textbf{\Large \sp@@taskname~\arabic{task}~--- \large\taskname}}
+\appto\extrasngerman{\let\taskautorefname\sp@@taskname}
 
 \errorcontextlines=999
-% \textbf{\Large Aufgabe~\arabic{exercise}~--- \large#1}
-% #1 name of the exercise
-\def\sp@exercise#1{\par
-   % first, we step the number of total exercises
-   \refstepcounter{exercise}%
-   % for convenience, we add an automatic label to each exercise, with this we can link it in the points table!
-   \label{sp@@ex:\arabic{exercise}}%
-   \let\@currentname\sp@@exercisename\relax
-   \let\@currentlabel\theexercise\relax
-   \hyper@makecurrent{exercise}%
-   \edef\sp@current@exercise@formula{sp@exercise@\arabic{exercise}@formula}%
-   \edef\sp@current@exercise@subtask{sp@exercise@\arabic{exercise}@subtaskcount}%
+% \textbf{\Large Aufgabe~\arabic{task}~--- \large#1}
+% #1 name of the task
+\def\sp@task#1{\par
+   % first, we step the number of total tasks
+   \refstepcounter{task}%
+   % for convenience, we add an automatic label to each task, with this we can link it in the points table!
+   \label{sp@@ex:\arabic{task}}%
+   \let\@currentname\sp@@taskname\relax
+   \let\@currentlabel\thetask\relax
+   \hyper@makecurrent{task}%
+   \edef\sp@current@task@formula{sp@task@\arabic{task}@formula}%
+   \edef\sp@current@task@subtask{sp@task@\arabic{task}@subtaskcount}%
    \begingroup
       \raggedleft
       \begin{tabularx}{\linewidth}{@{}Xr@{}}%
-         \def\exercisename{#1}%
-         \sp@@exerciseformat &
-         % if the command pointed to by '\sp@current@exercise@formula' exists, we display its formula and the result
+         \def\taskname{#1}%
+         \sp@@taskformat &
+         % if the command pointed to by '\sp@current@task@formula' exists, we display its formula and the result
          % we add +\z@ to compensate faulty formulas
-         \expandafter\ifcsname\sp@current@exercise@formula\endcsname
-            \sp@get@points@of@task\sp@result{\arabic{exercise}}%
+         \expandafter\ifcsname\sp@current@task@formula\endcsname
+            \sp@get@points@of@task\sp@result{\arabic{task}}%
             \let\sp@pt\space% hide the pt marker
             % currently we avoid math-mode
             \textbf{%
                % we only print the formula if there is more than one subtask!
-               \ifnum\csname\sp@current@exercise@subtask\endcsname>\@ne
-                  \csname\sp@current@exercise@formula\endcsname=\space
+               \ifnum\csname\sp@current@task@subtask\endcsname>\@ne
+                  \csname\sp@current@task@formula\endcsname=\space
                \fi
                \sp@result\space Punkt\ifdim\sp@result\p@=\p@\else e\fi}%
             % if the user has specified the expected number of points we check if they match
-            \ifcsname sp@current@exercise@expected@points\endcsname
+            \ifcsname sp@current@task@expected@points\endcsname
                % we check if the expected points are equal to the calculated points
-               \def\sp@tmp{\csname sp@current@exercise@expected@points\endcsname}%
+               \def\sp@tmp{\csname sp@current@task@expected@points\endcsname}%
                \ifdim\sp@result\p@=\sp@tmp\p@ \else
                   % otherwise we issue a warning
-                  \ClassWarning{sp-exam}{This warning is expected when you just changed the points/on the first run as two passes are required to get stable points. So please, first rerun latex to see if the problem persists. The expected points for exercise \arabic{exercise} do not match the calculated points! You wanted '\sp@tmp' but the subtask only sum to \sp@result. Please check the expected points and the points given to the subtasks! If you think this is an error, contact the maintainer and remove the expected points}%
+                  \ClassWarning{sp-exam}{This warning is expected when you just changed the points/on the first run as two passes are required to get stable points. So please, first rerun latex to see if the problem persists. The expected points for task \arabic{task} do not match the calculated points! You wanted '\sp@tmp' but the subtask only sum to \sp@result. Please check the expected points and the points given to the subtasks! If you think this is an error, contact the maintainer and remove the expected points}%
                   \rlap{\textbf{\color{red}(vs.\,\sp@tmp)}}%
                \fi
             \fi
@@ -410,10 +410,10 @@
       \end{tabularx}\smallskip\par
    \endgroup
    % update the point macros for the next round
-   \expandafter\let\csname\sp@current@exercise@formula\endcsname\@empty\relax
+   \expandafter\let\csname\sp@current@task@formula\endcsname\@empty\relax
    % initialize the subtask count storage
-   \expandafter\def\csname\sp@current@exercise@subtask\endcsname{0}%
-   % reduce the width of an exercise
+   \expandafter\def\csname\sp@current@task@subtask\endcsname{0}%
+   % reduce the width of an task
    \begin{enumerate}[leftmargin=10\p@,rightmargin=20\p@]
 		\item[]\relax
 }
@@ -433,10 +433,10 @@
    \let\@currentname\sp@@subtaskname\relax
    \let\@currentlabel\thesubtask\relax
    % if the current subtask formula is empty, we just add the given points, otherwise, we precede it with a plus sign
-   \expandafter\ifx\csname\sp@current@exercise@formula\endcsname\@empty
-      \csgdef\sp@current@exercise@formula{#1\sp@pt}%
+   \expandafter\ifx\csname\sp@current@task@formula\endcsname\@empty
+      \csgdef\sp@current@task@formula{#1\sp@pt}%
    \else
-      \csgappto\sp@current@exercise@formula{+\space#1\sp@pt}%
+      \csgappto\sp@current@task@formula{+\space#1\sp@pt}%
    \fi
 }
 
@@ -466,9 +466,9 @@
 \fi
 
 % #1 box configuration, #2 content
-\def\sp@exercise@point@marker@{%
-   % total points of exercise
-   \sp@get@points@of@task\sp@result{\arabic{exercise}}
+\def\sp@task@point@marker@{%
+   % total points of task
+   \sp@get@points@of@task\sp@result{\arabic{task}}
    \ifdim\sp@result\p@=\z@\relax\else
    \marginnote{\fboxsep=.5\p@\relax\fboxrule=1.66\p@
       \smash{\raisebox{.5\height}{\sp@box{%
@@ -482,50 +482,50 @@
 % by default we clear the page and write the total number of pages in the margin
 % for the solution, we do not want point marker
 \ifsolution
-   \sp@make@cmd{endofexercise}{\clearpage\rfoot{}}
+   \sp@make@cmd{endoftask}{\clearpage\rfoot{}}
 \else
-   \sp@make@cmd{endofexercise}{%
-      \rfoot{\sp@exercise@point@marker@}%
+   \sp@make@cmd{endoftask}{%
+      \rfoot{\sp@task@point@marker@}%
       \clearpage
       \rfoot{}%
    }
 \fi
 
-% at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
+% at the end of the task we persist the formula to calculate the points for this task (to present to the students)
 % and the number of subtasks
-% please note, that we name this `endsp@exercise` to be theoretically compatible with the latex environments
-% to be used as `\begin{task} ... \end{exercise}`
-\def\endsp@exercise{%
+% please note, that we name this `endsp@task` to be theoretically compatible with the latex environments
+% to be used as `\begin{task} ... \end{task}`
+\def\endsp@task{%
    \end{enumerate}%
    % define the expected points first if none given
    \ifnum\value{subtask}=\z@\relax
-      \expandafter\def\csname\sp@current@exercise@formula\endcsname{\sp@current@exercise@expected@points\sp@pt}%
+      \expandafter\def\csname\sp@current@task@formula\endcsname{\sp@current@task@expected@points\sp@pt}%
    \fi
-   \expandafter\sp@persist\sp@current@exercise@formula=\csname\sp@current@exercise@formula\endcsname;%
-   \expandafter\sp@persist sp@exercise@\arabic{exercise}@subtaskcount=\arabic{subtask};%
-   % every exercise gets it's own page
-   \sp@@endofexercise
+   \expandafter\sp@persist\sp@current@task@formula=\csname\sp@current@task@formula\endcsname;%
+   \expandafter\sp@persist sp@task@\arabic{task}@subtaskcount=\arabic{subtask};%
+   % every task gets it's own page
+   \sp@@endoftask
 }
 
 % at the end of the document we must persist all counts for the next round!
 \AtEndDocument{%
-   \sp@persist sp@exercises@totalcount=\arabic{exercise};%
+   \sp@persist sp@tasks@totalcount=\arabic{task};%
 }
 
 % sp cover page points table =============================================
 
-% this iterates from 1 to the total number of exercises using an increment
+% this iterates from 1 to the total number of tasks using an increment
 % of 1 and executes #1 with `\i` set to the current step.
 \def\sp@points@iter#1{%
    % if life gives you do-while, but you want while-do, make lemonade!
-   \ifnum\sp@exercises@totalcount>\z@
+   \ifnum\sp@tasks@totalcount>\z@
       \begingroup
          \count@=\z@
          \loop
             \advance\count@ by\@ne\relax
             \edef\i{\the\count@}%
             #1%
-         \ifnum\count@<\sp@exercises@totalcount\repeat
+         \ifnum\count@<\sp@tasks@totalcount\repeat
       \endgroup
    \fi
 }
@@ -557,7 +557,7 @@
 \sp@make@cmd{pointstable}{%
 \sp@tablereset
 % additionally, we need two columns for the total sum of points and the grade
-\edef\sp@total@columns{\the\numexpr\sp@exercises@totalcount+2}%
+\edef\sp@total@columns{\the\numexpr\sp@tasks@totalcount+2}%
 % to calculate the sum of all points
 \def\sp@total{0}%
 % we define the header of the line to enter the points and the fields for the correctors
@@ -568,7 +568,7 @@
    \xdef\sp@total{\expandafter\strip@pt\dimexpr\sp@total\p@+\sp@result\p@}%
    \xappto\sp@correctors{&}%
 }%
-\begin{tabularx}{\linewidth}{|*{\sp@exercises@totalcount}{X|}X||X|}
+\begin{tabularx}{\linewidth}{|*{\sp@tasks@totalcount}{X|}X||X|}
    \hline
    \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}\textit{Punkteverteilung}}\\
    \hline
@@ -718,19 +718,19 @@
 
 \fi
 
-% user commands for exercises ============================================
+% user commands for tasks ============================================
 
-% #1: you can give the points here directly, if the exercise has subtasks,
+% #1: you can give the points here directly, if the task has subtasks,
 %     they must sum up to this number
-% #2: name of the exercise
-\newenvironment{exercise}[2][]{\begingroup
+% #2: name of the task
+\newenvironment{task}[2][]{\begingroup
    % test if the optional argument is given
    \edef\@tmp{#1}\ifx\@tmp\@empty\else
       % we have to get exactly these points!
-      \def\sp@current@exercise@expected@points{#1}%
+      \def\sp@current@task@expected@points{#1}%
    \fi
-   \sp@exercise{#2}%
-}{\endsp@exercise\endgroup\bigskip}
+   \sp@task{#2}%
+}{\endsp@task\endgroup\bigskip}
 
 % #1: number of points
 \def\Subtask{\@ifstar\sp@Subtask@star\sp@Subtask@}
@@ -804,7 +804,7 @@
    % #1 holds the solution that we want to be there
    \newcommand*\StudentLine[1]{\StudentStrut{\rlap{#1}\color{gray}\hrulefill}}
    % #1 relative weight of the space if you place multiple
-   % the space is only active in the exercise mode
+   % the space is only active in the task mode
    \newcommand*\VerticalSpace[1][]{\vspace*{\z@}}
 \else
    \excludecomment{solution}

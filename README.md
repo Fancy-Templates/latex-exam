@@ -68,11 +68,11 @@ There are just a handful of steps required to get started. You can [inspect the 
 4. <details><summary> Setup the default exam structure </summary>
 
    Copy at least `template/exam.tex`, `template/solution.tex`, and `template/correction.tex` to your exam folder (or create them from scratch) as you probably want to modify them anyway.
-   Besides, create a new folder `exercises` (or copy the one from the template)
+   Besides, create a new folder `tasks` (or copy the one from the template)
 
    ```shell
    $ cp template/exam.tex template/solution.tex template/correction.tex exam1/
-   $ cp -r template/exercises exam1/
+   $ cp -r template/tasks exam1/
    ```
 
    If you use `latexmk` you can copy the [_.latexmkrc_](.latexmkrc) file as well.
@@ -82,7 +82,7 @@ There are just a handful of steps required to get started. You can [inspect the 
    ```text
     + /
       | - exam1/
-      |   | - exercises/
+      |   | - tasks/
       |   |   | - ...
       |   | - exam.tex
       |   | - solution.tex
@@ -94,7 +94,7 @@ There are just a handful of steps required to get started. You can [inspect the 
 
    </details>
 
-   With this, the main exam lives in the `exam.tex`, while the exercises live in the `exercises` folder. Your exam/project now resides in the `exam1` folder.
+   With this, the main exam lives in the `exam.tex`, while the tasks live in the `tasks` folder. Your exam/project now resides in the `exam1` folder.
 
 5. <details><summary> Configure the exam </summary>
 
@@ -109,7 +109,7 @@ If you want to just get started, and you are in an empty directory, the followin
 git submodule add https://spgit.informatik.uni-ulm.de/teaching/templates/exam.git template
 mkdir exam1
 cp template/exam.tex template/solution.tex template/correction.tex exam1/
-cp -r template/exercises exam1/
+cp -r template/tasks exam1/
 # configure exam1/exam.tex...
 ```
 
@@ -124,7 +124,7 @@ cp -r template/exercises exam1/
    ```
 
 - This repository contains a [_.latexmkrc_](.latexmkrc) file that can be used with [`latexmk`](https://ctan.org/pkg/latexmk/).
-- You can naturally label and reference exercises and (sub-)tasks using `\label{<name>}` and `\ref{<name>}`/`\autoref{<name>}`.
+- You can naturally label and reference tasks and (sub-)tasks using `\label{<name>}` and `\ref{<name>}`/`\autoref{<name>}`.
 - The layout is currently designed for exams in German.
 - If you want, you can use the [_.gitlab-ci.yml_](.gitlab-ci.yml) file to automatically let the CI build the PDFs of your exam for you.
 
@@ -201,7 +201,7 @@ After [loading the class](#class-options) and [configuring the exam](#configurin
    % Typeset the coverpage
    \maketitle
 
-   % ... (exercises)
+   % ... (tasks)
 
    % This is optional and only required if you have additional pages.
    % For example, to repeat definitions.
@@ -211,16 +211,16 @@ After [loading the class](#class-options) and [configuring the exam](#configurin
 \end{document}
 ```
 
-### A First Exercise
+### A First Task
 
-Most of the time you are probably fine with one of the following two forms. You can create an exercise with a single task (i.e., no subtasks) like this:
+Most of the time you are probably fine with one of the following two forms. You can create an task with a single task (i.e., no subtasks) like this:
 
 ```latex
-% This exercise has 7 points
+% This task has 7 points
 \begin{task}[7]{Eine interessante Aufgabe}
    Eine interessante Aufgabenbeschreibung
    % ... (solutions)
-\end{exercise}
+\end{task}
 ```
 
 If you want subtasks, you can add them like this (see below for [free-form subtasks](#free-form-subtasks)): `
@@ -235,10 +235,10 @@ If you want subtasks, you can add them like this (see below for [free-form subta
       \subtask{2} Eine weitere Teilaufgabe
       \subtask{4} Eine letzte Teilaufgabe
    \end{subtasks}
-\end{exercise}
+\end{task}
 ```
 
-You can combine the optional argument with the subtasks as well, as indicated by the comment. In this scenario, the template will automatically check if the sum of the subtasks is equal to the given/expected points (i.e., it issues a warning and provides a visual hint if the points are not equal). Use this as a safeguard if, for whatever reason, an exercise has to have a fixed number of points.
+You can combine the optional argument with the subtasks as well, as indicated by the comment. In this scenario, the template will automatically check if the sum of the subtasks is equal to the given/expected points (i.e., it issues a warning and provides a visual hint if the points are not equal). Use this as a safeguard if, for whatever reason, a task has to have a fixed number of points.
 
 #### Solutions
 
@@ -317,12 +317,12 @@ Additionally, we provide several inline macros that can be used to write code fo
 
 #### Free-Form Subtasks
 
-Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to layout your exercise freely.
+Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to layout your tasks freely.
 
-### Outsourcing Exercises
+### Outsourcing Tasks
 
-We recommend, that you create a separate file for each exercise, including it using `\input{<filename>}` or `\include{<filename>}`.
-This not only allows easier re-use and -order exercises but also keeps the [main](exam.tex) file clean and readable.
+We recommend, that you create a separate file for each task, including it using `\input{<filename>}` or `\include{<filename>}`.
+This not only allows easier re-use and -order tasks but also keeps the [main](exam.tex) file clean and readable.
 
 ### Exam Modes
 
