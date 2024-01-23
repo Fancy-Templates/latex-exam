@@ -779,6 +779,10 @@
    \solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
 }{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
 
+\newenvironment{correctionbox}{\begingroup\par
+   \solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Korrekturhinweis:}~\sp@vertical@hrulefill\par
+}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
+
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
 
@@ -810,7 +814,7 @@
   \else#3\fi}
 
 \ifsolution
-   % a simple environment to wrap the actual solution
+   % a simple environment to wrap the actual solution and correction
    \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
    % #1 holds the solution that we want to be there
    \newcommand*\StudentLine[1]{\StudentStrut{\rlap{\solutionstyle#1}\color{gray}\hrulefill}}
@@ -823,4 +827,10 @@
    \newcommand*\VerticalSpace[1][1]{%
       \sp@isnum{#1}{\vspace*{\z@\@plus#1fill}}{\vspace*{#1}}%
    }
+\fi
+
+\ifcorrection
+   \specialcomment{correction}{\begin{correctionbox}}{\end{correctionbox}}
+\else
+   \excludecomment{correction}
 \fi

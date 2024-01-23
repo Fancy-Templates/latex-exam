@@ -329,7 +329,7 @@ This not only allows easier re-use and -order tasks but also keeps the [main](ex
 
 Even though we allow for a lot of flexible constructs behind the scenes, you are probably fine with using only two environments.
 
-***The begin and end markers for the `solution` environment must be given in their OWN line, without any leading whitespace. If, for whatever reason, you dislike that, see [conditional content](#conditional-content) for an alternative.***
+***The begin and end markers for the `solution` and `correction` environment must be given in their OWN line, without any leading whitespace. If, for whatever reason, you dislike that, see [conditional content](#conditional-content) for an alternative.***
 
 ```latex
 \ifexam
@@ -337,7 +337,7 @@ Even though we allow for a lot of flexible constructs behind the scenes, you are
 \fi
 
 \begin{solution}
-   Dieser Text erscheint nur in den Lösungen, in einer Lösungsbox, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst).
+   Dieser Text erscheint nur in den Lösungen, in einer Lösungsbox, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst). Analog, existiert die `correction` Umgebung.
 \end{solution}
 ```
 
