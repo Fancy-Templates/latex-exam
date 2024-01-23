@@ -156,22 +156,22 @@
 
 \setlist[itemize]{leftmargin=2em,itemsep=\smallskipamount}
 
-\def\sp@task@item#1{\sp@item \Subtask{#1}\ignorespaces}
-\def\sp@task@error{\ClassError{sp-exam}{You cannot use \string\item\space in a task environment. Please use \string\task{<points>}\space instead!}{Otherwise, why would you use the tasks list?}}
+\def\sp@subtask@item#1{\sp@item \Subtask{#1}\ignorespaces}
+\def\sp@subtask@error{\ClassError{sp-exam}{You cannot use \string\item\space in a subtasks environment. Please use \string\subtask{<points>}\space instead!}{Otherwise, why would you use the subtasks list?}}
 
 % so that other, nested lists work, we have to recover item within then explicitly
 \let\sp@item\item\relax
 \setlist{first*=\let\item\sp@item}
 
-\newlist{tasks}{enumerate}{2}
+\newlist{subtasks}{enumerate}{2}
 % within task, every `\item` takes in a subtask argument
-\setlist[tasks]{%
+\setlist[subtasks]{%
    leftmargin=*,%
    font=\normalfont\bfseries,%
-   first*=\let\item\sp@task@error\relax\let\task\sp@task@item%
+   first*=\let\item\sp@task@error\relax\let\subtask\sp@task@item%
 }
-\setlist[tasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
-\setlist[tasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
+\setlist[subtasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
+\setlist[subtasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
 
 % separate pages =========================================================
 
@@ -494,7 +494,7 @@
 % at the end of the exercise we persist the formula to calculate the points for this exercise (to present to the students)
 % and the number of subtasks
 % please note, that we name this `endsp@exercise` to be theoretically compatible with the latex environments
-% to be used as `\begin{exercise} ... \end{exercise}`
+% to be used as `\begin{task} ... \end{exercise}`
 \def\endsp@exercise{%
    \end{enumerate}%
    % define the expected points first if none given

@@ -217,7 +217,7 @@ Most of the time you are probably fine with one of the following two forms. You 
 
 ```latex
 % This exercise has 7 points
-\begin{exercise}[7]{Eine interessante Aufgabe}
+\begin{task}[7]{Eine interessante Aufgabe}
    Eine interessante Aufgabenbeschreibung
    % ... (solutions)
 \end{exercise}
@@ -226,15 +226,15 @@ Most of the time you are probably fine with one of the following two forms. You 
 If you want subtasks, you can add them like this (see below for [free-form subtasks](#free-form-subtasks)): `
 
 ```latex
-% \begin{exercise}[7]{Eine interessante Aufgabe}
-\begin{exercise}{Eine interessante Aufgabe}
+% \begin{task}[7]{Eine interessante Aufgabe}
+\begin{task}{Eine interessante Aufgabe}
    Eine interessante Aufgabenbeschreibung
-   \begin{tasks}
-      \task{1} Eine Teilaufgabe
+   \begin{subtasks}
+      \subtask{1} Eine Teilaufgabe
       % ... (solutions)
-      \task{2} Eine weitere Teilaufgabe
-      \task{4} Eine letzte Teilaufgabe
-   \end{tasks}
+      \subtask{2} Eine weitere Teilaufgabe
+      \subtask{4} Eine letzte Teilaufgabe
+   \end{subtasks}
 \end{exercise}
 ```
 
