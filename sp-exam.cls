@@ -253,7 +253,7 @@
 \sp@make@cmd{examdateline}{\sp@@date, \sp@@time}
 \sp@make@cmd{examdurationline}{Bearbeitungszeit: \sp@@duration\;min}
 
-\sp@make@cmd{additionalsheets}{\ifcsname sp@appendix@end\endcsname Sie dürfen \ifnum\sp@appendix@end=1\relax das Zusatzblatt\else die Zusatzblätter\fi\space herauslösen\fi}
+\sp@make@cmd{additionalsheets}{\ifcsname sp@appendix@end\endcsname Sie dürfen \ifnum\sp@appendix@end=1\relax das Zusatzblatt\else die Zusatzblätter\fi\space herauslösen.\fi}
 
 
 % we assume that, by default, user's will give th relative path to the cls
