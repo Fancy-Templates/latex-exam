@@ -158,6 +158,7 @@
 % so that other, nested lists work, we have to recover item within then explicitly
 \let\sp@item\item\relax
 \setlist{first*=\let\item\sp@item}
+\appto\trivlist{\let\item\sp@item}
 
 \newlist{subtasks}{enumerate}{2}
 % within task, every `\item` takes in a subtask argument
