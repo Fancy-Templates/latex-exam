@@ -206,7 +206,7 @@
 \sp@make@required@cmd{examnumber}
 \sp@make@required@cmd{examname}
 \sp@make@required@cmd{examiner}
-\sp@make@required@cmd{year}
+\sp@make@required@cmd{semesteryear}
 \sp@make@required@cmd{semester}
 \sp@make@required@cmd{date}
 \sp@make@required@cmd{time}
