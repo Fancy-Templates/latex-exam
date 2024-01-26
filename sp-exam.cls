@@ -591,12 +591,7 @@
    \endgroup
 }
 
-% the sp cover page ======================================================
-\sp@make@cmd{coverpage@exam}{%
-\begin{center}
-   \parskip\z@\relax\parindent\z@\relax
-   % header --------------------------------------------------------------
-   \sp@@titleandlogo
+\sp@make@cmd{dateandmeta}{%
    % date and time -------------------------------------------------------
    \vskip2.5em\par\begingroup
       \strut\hfill\sp@@examdateline\hfill\sp@@examdurationline\hfill\strut
@@ -604,6 +599,15 @@
    \endgroup\vskip2em\par\begingroup
       \parbox[t]{.5\linewidth}{\sp@@examinerline}\hfill%
       \parbox[t]{.45\linewidth}{\raggedleft\sp@@instituteline}%
+}
+
+% the sp cover page ======================================================
+\sp@make@cmd{coverpage@exam}{%
+\begin{center}
+   \parskip\z@\relax\parindent\z@\relax
+   % header --------------------------------------------------------------
+   \sp@@titleandlogo
+   \sp@@dateandmeta
    % student data table --------------------------------------------------
    \endgroup\vskip2em\par\begingroup
       \sp@@studentdatatable
@@ -637,11 +641,7 @@
 \begin{center}
    \parskip\z@\relax\parindent\z@\relax
    \sp@@titleandlogo
-   \vskip2.5em\par\begingroup
-      \textit{\sp@@examinerline}
-   % date and time -------------------------------------------------------
-   \endgroup\vskip1.5em\par\begingroup
-      \strut\sp@@examdateline,\quad\sp@@examdurationline\strut
+   \sp@@dateandmeta
    % marker --------------------------------------------------
    \endgroup\par\vfill\vfill\par\begingroup
       \huge\bfseries\solutionstyle
