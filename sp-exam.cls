@@ -243,7 +243,7 @@
 \sp@make@cmd{examlineB}{\textbf{\Large\strut\LARGE\sp@@examname\Large\strut}}
 \sp@make@cmd{examinerline}{{\raggedright\strut\sp@@examiner\strut\endgraf}}
 
-\sp@make@cmd{whenline}{im \sp@@semester semester \sp@@year}
+\sp@make@cmd{whenline}{im \sp@@semester semester \sp@@semesteryear}
 \sp@make@cmd{institute}{Institut für Softwaretechnik und Programmiersprachen}
 \sp@make@cmd{instituteline}{\sp@@institute}
 
