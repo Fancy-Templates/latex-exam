@@ -68,11 +68,11 @@ There are just a handful of steps required to get started. You can [inspect the 
 4. <details><summary> Setup the default exam structure </summary>
 
    Copy at least `template/exam.tex`, `template/solution.tex`, and `template/correction.tex` to your exam folder (or create them from scratch) as you probably want to modify them anyway.
-   Besides, create a new folder `exercises` (or copy the one from the template)
+   Besides, create a new folder `tasks` (or copy the one from the template)
 
    ```shell
    $ cp template/exam.tex template/solution.tex template/correction.tex exam1/
-   $ cp -r template/exercises exam1/
+   $ cp -r template/tasks exam1/
    ```
 
    If you use `latexmk` you can copy the [_.latexmkrc_](.latexmkrc) file as well.
@@ -82,7 +82,7 @@ There are just a handful of steps required to get started. You can [inspect the 
    ```text
     + /
       | - exam1/
-      |   | - exercises/
+      |   | - tasks/
       |   |   | - ...
       |   | - exam.tex
       |   | - solution.tex
@@ -94,7 +94,7 @@ There are just a handful of steps required to get started. You can [inspect the 
 
    </details>
 
-   With this, the main exam lives in the `exam.tex`, while the exercises live in the `exercises` folder. Your exam/project now resides in the `exam1` folder.
+   With this, the main exam lives in the `exam.tex`, while the tasks live in the `tasks` folder. Your exam/project now resides in the `exam1` folder.
 
 5. <details><summary> Configure the exam </summary>
 
@@ -109,7 +109,7 @@ If you want to just get started, and you are in an empty directory, the followin
 git submodule add https://spgit.informatik.uni-ulm.de/teaching/templates/exam.git template
 mkdir exam1
 cp template/exam.tex template/solution.tex template/correction.tex exam1/
-cp -r template/exercises exam1/
+cp -r template/tasks exam1/
 # configure exam1/exam.tex...
 ```
 
@@ -124,7 +124,7 @@ cp -r template/exercises exam1/
    ```
 
 - This repository contains a [_.latexmkrc_](.latexmkrc) file that can be used with [`latexmk`](https://ctan.org/pkg/latexmk/).
-- You can naturally label and reference exercises and (sub-)tasks using `\label{<name>}` and `\ref{<name>}`/`\autoref{<name>}`.
+- You can naturally label and reference tasks and (sub-)tasks using `\label{<name>}` and `\ref{<name>}`/`\autoref{<name>}`.
 - The layout is currently designed for exams in German.
 - If you want, you can use the [_.gitlab-ci.yml_](.gitlab-ci.yml) file to automatically let the CI build the PDFs of your exam for you.
 
@@ -201,7 +201,7 @@ After [loading the class](#class-options) and [configuring the exam](#configurin
    % Typeset the coverpage
    \maketitle
 
-   % ... (exercises)
+   % ... (tasks)
 
    % This is optional and only required if you have additional pages.
    % For example, to repeat definitions.
@@ -211,34 +211,34 @@ After [loading the class](#class-options) and [configuring the exam](#configurin
 \end{document}
 ```
 
-### A First Exercise
+### A First Task
 
-Most of the time you are probably fine with one of the following two forms. You can create an exercise with a single task (i.e., no subtasks) like this:
+Most of the time you are probably fine with one of the following two forms. You can create an task with a single task (i.e., no subtasks) like this:
 
 ```latex
-% This exercise has 7 points
-\begin{exercise}[7]{Eine interessante Aufgabe}
+% This task has 7 points
+\begin{task}[7]{Eine interessante Aufgabe}
    Eine interessante Aufgabenbeschreibung
    % ... (solutions)
-\end{exercise}
+\end{task}
 ```
 
 If you want subtasks, you can add them like this (see below for [free-form subtasks](#free-form-subtasks)): `
 
 ```latex
-% \begin{exercise}[7]{Eine interessante Aufgabe}
-\begin{exercise}{Eine interessante Aufgabe}
+% \begin{task}[7]{Eine interessante Aufgabe}
+\begin{task}{Eine interessante Aufgabe}
    Eine interessante Aufgabenbeschreibung
-   \begin{tasks}
-      \task{1} Eine Teilaufgabe
+   \begin{subtasks}
+      \subtask{1} Eine Teilaufgabe
       % ... (solutions)
-      \task{2} Eine weitere Teilaufgabe
-      \task{4} Eine letzte Teilaufgabe
-   \end{tasks}
-\end{exercise}
+      \subtask{2} Eine weitere Teilaufgabe
+      \subtask{4} Eine letzte Teilaufgabe
+   \end{subtasks}
+\end{task}
 ```
 
-You can combine the optional argument with the subtasks as well, as indicated by the comment. In this scenario, the template will automatically check if the sum of the subtasks is equal to the given/expected points (i.e., it issues a warning and provides a visual hint if the points are not equal). Use this as a safeguard if, for whatever reason, an exercise has to have a fixed number of points.
+You can combine the optional argument with the subtasks as well, as indicated by the comment. In this scenario, the template will automatically check if the sum of the subtasks is equal to the given/expected points (i.e., it issues a warning and provides a visual hint if the points are not equal). Use this as a safeguard if, for whatever reason, a task has to have a fixed number of points.
 
 #### Solutions
 
@@ -267,14 +267,15 @@ If your task requires a radio- or checkbox, you can use the following environmen
 #### Free-Text Answers and Spacing
 
 The `\VerticalSpace` inserts effectively a `\vfill` in the exam mode (and therefore just creates blank vertical space for the students to write). An optional argument allows to (relatively) weigh the space against other `\VerticalSpace` commands. For example, if you use `\VerticalSpace[2]` and `\VerticalSpace`, the first one will be twice as large as the second one.
+Besides a unit-less number, you can use a unit that TeX can understand to get a fixed space: `\VerticalSpace[2cm]` creates a _2cm_ space.
 
 For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effectively use the remaining space on a line (use `\parbox{<width>}{\StudentLine{<solution>}}` to limit the width) and set a placeholder for the student to write in. The given solution is added in the solution mode.
 
 #### Lines for Student Code
 
 You can use the `\IndentGuides{<height>}` macro to create vertical lines (of length `<height>`) as indent guides. For example `\IndentGuides{5cm}` creates 5cm long lines.
-You can use an optional argument if you are not satisfied with the number of lines presented. So `\IndentGuides[4]{5cm}` creates 4 lines of 5cm length.
-The default distance can be changed with `\IndentGuidesDistance{<distance>}`.
+You can use an optional argument if you are not satisfied with the number of lines presented. So `\IndentGuides[4]{5cm}` creates 4&nbsp;lines of 5cm&nbsp;length.
+The default distance can be changed with `\IndentGuidesDistance{<distance>}`. The default color can be changed using `\IndentGuidesColor{<color-name>}` (e.g., `\IndentGuidesColor{green}`).
 
 #### Code Presentation
 
@@ -317,18 +318,18 @@ Additionally, we provide several inline macros that can be used to write code fo
 
 #### Free-Form Subtasks
 
-Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to layout your exercise freely.
+Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to layout your tasks freely.
 
-### Outsourcing Exercises
+### Outsourcing Tasks
 
-We recommend, that you create a separate file for each exercise, including it using `\input{<filename>}` or `\include{<filename>}`.
-This not only allows easier re-use and -order exercises but also keeps the [main](exam.tex) file clean and readable.
+We recommend, that you create a separate file for each task, including it using `\input{<filename>}` or `\include{<filename>}`.
+This not only allows easier re-use and -order tasks but also keeps the [main](exam.tex) file clean and readable.
 
 ### Exam Modes
 
 Even though we allow for a lot of flexible constructs behind the scenes, you are probably fine with using only two environments.
 
-***The begin and end markers for the `solution` environment must be given in their OWN line, without any leading whitespace. If, for whatever reason, you dislike that, see [conditional content](#conditional-content) for an alternative.***
+***The begin and end markers for the `solution` and `correction` environment must be given in their OWN line, without any leading whitespace. If, for whatever reason, you dislike that, see [conditional content](#conditional-content) for an alternative.***
 
 ```latex
 \ifexam
@@ -336,7 +337,7 @@ Even though we allow for a lot of flexible constructs behind the scenes, you are
 \fi
 
 \begin{solution}
-   Dieser Text erscheint nur in den Lösungen, in einer Lösungsbox, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst).
+   Dieser Text erscheint nur in den Lösungen, in einer Lösungsbox, nicht in der Klausur (zudem wird er hier in einen entsprechenden Block gefasst). Analog, existiert die `correction` Umgebung.
 \end{solution}
 ```
 
@@ -353,6 +354,11 @@ There are three switches you can use: `\ifexam`, `\ifsolution`, and `\ifcorrecti
    Dieser Text erscheint in allen anderen Modi.
 \fi
 ```
+
+#### Changing the Solution-Color
+
+Internally, the color of solution text is guided by `\SolutionColor{<color-name>}`. You can use this to change the color of the solution text (e.g., `\SolutionColor{red}`).
+If you, for whatever reason want to mark something as part of the solution, you can use the `\solutionstyle` macro (although this is independent of any `\ifsolution` environment, for flexibility).
 
 ## Open Discussion Points
 
