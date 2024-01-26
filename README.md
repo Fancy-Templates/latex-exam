@@ -154,9 +154,9 @@ We show example definitions for all required options below:
 \examiner{Florian Sihler, Alexander Raschke}  % name of the examiner(s)
 
 \semester{Winter}                             % summer or wintersemester?
-\semesteryear{2023/24}                                % year of the semester
+\semesteryear{2023/24}                        % year of the semester
 \date{12. März 2024}                          % date of the exam
-\time{9:00 Uhr}                               % time of the exam
+\starttime{9:00 Uhr}                          % time of the exam
 \duration{90}                                 % allowed duration in minutes
 
 % information regarding the permitted material
