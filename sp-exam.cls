@@ -167,7 +167,7 @@
    font=\normalfont\bfseries,%
    first*=\let\item\sp@task@error\relax\let\subtask\sp@subtask@item%
 }
-\setlist[subtasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
+\setlist[subtasks,1]{label=\alph*),itemsep=\bigskipamount}% its up to the exam-creator to set the desired spacing
 \setlist[subtasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
 
 % separate pages =========================================================
