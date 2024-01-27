@@ -316,6 +316,26 @@ Additionally, we provide several inline macros that can be used to write code fo
 \html{<html><body>Hello HTML!</body></html>}
 ```
 
+#### Examples
+
+You can use the `examples` environment to present examples (e.g., for each subtask). The environment will automatically detect the number of examples and use the phrase `Beispiel` or `Beispiele` accordingly.
+
+```latex
+\begin{examples}
+   \item \texttt{1 + 1} sollte \texttt{2} ergeben
+   \item \texttt{AnnA} ist ein Palindrom
+\end{examples}
+```
+
+If you want to have a different text above the list, you can use the optional argument (the number of examples is stored in `\examplescount`):
+
+```latex
+\begin{examples}[Hier ein \ifnum\examplescount=1 Beispiel\else paar Beispiele\fi:]
+   \item \texttt{1 + 1} sollte \texttt{2} ergeben
+   \item \texttt{AnnA} ist ein Palindrom
+\end{examples}
+```
+
 #### Free-Form Subtasks
 
 Besides the `tasks` environment, you can use `\Subtask{<points>}` to create a subtask with a given number of points. The starred version `\Subtask*{<points>}` does not add a points box in the margin and therefore (theoretically) allows you to layout your tasks freely.

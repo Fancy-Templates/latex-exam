@@ -167,7 +167,7 @@
    font=\normalfont\bfseries,%
    first*=\let\item\sp@task@error\relax\let\subtask\sp@subtask@item%
 }
-\setlist[subtasks,1]{label=\alph*),itemsep=\bigskipamount}% its up to the exam-creator to set the desired spacing
+\setlist[subtasks,1]{label=\alph*),itemsep=\bigskipamount}% its up for the exam-creator to set the desired spacing
 \setlist[subtasks,2]{label=\alph{enumi}.\roman*),itemsep=\medskipamount}
 
 % separate pages =========================================================
@@ -795,6 +795,25 @@
 \def\IndentGuidesColor#1{\colorlet{sp@lines@color}{#1}}
 % used below to create multiple lines
 \def\sp@lines@rule#1{\color{sp@lines@color}\rule\sp@lines@width{#1}\hspace*{\sp@lines@space}}
+
+\newcounter{sp@example}% used to uniquely identify an
+\newcounter{sp@count}  % temporary count
+\def\sp@example@id{sp@example@\arabic{sp@example}@count}
+\newenvironment{examples}[1][\textbf{Beispiel\ifnum\examplescount>1 e\fi:}]{%
+   \begingroup\parskip=\medskipamount
+   \par\noindent
+   \setcounter{sp@count}{0}%
+   \stepcounter{sp@example}%
+   \def\examplescount{0}%
+   \ifcsname\sp@example@id\endcsname\edef\examplescount{\csname\sp@example@id\endcsname}\fi
+   % automatic use plural if more than one example
+   #1\vspace*{-\parskip}
+   \begin{itemize}[nosep,first*=\preto\item{\stepcounter{sp@count}}]%
+}{%
+   % persist the number of examples
+   \sp@persist\sp@example@id=\arabic{sp@count};%
+   \end{itemize}\endgroup
+}
 
 % #1 is the number of lines, #2 is the height using arbitrary units
 \newcommand*\IndentGuides[2][5]{\begingroup
