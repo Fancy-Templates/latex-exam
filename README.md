@@ -269,7 +269,7 @@ If your task requires a radio- or checkbox, you can use the following environmen
 The `\VerticalSpace` inserts effectively a `\vfill` in the exam mode (and therefore just creates blank vertical space for the students to write). An optional argument allows to (relatively) weigh the space against other `\VerticalSpace` commands. For example, if you use `\VerticalSpace[2]` and `\VerticalSpace`, the first one will be twice as large as the second one.
 Besides a unit-less number, you can use a unit that TeX can understand to get a fixed space: `\VerticalSpace[2cm]` creates a _2cm_ space.
 
-For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effectively use the remaining space on a line (use `\parbox{<width>}{\StudentLine{<solution>}}` to limit the width) and set a placeholder for the student to write in. The given solution is added in the solution mode.
+For a fill-in-the-blank answer, the `\StudentLine{<solution>}` macro will effectively use the remaining space on a line (use `\StudentLine[<width>]{<solution>}` to limit the width) and set a placeholder for the student to write in. The given solution is added in the solution mode.
 
 #### Lines for Student Code
 

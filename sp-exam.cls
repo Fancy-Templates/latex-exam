@@ -833,17 +833,21 @@
      #2\relax
   \else#3\fi}
 
+% cares for the width
+\def\sp@studentline@wrap#1{\def\@tempa{#1}\ifx\@tempa\@empty\else\expandafter\sp@studentline@wrap@active\fi}
+\def\sp@studentline@wrap@active{\parbox[t]{\@tempa}}
+
 \ifsolution
    % a simple environment to wrap the actual solution and correction
    \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
    % #1 holds the solution that we want to be there
-   \newcommand*\StudentLine[1]{\StudentStrut{\rlap{\solutionstyle#1}\color{gray}\hrulefill}}
+   \newcommand*\StudentLine[2][]{\sp@studentline@wrap{#1}{\StudentStrut{\rlap{\solutionstyle#2}\color{gray}\hrulefill}}}
    % #1 relative weight of the space if you place multiple
    % the space is only active in the task mode
    \newcommand*\VerticalSpace[1][]{\vspace*{\z@}}
 \else
    \excludecomment{solution}
-   \newcommand*\StudentLine[1]{\StudentStrut{\hrulefill}}
+   \newcommand*\StudentLine[2][]{\sp@studentline@wrap{#1}{\StudentStrut{\hrulefill}}}
    \newcommand*\VerticalSpace[1][1]{%
       \sp@isnum{#1}{\vspace*{\z@\@plus#1fill}}{\vspace*{#1}}%
    }
