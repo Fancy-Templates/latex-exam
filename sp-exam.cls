@@ -567,7 +567,7 @@
    \xdef\sp@total{\expandafter\strip@pt\dimexpr\sp@total\p@+\sp@result\p@}%
    \xappto\sp@correctors{&}%
 }%
-\begin{tabularx}{\linewidth}{|*{\sp@tasks@totalcount}{X|}X||X|}
+\begin{tabularx}{\linewidth}{|*{\sp@tasks@totalcount}{X|}X||p{3.5em}|}
    \hline
    \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}\textit{Punkteverteilung}}\\
    \hline
