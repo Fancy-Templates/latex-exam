@@ -713,13 +713,12 @@
 \typeout{Load code setup}
 \ifsolution
    \usemintedstyle{tango}
-   \def\theFancyVerbLine{\sffamily\textcolor{gray}{\scriptsize\arabic{FancyVerbLine}}}
 \else
    \typeout{Load code setup}
    % we avoid colors in the exam
    \usemintedstyle{bw}
-   \def\theFancyVerbLine{\sffamily\scriptsize\arabic{FancyVerbLine}}
 \fi
+\def\theFancyVerbLine{\sffamily\textcolor{gray}{\scriptsize\arabic{FancyVerbLine}}}
 
 \fi
 
