@@ -318,7 +318,7 @@ Additionally, we provide several inline macros that can be used to write code fo
 
 #### Examples
 
-You can use the `examples` environment to present examples (e.g., for each subtask). The environment will automatically detect the number of examples and use the phrase `Beispiel` or `Beispiele` accordingly.
+You can use the `examples` environment to present examples (e.g., for each subtask). The environment will automatically detect the number of examples and use the phrase `Beispiel` or `Beispiele` accordingly (yet, similarly to the point calculation, this requires a second run).
 
 ```latex
 \begin{examples}
