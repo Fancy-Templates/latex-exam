@@ -312,7 +312,7 @@
    % now we have to check if there are additional pages
    \ifcsname sp@appendix@end\endcsname
       \space und \ifnum\sp@appendix@end=1\relax \textbf{einer} Zusatzseite\else\textbf{\sp@appendix@end}~Zusatzseiten\fi
-   \fi)
+   \fi).
    \item Bearbeiten Sie die Aufgaben direkt auf den Aufgabenblättern. Wenn Sie mehr Platz benötigen, verwenden Sie zuerst die Rückseiten der Blätter. \sp@@additionalsheets
    \item \sp@@permittedmaterial
    \item Aufgaben, welche nicht mit einem dokumentenechten Stift in den Farben blau oder schwarz bearbeitet worden sind, werden nicht bewertet.
