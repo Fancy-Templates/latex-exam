@@ -619,7 +619,7 @@
       \sp@@hintstitle\\
       % we store the hints in a box to calculate the height to align the image
       \setbox0=\hbox{\parbox[c]{.48\linewidth}{%
-         \begin{itemize}
+         \small\begin{itemize}
             \sp@@hints
          \end{itemize}
       }}%
