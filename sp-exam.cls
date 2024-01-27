@@ -496,7 +496,9 @@
    \end{enumerate}%
    % define the expected points first if none given
    \ifnum\value{subtask}=\z@\relax
-      \expandafter\def\csname\sp@current@task@formula\endcsname{\sp@current@task@expected@points\sp@pt}%
+      \ifcsname sp@current@task@expected@points\endcsname
+         \expandafter\def\csname\sp@current@task@formula\endcsname{\sp@current@task@expected@points\sp@pt}%
+      \fi
    \fi
    \expandafter\sp@persist\sp@current@task@formula=\csname\sp@current@task@formula\endcsname;%
    \expandafter\sp@persist sp@task@\arabic{task}@subtaskcount=\arabic{subtask};%
