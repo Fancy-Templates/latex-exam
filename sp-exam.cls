@@ -180,7 +180,7 @@
 \newif\ifsp@in@appendix
 \def\appendix{%
    % we store the number of pages in a macro to test for single pages
-   \xdef\sp@main@end{\the\numexpr\arabic{page}+\sp@@finalpageoffset}%
+   \xdef\sp@main@end{\arabic{page}}%
    \clearpage
    \global\sp@in@appendixtrue
    \pagenumbering{roman}%
@@ -191,10 +191,10 @@
 % at the end of the document we just store the current page(s)
 \AtEndDocument{%
    \ifsp@in@appendix
-      \sp@persist sp@main@end=\sp@main@end;%
+      \sp@persist sp@main@end=\the\numexpr\sp@main@end+\sp@@finalpageoffset;%
       \sp@persist sp@appendix@end=\arabic{page};%
    \else
-      \sp@persist sp@main@end=\arabic{page};%
+      \sp@persist sp@main@end=\the\numexpr\arabic{page}+\sp@@finalpageoffset;%
    \fi
 }
 \def\sp@main@end{-1}
