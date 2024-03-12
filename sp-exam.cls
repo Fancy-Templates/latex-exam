@@ -778,13 +778,13 @@
 \def\sp@vertical@hrulefill{\sp@custom@hrulefill{.7ex}{.5pt}}
 
 \newenvironment{solutionbox}{\begingroup\par
-\solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
+\solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par}{\parskip\z@\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
 
 \newenvironment{solution}{\solutionshowenv\solutionbox}{\endsolutionbox\endsolutionshowenv}
 
 \newenvironment{correctionbox}{\begingroup\par
 \solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Korrekturhinweis:}~\sp@vertical@hrulefill\par
-}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
+}{\parskip\z@\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
 
 \newenvironment{correction}{\correctionshowenv\correctionbox}{\endcorrectionshowenv\endcorrectionbox}
 
