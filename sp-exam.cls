@@ -850,7 +850,7 @@
    % the space is only active in the task mode
    \newcommand*\VerticalSpace[1][]{\vspace*{\z@}}
 \else
-   \excludeversion{solution}
+   \excludeversion{solutionshowenv}
    \newcommand*\StudentLine[2][]{\sp@studentline@wrap{#1}{\StudentStrut{\hrulefill}}}
    \newcommand*\VerticalSpace[1][1]{%
       \sp@isnum{#1}{\vspace*{\z@\@plus#1fill}}{\vspace*{#1}}%
