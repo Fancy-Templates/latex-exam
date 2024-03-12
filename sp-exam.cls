@@ -777,13 +777,16 @@
 }
 \def\sp@vertical@hrulefill{\sp@custom@hrulefill{.7ex}{.5pt}}
 
-\newenvironment{solution}{\solutionshowenv\begingroup\par
-   \solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
-}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip\endsolutionshowenv}
+\newenvironment{solutionbox}{\begingroup\par
+\solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
 
-\newenvironment{correction}{\correctionshowenv\begingroup\par
-   \solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Korrekturhinweis:}~\sp@vertical@hrulefill\par
-}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip\endcorrectionshowenv}
+\newenvironment{solution}{\solutionshowenv\solutionbox}{\endsolutionbox\endsolutionshowenv}
+
+\newenvironment{correctionbox}{\begingroup\par
+\solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Korrekturhinweis:}~\sp@vertical@hrulefill\par
+}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
+
+\newenvironment{correction}{\correctionshowenv\correctionbox}{\endcorrectionshowenv\endcorrectionbox}
 
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
