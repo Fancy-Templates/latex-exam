@@ -349,7 +349,7 @@ This not only allows easier re-use and -order tasks but also keeps the [main](ex
 
 Even though we allow for a lot of flexible constructs behind the scenes, you are probably fine with using only two environments.
 
-***The begin and end markers for the `solution` and `correction` environment must be given in their OWN line, without any leading whitespace. If, for whatever reason, you dislike that, see [conditional content](#conditional-content) for an alternative.***
+***The `solution` and `correction` environment can, theoretically cause compilation fail. Please report an issue (including the MWE). If needed, see [conditional content](#conditional-content) for a potential (emergency) workaround.***
 
 ```latex
 \ifexam

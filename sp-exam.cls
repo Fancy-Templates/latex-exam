@@ -45,7 +45,7 @@
 \RequirePackage{enumitem}
 \RequirePackage{etoolbox}
 \RequirePackage{parskip}
-\RequirePackage{comment}
+\RequirePackage{versions}
 
 \if@sp@rounded@support@
    \RequirePackage{tikz}
@@ -777,13 +777,13 @@
 }
 \def\sp@vertical@hrulefill{\sp@custom@hrulefill{.7ex}{.5pt}}
 
-\newenvironment{solutionbox}{\begingroup\par
+\newenvironment{solution}{\solutionshowenv\begingroup\par
    \solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Lösung:}~\sp@vertical@hrulefill\par
-}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
+}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip\endsolutionshowenv}
 
-\newenvironment{correctionbox}{\begingroup\par
+\newenvironment{correction}{\correctionshowenv\begingroup\par
    \solutionstyle\parbox{1cm}{\sp@vertical@hrulefill}~\textbf{Korrekturhinweis:}~\sp@vertical@hrulefill\par
-}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip}
+}{\nopagebreak\par\nopagebreak\sp@vertical@hrulefill\nopagebreak\endgroup\par\medskip\endcorrectionshowenv}
 
 % we use this to strut space for students to write one
 \def\StudentStrut{\rule[-2.5\dp\strutbox]{0pt}{3\ht\strutbox}}
@@ -840,14 +840,14 @@
 
 \ifsolution
    % a simple environment to wrap the actual solution and correction
-   \specialcomment{solution}{\begin{solutionbox}}{\end{solutionbox}}
+   \includeversion{solutionshowenv}
    % #1 holds the solution that we want to be there
    \newcommand*\StudentLine[2][]{\sp@studentline@wrap{#1}{\StudentStrut{\rlap{\solutionstyle#2}\color{gray}\hrulefill}}}
    % #1 relative weight of the space if you place multiple
    % the space is only active in the task mode
    \newcommand*\VerticalSpace[1][]{\vspace*{\z@}}
 \else
-   \excludecomment{solution}
+   \excludeversion{solution}
    \newcommand*\StudentLine[2][]{\sp@studentline@wrap{#1}{\StudentStrut{\hrulefill}}}
    \newcommand*\VerticalSpace[1][1]{%
       \sp@isnum{#1}{\vspace*{\z@\@plus#1fill}}{\vspace*{#1}}%
@@ -855,7 +855,7 @@
 \fi
 
 \ifcorrection
-   \specialcomment{correction}{\begin{correctionbox}}{\end{correctionbox}}
+   \includeversion{correctionshowenv}
 \else
-   \excludecomment{correction}
+   \excludeversion{correctionshowenv}
 \fi
