@@ -34,7 +34,7 @@
 \RequirePackage{fontenc}
 \PassOptionsToPackage{utf8}{inputenc}
 \RequirePackage{inputenc}
-\PassOptionsToPackage{ngerman}{babel}
+\PassOptionsToPackage{ngerman,shorthands=off}{babel}
 \RequirePackage{babel}
 \RequirePackage{xcolor}
 \RequirePackage{tabularx}
