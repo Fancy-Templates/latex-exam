@@ -304,6 +304,19 @@ public class HelloWorld {
 \end{minted}
 ```
 
+If you, for example for layout reasons, want to indent your code, you can pass the `autogobble` option to `minted` to remove leading whitespace:
+
+```latex
+This is code:
+   \begin{minted}[autogobble,numbered]{java}
+   public class HelloWorld {
+      public static void main(String[] args) {
+         System.out.println("Hello World!");
+      }
+   }
+   \end{minted}
+```
+
 Additionally, we provide several inline macros that can be used to write code for common languages:
 ```latex
 \java{System.out.println("Hello Java!");}
