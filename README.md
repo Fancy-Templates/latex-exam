@@ -411,10 +411,6 @@ There are three switches you can use: `\ifexam`, `\ifsolution`, and `\ifcorrecti
 Internally, the color of solution text is guided by `\SolutionColor{<color-name>}`. You can use this to change the color of the solution text (e.g., `\SolutionColor{red}`).
 If you, for whatever reason want to mark something as part of the solution, you can use the `\solutionstyle` macro (although this is independent of any `\ifsolution` environment, for flexibility).
 
-## Open Discussion Points
-
-- [ ] How should we style the point boxes/solution blocks
-
 ## More Nice Things
 
 If compilation is too slow for you, you can create a format file and use that instead:
