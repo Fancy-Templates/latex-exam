@@ -113,6 +113,24 @@ cp -r template/tasks exam1/
 # configure exam1/exam.tex...
 ```
 
+### Update the Template
+
+If you want to update the template, you can use the following command:
+
+```shell
+git submodule update --remote --merge <path/to/the/submodule>
+```
+
+For example:
+
+```shell
+git submodule update --remote --merge template
+```
+
+Omitting the path will update all your submodules.
+
+
+
 ### General Information
 
 - The template requires _two_ compilations to correctly calculate all points
