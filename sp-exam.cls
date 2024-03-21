@@ -109,6 +109,7 @@
 % page layout ============================================================
 
 \RequirePackage{microtype}
+\RequirePackage[defaultlines=3,all]{nowidow}
 
 \def\sp@geometry@left{2cm}%
 \def\sp@geometry@right{2cm}%
