@@ -283,6 +283,10 @@
 % we just reset tabular definitions in case someone redefines how tables look
 \def\sp@tablereset{\def\arraystretch{1}}
 
+
+\sp@make@cmd{studentdatatableintrotext}{Hiermit erkläre ich, dass ich prüfungsfähig bin.\newline
+Sollte ich nicht auf der Liste der angemeldeten Studierenden aufgeführt sein, dann nehme ich
+hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
 \sp@make@cmd{studentdatatable}{%
 \tabcolsep\z@\relax\sp@tablereset
 \begin{tabular}{|*2{p{.375\textwidth}|}p{.25\textwidth}|}
@@ -293,9 +297,7 @@
    \multicolumn{2}{|l|}{\sp@space@v}&\\\hline
 
    \multicolumn{3}{|p{\dimexpr.95\textwidth-\sp@table@indent}|}{%
-      \vskip-5\p@\sp@table@field{\parbox[t]{\linewidth}{Hiermit erkläre ich, dass ich prüfungsfähig bin.\newline
-      Sollte ich nicht auf der Liste der angemeldeten Studierenden aufgeführt sein, dann nehme ich
-      hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird. \newline\bigskip\newline
+      \vskip-5\p@\sp@table@field{\parbox[t]{\linewidth}{\sp@@studentdatatableintrotext\newline\bigskip\newline
       \rule{10cm}{.5\p@}\\[-2.66\p@]%
       \strut Datum, Unterschrift}}} \\\hline
 \end{tabular}
