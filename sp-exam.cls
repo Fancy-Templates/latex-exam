@@ -309,6 +309,9 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
 % morehints can be used to add more hints using `\item` prefixes, at the bottom of the list.
 % we make no attempts to make more space for them!
 \sp@make@cmd{morehints}{}
+
+\sp@make@cmd{onnotenoughspace}{Wenn Sie mehr Platz benötigen, verwenden Sie zuerst die Rückseiten der Blätter.}
+
 \sp@make@cmd{hints}{%
    \item Füllen Sie das Deckblatt vollständig und korrekt aus.
    \item Lesen Sie sich zunächst die Klausur sorgfältig durch (sie besteht aus \ifnum\sp@main@end=1\relax \textbf{einer} Seite\else\textbf{\sp@main@end}~Seiten\fi%
@@ -316,7 +319,7 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
    \ifcsname sp@appendix@end\endcsname
       \space und \ifnum\sp@appendix@end=1\relax \textbf{einer} Zusatzseite\else\textbf{\sp@appendix@end}~Zusatzseiten\fi
    \fi).
-   \item Bearbeiten Sie die Aufgaben direkt auf den Aufgabenblättern. Wenn Sie mehr Platz benötigen, verwenden Sie zuerst die Rückseiten der Blätter. \sp@@additionalsheets
+   \item Bearbeiten Sie die Aufgaben direkt auf den Aufgabenblättern. \sp@@onnotenoughspace\space \sp@@additionalsheets
    \item \sp@@permittedmaterial
    \item Aufgaben, welche nicht mit einem dokumentenechten Stift in den Farben blau oder schwarz bearbeitet worden sind, werden nicht bewertet.
    \sp@@morehints
