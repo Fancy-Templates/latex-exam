@@ -314,6 +314,8 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
 
 \sp@make@cmd{wheretosolve}{\item Bearbeiten Sie die Aufgaben direkt auf den Aufgabenblättern. Wenn Sie mehr Platz benötigen, verwenden Sie zuerst die Rückseiten der Blätter.\sp@@onnotenoughspace\space \sp@@additionalsheets}
 
+\sp@make@cmd{whattouse}{\item Aufgaben, welche nicht mit einem dokumentenechten Stift in den Farben blau oder schwarz bearbeitet worden sind, werden nicht bewertet.}
+
 \sp@make@cmd{hints}{%
    \item Füllen Sie das Deckblatt vollständig und korrekt aus.
    \item Lesen Sie sich zunächst die Klausur sorgfältig durch (sie besteht aus \ifnum\sp@main@end=1\relax \textbf{einer} Seite\else\textbf{\sp@main@end}~Seiten\fi%
@@ -323,7 +325,7 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
    \fi).
    \sp@@wheretosolve  
    \item \sp@@permittedmaterial
-   \item Aufgaben, welche nicht mit einem dokumentenechten Stift in den Farben blau oder schwarz bearbeitet worden sind, werden nicht bewertet.
+   \sp@@whattouse
    \sp@@morehints
 }
 
