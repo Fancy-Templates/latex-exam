@@ -329,7 +329,7 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
    \sp@@morehints
 }
 
-\sp@make@cmd{additionalpaper}{Zusätzliches benötigtes Paper wird Ihnen von der Aufsicht zur Verfügung gestellt.}
+\sp@make@cmd{additionalpaper}{Zusätzliches benötigtes Papier wird Ihnen von der Aufsicht zur Verfügung gestellt.}
 
 % the task/points magic ==============================================
 
