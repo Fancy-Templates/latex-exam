@@ -3,10 +3,21 @@
 \newif\ifsolution    \solutionfalse
 \newif\ifcorrection  \correctionfalse
 
+\RequirePackage{translations}
+
 % Moreover, our default/convenience macros consider these as special modes
 \DeclareOption{exam}{\examtrue\solutionfalse\correctionfalse}
 \DeclareOption{solution}{\examfalse\solutiontrue\correctionfalse}
 \DeclareOption{correction}{\examfalse\solutiontrue\correctiontrue}
+
+% language support
+\def\@sp@lang@german{\def\@sp@language{ngerman}}
+\def\@sp@lang@english{\def\@sp@language{english}}
+
+\DeclareOption{english}{\@sp@lang@english}
+\DeclareOption{german}{\@sp@lang@german}
+\DeclareOption{ngerman}{\@sp@lang@german}
+\@sp@lang@german
 
 % code support loads everything to present code with the minted package
 % using it requires python, pygments, and the `--shell-escape`
@@ -34,7 +45,7 @@
 \RequirePackage{fontenc}
 \PassOptionsToPackage{utf8}{inputenc}
 \RequirePackage{inputenc}
-\PassOptionsToPackage{ngerman,shorthands=off}{babel}
+\PassOptionsToPackage{main=\@sp@language,shorthands=off}{babel}
 \RequirePackage{babel}
 \RequirePackage{xcolor}
 \RequirePackage{tabularx}
@@ -239,7 +250,9 @@
 % all of these commands could be redefined just the same but we not require the user to
 % in other words, the defaults should be satisfactory for most users
 % the following lines define them roughly from top to bottom regarding their appearance on the (exam/solution) title page
-\sp@make@cmd{examcount}{\sp@@examnumber. Klausur}
+\NewTranslation{ngerman}{exam}{Klausur}
+\NewTranslation{english}{exam}{Exam}
+\sp@make@cmd{examcount}{\sp@@examnumber. \GetTranslation{exam}}
 \sp@make@cmd{examlineA}{\strut\sp@@examcount{} zur Veranstaltung}
 \sp@make@cmd{examlineB}{\textbf{\Large\strut\LARGE\sp@@examname\Large\strut}}
 \sp@make@cmd{examinerline}{{\raggedright\strut\sp@@examiner\strut\endgraf}}
