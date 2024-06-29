@@ -576,7 +576,7 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
    \appto\sp@pointstable@last{\sp@pointstable@last@wrapper{#1}}%
 }
 
-\sp@make@cmd{printpoints}{von \sp@points}
+\def\printpoints#1{von #1}
 
 \sp@make@cmd{pointstable}{%
 \sp@tablereset
@@ -588,7 +588,7 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
 \def\sp@numbers{}\def\sp@correctors{}%
 \sp@points@iter{%
    \sp@get@points@of@task\sp@result{\i}%
-   \xappto\sp@numbers{\noexpand\sp@points@row@entry{sp@@ex:\i}{\i}{\let\sp@points\sp@result \sp@@printpoints} & }%
+   \xappto\sp@numbers{\noexpand\sp@points@row@entry{sp@@ex:\i}{\i}{\printpoints{\sp@result}} & }%
    \xdef\sp@total{\expandafter\strip@pt\dimexpr\sp@total\p@+\sp@result\p@}%
    \xappto\sp@correctors{&}%
 }%
@@ -596,7 +596,7 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
    \hline
    \multicolumn{\sp@total@columns}{|c|}{{\LARGE\strut}\textit{Punkteverteilung}}\\
    \hline
-   \sp@numbers \sp@points@row@entry\@empty{$\sum$}{\let\sp@points\sp@total\sp@@printpoints} & \sp@points@row@entry\@empty{{\LARGE\strut}\textbf{Note}}{} \\ \hline
+   \sp@numbers \sp@points@row@entry\@empty{$\sum$}{\printpoints{\sp@total}} & \sp@points@row@entry\@empty{{\LARGE\strut}\textbf{Note}}{} \\ \hline
    \rule\z@{2\ht\strutbox}\sp@correctors & \tiny Korrektur\\ \hline
    \sp@pointstable@last
 \end{tabularx}%
