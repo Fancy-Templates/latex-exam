@@ -184,15 +184,12 @@
 
 % separate pages =========================================================
 
-% we reduce one as every task inserts a clearpage at the end
-\sp@make@cmd{finalpageoffset}{-1}
-
 % we allow the '\appendix' command to be used in the document to separate
 % additional pages from those for the main exam
 \newif\ifsp@in@appendix
 \def\appendix{%
    % we store the number of pages in a macro to test for single pages
-   \xdef\sp@main@end{\arabic{page}}%
+   \label{sp@label@main@end}%
    \clearpage
    \global\sp@in@appendixtrue
    \pagenumbering{roman}%
@@ -200,16 +197,42 @@
    \setcounter{page}{1}%
 }
 
+\def\sp@default@page{-1}
+% based on the refcount implementation
+\long\def\sp@extract@pagenumber#1#2#3#4\@nil{\typeout{At: #1|#2|#3|#4}\edef\sp@curpage{\expandafter\romannumeral#3\relax}}
+\def\sp@getlabelnumber#1#2{
+   \ifcsname r@#1\endcsname
+      \expandafter\expandafter\expandafter\sp@extract@pagenumber
+      \expandafter\expandafter\expandafter!%
+      \csname r@#1\expandafter\expandafter\expandafter\endcsname
+      \expandafter\expandafter\expandafter{%
+      \expandafter\sp@default@page
+      \expandafter}\expandafter{\sp@default@page}\@nil
+   \else
+      \def\sp@curpage{\sp@default@page}
+   \fi
+   \let#2\sp@curpage
+}
+
 % at the end of the document we just store the current page(s)
 \AtEndDocument{%
-   \ifsp@in@appendix
-      \sp@persist sp@main@end=\the\numexpr\sp@main@end+\sp@@finalpageoffset;%
-      \sp@persist sp@appendix@end=\arabic{page};%
-   \else
-      \sp@persist sp@main@end=\the\numexpr\arabic{page}+\sp@@finalpageoffset;%
-   \fi
+   \label{sp@label@complete@end}%
+   \sp@persist sp@with@appendix=\ifsp@in@appendix true\else false\fi;%
 }
-\def\sp@main@end{-1}
+\def\sp@hasappendix{true}
+\providecommand\sp@with@appendix{false}
+
+\AtBeginDocument{
+   \sp@getlabelnumber{sp@label@main@end}\sp@main@end
+   \ifx\sp@with@appendix\sp@hasappendix
+      \sp@getlabelnumber{sp@label@complete@end}\sp@complete@end
+      \edef\sp@appendix@end{%
+         \numexpr0\sp@complete@end-\sp@main@end\relax
+      }%
+   \fi
+   % \show\sp@main@end
+}
+\providecommand\sp@main@end{-1}
 
 % macros for the sp cover page ===========================================
 
