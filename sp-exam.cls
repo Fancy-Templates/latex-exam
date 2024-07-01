@@ -57,6 +57,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{parskip}
 \RequirePackage{versions}
+\RequirePackage{afterpage}
 
 \if@sp@rounded@support@
    \RequirePackage{tikz}
@@ -192,7 +193,7 @@
 \newif\ifsp@in@appendix
 \def\appendix{%
    % we store the number of pages in a macro to test for single pages
-   \xdef\sp@main@end{\arabic{page}}%
+   \afterpage{\xdef\sp@main@end{\arabic{page}}}%
    \clearpage
    \global\sp@in@appendixtrue
    \pagenumbering{roman}%
