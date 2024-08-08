@@ -326,7 +326,7 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
 
 \sp@make@cmd{onnotenoughspace}{Wenn Sie mehr Platz benötigen, verwenden Sie zuerst die Rückseiten der Blätter.}
 
-\sp@make@cmd{wheretosolve}{\item Bearbeiten Sie die Aufgaben direkt auf den Aufgabenblättern. Wenn Sie mehr Platz benötigen, verwenden Sie zuerst die Rückseiten der Blätter.\sp@@onnotenoughspace\space \sp@@additionalsheets}
+\sp@make@cmd{wheretosolve}{\item Bearbeiten Sie die Aufgaben direkt auf den Aufgabenblättern. \sp@@onnotenoughspace\space \sp@@additionalsheets}
 
 \sp@make@cmd{whattouse}{\item Aufgaben, welche nicht mit einem dokumentenechten Stift in den Farben blau oder schwarz bearbeitet worden sind, werden nicht bewertet.}
 

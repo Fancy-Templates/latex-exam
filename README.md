@@ -180,6 +180,7 @@ We show example definitions for all required options below:
 % information regarding the permitted material
 \permittedmaterial{\allowhandwrittensheet}
 % alternatively: \allowcheatsheet, \allownothing, or free text
+% \onnotenoughspace{Wenn Sie mehr Platz benötigen, verwenden Sie zuerst die Rückseiten der Blätter.} % what to do if someone has not enough space
 ```
 
 Besides these, there are probably just two or three more options that you are potentially interested in:
