@@ -705,6 +705,10 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
 
 \if@sp@code@support@
 
+\IfFileExists{minted2.sty}{%
+\typeout{Load minted3 compatibility setup}
+\RequirePackage{minted2}
+}{}
 \PassOptionsToPackage{outputdir=\sp@@outputdir}{minted}
 \RequirePackage{minted}
 
