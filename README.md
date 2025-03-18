@@ -393,7 +393,13 @@ Even though we allow for a lot of flexible constructs behind the scenes, you are
 \end{solution}
 ```
 
-These environments work with `minted` as well.
+Similarly, you can use the `correction` environment to create a correction block which explains your grading scheme to the correctors. 
+
+```latex
+\begin{correction}
+   Hier können Angaben zum Korrekturschema stehen.
+\end{correction}
+```
 
 #### Conditional Content
 
