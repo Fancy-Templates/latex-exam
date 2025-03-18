@@ -336,6 +336,7 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
 
 \sp@make@cmd{hints}{%
    \item Füllen Sie das Deckblatt vollständig und korrekt aus.
+   \if@sp@codeword@\sp@@codewordtext\fi
    \item Lesen Sie sich zunächst die Klausur sorgfältig durch (sie besteht aus \ifnum\sp@main@end=1\relax \textbf{einer} Seite\else\textbf{\sp@main@end}~Seiten\fi%
    % now we have to check if there are additional pages
    \ifcsname sp@appendix@end\endcsname
@@ -634,6 +635,11 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
 }
 
 % the sp cover page ======================================================
+
+\sp@make@cmd{codewordtext}{%
+   \item Die Angabe eines Codewortes (rechts) ermöglicht es Ihnen, Ihr Ergebnis anonym und vorzeitig über Moodle zu erfahren. 
+}
+
 \sp@make@cmd{coverpage@exam}{%
 \begin{center}
    \parskip\z@\relax\parindent\z@\relax
