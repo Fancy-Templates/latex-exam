@@ -28,6 +28,8 @@
 \newif\if@sp@rounded@support@
 \DeclareOption{rounded}{\@sp@rounded@support@true}
 
+\newif\if@sp@codeword@
+\DeclareOption{codeword}{\@sp@codeword@true}
 % pass unknown options to article
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 
@@ -264,6 +266,8 @@
 
 \sp@make@cmd{examdateline}{\sp@@date, \sp@@starttime}
 \sp@make@cmd{examdurationline}{Bearbeitungszeit: \sp@@duration\;min}
+
+\sp@make@cmd{codeword}{Codewort}
 
 \sp@make@cmd{additionalsheets}{\ifcsname sp@appendix@end\endcsname Sie dürfen \ifnum\sp@appendix@end=1\relax das Zusatzblatt\else die Zusatzblätter\fi\space herauslösen.\fi}
 
@@ -652,6 +656,13 @@ hiermit zur Kenntnis, dass diese Prüfung nicht gewertet werden wird.}
       \usebox0\relax
    % cover image ---------------------------------------------------------
       \hfill\begin{minipage}[c][\dimexpr\ht0+\dp0][c]{\dimexpr70mm+2\fboxsep}
+         \if@sp@codeword@
+         \begingroup\fboxrule1.75pt\relax
+         \fbox{\begin{minipage}[t][16mm][t]{70mm}
+            \strut\sp@@codeword\\\hfill
+            \rule[-6mm]{\linewidth}{.5\p@}
+         \end{minipage}}\par\vspace*{2em}\par
+         \endgroup\fi
          \hfill% \fboxsep=0pt is to be done with the image if desired
          \sp@@coverimage\bigskip\par
          \sp@@additionalpaper
