@@ -3,7 +3,28 @@
 We created this is the exam template originally for the [_Institute of Software Engineering and Programming Languages_ at the University of Ulm][sp-institute], composed in the single file [_exam.cls_](exam.cls) (supplementary images are located in [_img/_](img/)).
 See the [CHANGELOG.md](CHANGELOG.md) for a list of changes.
 
-[[_TOC_]]
+- [The fancy LaTeX exam template](#the-fancy-latex-exam-template)
+  - [Quickstart Guide](#quickstart-guide)
+    - [Setup Steps](#setup-steps)
+    - [Update the Template](#update-the-template)
+    - [General Information](#general-information)
+  - [What This Template Offers](#what-this-template-offers)
+    - [Class Options](#class-options)
+    - [Configuring the Exam](#configuring-the-exam)
+    - [Basic Document Structure](#basic-document-structure)
+    - [A First Task](#a-first-task)
+      - [Solutions](#solutions)
+      - [Radio- and Checkboxes](#radio--and-checkboxes)
+      - [Free-Text Answers and Spacing](#free-text-answers-and-spacing)
+      - [Lines for Student Code](#lines-for-student-code)
+      - [Code Presentation](#code-presentation)
+      - [Examples](#examples)
+      - [Free-Form Subtasks](#free-form-subtasks)
+    - [Outsourcing Tasks](#outsourcing-tasks)
+    - [Exam Modes](#exam-modes)
+      - [Conditional Content](#conditional-content)
+      - [Changing the Solution-Color](#changing-the-solution-color)
+  - [More Nice Things](#more-nice-things)
 
 ## Quickstart Guide
 
