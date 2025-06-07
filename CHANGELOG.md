@@ -1,4 +1,4 @@
-# Changelog for sp-exam
+# Changelog for exam
 
 ## Changes from the initial draft
 

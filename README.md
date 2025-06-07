@@ -1,17 +1,17 @@
-# The SP exam template
+# The fancy LaTeX exam template
 
-This is the exam template of the _Institute of Software Engineering and Programming Languages_ at the University of Ulm, composed in the single file [_sp-exam.cls_](sp-exam.cls) (supplementary images are located in [_img/_](img/)).
-It is currently in its draft phase and [open for comments](#open-discussion-points). See the [CHANGELOG.md](CHANGELOG.md) for a list of changes.
+We created this is the exam template originally for the [_Institute of Software Engineering and Programming Languages_ at the University of Ulm][sp-institute], composed in the single file [_exam.cls_](exam.cls) (supplementary images are located in [_img/_](img/)).
+See the [CHANGELOG.md](CHANGELOG.md) for a list of changes.
 
 [[_TOC_]]
 
 ## Quickstart Guide
 
-> If you encounter any problem, please write me an [email](mailto:florian.sihler@uni-ulm.de) or open an [issue](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/issues/new)!
+> If you encounter any problem, please write me an [email](mailto:florian.sihler@uni-ulm.de) or open [a new issue][issue]!
 
 ### Setup Steps
 
-There are just a handful of steps required to get started. You can [inspect the output](https://spgit.informatik.uni-ulm.de/teaching/templates/exam/-/jobs/artifacts/main/browse?job=build-pdf) to see the PDFs produced.
+There are just a handful of steps required to get started. You can inspect the CI output to see the PDFs produced.
 
 1. Within your repository, navigate to wherever you want to create your exam.\
    The following examples will assume that the folder is empty (but this is not required).
@@ -27,7 +27,7 @@ There are just a handful of steps required to get started. You can [inspect the 
    - With HTTPS:
 
       ```shell
-      $ git submodule add https://spgit.informatik.uni-ulm.de/teaching/templates/exam.git template
+      $ git submodule add https://github.com/Fancy-Templates/latex-exam.git template
       ```
 
    Now, there should be a new folder `template` that contains the exam template:
@@ -35,15 +35,13 @@ There are just a handful of steps required to get started. You can [inspect the 
    ```text
     + /
       | - template/
-      |   | - sp-exam.cls
+      |   | - exam.cls
       |   | - ...
    ```
 
    If you have never worked with [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules), cloning with the `--recursive` flag is usually sufficient.
 
    </details>
-
-   **Note, that for submodules to work, everyone working with your repository must have access to the exam repository. In other words, if you work with students, they require access to the exam template repository as well.**
 
 3. <details><summary> <i>(optional)</i> Create a folder for your first exam (e.g., "exam1").</summary>
 
@@ -57,7 +55,7 @@ There are just a handful of steps required to get started. You can [inspect the 
     + /
       | - exam1/
       | - template/
-      |   | - sp-exam.cls
+      |   | - exam.cls
       |   | - ...
    ```
 
@@ -88,7 +86,7 @@ There are just a handful of steps required to get started. You can [inspect the 
       |   | - solution.tex
       |   | - correction.tex
       | - template/
-      |   | - sp-exam.cls
+      |   | - exam.cls
       |   | - ...
    ```
 
@@ -100,13 +98,13 @@ There are just a handful of steps required to get started. You can [inspect the 
 
    See [configuring the exam](#configuring-the-exam) for more information on the options.
 
-   Within the `exam.tex`, you first have to include the correct documentclass, by specifying the correct path to the template (which should do most of the magic from there by adding important paths to TeX's default input list (`input@path`)). If you changed nothing in the steps before, the template should check automatically, if `../template/sp-exam.cls` is present. Otherwise, make sure to give the correct relative path here.
+   Within the `exam.tex`, you first have to include the correct document class, by specifying the correct path to the template (which should do most of the magic from there by adding important paths to TeX's default input list (`input@path`)). If you changed nothing in the steps before, the template should check automatically, if `../template/exam.cls` is present. Otherwise, make sure to give the correct relative path here.
    </details>
 
 If you want to just get started, and you are in an empty directory, the following commands should work for you:
 
 ```shell
-git submodule add https://spgit.informatik.uni-ulm.de/teaching/templates/exam.git template
+git submodule add https://github.com/Fancy-Templates/latex-exam.git template
 mkdir exam1
 cp template/exam.tex template/solution.tex template/correction.tex exam1/
 cp -r template/tasks exam1/
@@ -137,30 +135,30 @@ Omitting the path will update all your submodules.
 - For each desired version (exam, solution, correction), you need to create a separate file (see [exam modes](#exam-modes) for more information on the modes) like this, but can make `exam.tex` the default one:
 
    ```latex
-   \PassOptionsToClass{solution}{sp-exam}
+   \PassOptionsToClass{solution}{exam}
    \input{exam.tex}
    ```
 
 - This repository contains a [_.latexmkrc_](.latexmkrc) file that can be used with [`latexmk`](https://ctan.org/pkg/latexmk/).
 - You can naturally label and reference tasks and (sub-)tasks using `\label{<name>}` and `\ref{<name>}`/`\autoref{<name>}`.
-- The layout is currently designed for exams in German.
-- If you want, you can use the [_.gitlab-ci.yml_](.gitlab-ci.yml) file to automatically let the CI build the PDFs of your exam for you.
+- The layout is currently designed for exams in German but translation should be relatively trivial.
+- If you want, you can use the [_.gitlab-ci.yml_](.gitlab-ci.yml) file to automatically let the CI build the PDFs of your exam for you if you use GitLab.
 
 ## What This Template Offers
 
 ### Class Options
 
-Essentially, there are three main modes that you can load the template with[^1]:
+Essentially, there are three main modes that you can load the template with:
 
-- `\documentclass[exam]{sp-exam}`: This is the default mode. It hides all solutions and additional hints for corrections.
-- `\documentclass[solution]{sp-exam}`: This mode shows all solutions.
-- `\documentclass[correction]{sp-exam}`: This mode shows all solutions and additional hints for corrections.
+- `\documentclass[exam]{exam}`: This is the default mode. It hides all solutions and additional hints for corrections.
+- `\documentclass[solution]{exam}`: This mode shows all solutions.
+- `\documentclass[correction]{exam}`: This mode shows all solutions and additional hints for corrections.
 
-Besides the mode, you can pass `code` to automatically set up [_minted_](https://ctan.org/pkg/minted) and `rounded` to use rounded boxes instead of the default ones (this, however, loads [_TikZ_](https://ctan.org/pkg/pgf)).
+Besides the mode, you can pass `code` to automatically set up [_minted_][minted] and `rounded` to use rounded boxes instead of the default ones (this, however, loads [_TikZ_][tikz]).
 If you want students to provide a codeword so they can see their score earlier, use the `codeword` option.
 
 Instead of passing the options directly to the document class,
-we use `\PassOptionsToClass{exam}{sp-exam}` to pass the options to the document class (this simplifies the files that we create per-mode).
+we use `\PassOptionsToClass{exam}{exam}` to pass the options to the document class (this simplifies the files that we create per-mode).
 
 ### Configuring the Exam
 
@@ -200,7 +198,7 @@ Besides these, there are probably just two or three more options that you are po
 % can be given multiple times if more than one line is desired/required
 ```
 
-If you _really_ want to know about what you can configure besides that, you can take a look at the [source code](sp-exam.cls). Every `\sp@make@cmd{<name>}{<default value>}` indicates a configuration option that you can set via `\<name>{<new value>}`. For example, you can overwrite the institute like this:
+If you _really_ want to know about what you can configure besides that, you can take a look at the [source code](exam.cls). Every `\fancy@make@cmd{<name>}{<default value>}` indicates a configuration option that you can set via `\<name>{<new value>}`. For example, you can overwrite the institute like this:
 
 ```latex
 \institute{Fluffy Penguins Research Center}
@@ -299,7 +297,7 @@ The default distance can be changed with `\IndentGuidesDistance{<distance>}`. Th
 
 #### Code Presentation
 
-If you pass the document-class option `code` to the `sp-exam` class, it will set up `minted` for you. Now, you can use `minted` to present code to your liking:
+If you pass the document-class option `code` to the `exam` class, it will set up `minted` for you. Now, you can use `minted` to present code to your liking:
 
 ```latex
 \begin{minted}{java}
@@ -394,7 +392,7 @@ Even though we allow for a lot of flexible constructs behind the scenes, you are
 \end{solution}
 ```
 
-Similarly, you can use the `correction` environment to create a correction block which explains your grading scheme to the correctors. 
+Similarly, you can use the `correction` environment to create a correction block which explains your grading scheme to the correctors.
 
 ```latex
 \begin{correction}
@@ -424,13 +422,16 @@ If you, for whatever reason want to mark something as part of the solution, you 
 If compilation is too slow for you, you can create a format file and use that instead:
 
 ```shell
-$ etex -shell-escape -ini -initialize -save-size=20000 -stack-size=20000 -jobname="sp-class-exam-fmt" "&pdflatex" mylatexformat.ltx """exam.tex"""
+$ etex -shell-escape -ini -initialize -save-size=20000 -stack-size=20000 -jobname="fancy-class-exam-fmt" "&pdflatex" mylatexformat.ltx """exam.tex"""
 
 # issue this twice
-$ pdflatex -jobname exam -fmt sp-class-exam-fmt -shell-escape exam.tex
+$ pdflatex -jobname exam -fmt fancy-class-exam-fmt -shell-escape exam.tex
 ```
 
 You may be able to drop the `-shell-escape` flags (if your exam does not require them).
 However, please do not forget to re-create the format file if you change the template or any other configuration in the preamble.
 
-[^1]: In theory, you can simply create your _own_ mode by defining `\spexammode` with a value of your choice. If this mode should be a solution mode, you should add it to `\sp@modes@show@solutions` as well.
+[issue]: https://github.com/Fancy-Templates/latex-exam/issues/new
+[minted]: https://ctan.org/pkg/minted
+[sp-institute]: https://www.uni-ulm.de/in/sp/
+[tikz]: https://ctan.org/pkg/pgf
